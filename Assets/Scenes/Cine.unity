@@ -16797,7 +16797,7 @@ GameObject:
   - component: {fileID: 572914016}
   - component: {fileID: 572914015}
   m_Layer: 0
-  m_Name: Camera (2)
+  m_Name: Camera Fotos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16914,13 +16914,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 572914014}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: 0.99999636, z: -0, w: 0.0027186375}
-  m_LocalPosition: {x: 0.384, y: 1.026, z: 8.107}
+  m_LocalRotation: {x: -0, y: 0.9919482, z: -0, w: 0.12664445}
+  m_LocalPosition: {x: 20.36, y: 2.69, z: -14.356}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 179.688, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 165.449, z: 0}
 --- !u!1001 &577768191
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -29041,7 +29041,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1447538076277799899, guid: e77d14504f632ec44b100525abcc0f38, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.01000154
       objectReference: {fileID: 0}
     - target: {fileID: 1447538076277799899, guid: e77d14504f632ec44b100525abcc0f38, type: 3}
       propertyPath: m_LocalPosition.y
@@ -29049,7 +29049,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1447538076277799899, guid: e77d14504f632ec44b100525abcc0f38, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 2.87
+      value: 3.8499994
       objectReference: {fileID: 0}
     - target: {fileID: 1447538076277799899, guid: e77d14504f632ec44b100525abcc0f38, type: 3}
       propertyPath: m_LocalRotation.w
@@ -38523,7 +38523,7 @@ Transform:
   m_GameObject: {fileID: 1817171561}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -0.06, y: 1.12, z: 5.06}
+  m_LocalPosition: {x: -0.07, y: 1.12, z: 6.04}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -44416,6 +44416,7 @@ SceneRoots:
   - {fileID: 775499614}
   - {fileID: 254970209}
   - {fileID: 88720535}
+  - {fileID: 572914018}
   - {fileID: 1817171565}
   - {fileID: 1270677796}
   - {fileID: 1690913019}
@@ -44454,5 +44455,4 @@ SceneRoots:
   - {fileID: 360142758}
   - {fileID: 810877212}
   - {fileID: 315818701}
-  - {fileID: 572914018}
   - {fileID: 12408178}
