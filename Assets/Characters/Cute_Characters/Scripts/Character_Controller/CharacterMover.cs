@@ -46,6 +46,10 @@ namespace Controller
 
         private bool m_IsMoving;
 
+        // Resultados calculados en FixedUpdate y consumidos por la animación en Update
+        private Vector2 m_LastAnimAxis;
+        private bool m_LastIsAir;
+
         public Vector2 Axis => m_Axis;
         public Vector3 Target => m_Target;
         public bool IsRun => m_IsRun;
@@ -64,15 +68,26 @@ namespace Controller
             m_Controller = GetComponent<CharacterController>();
             m_Animator = GetComponent<Animator>();
 
+            // Aseguramos que el Animator NO aplique root motion: el movimiento es 100% por codigo.
+            // Esto elimina la pelea entre el desplazamiento de la animacion y CharacterController.Move,
+            // que es lo que provocaba el "salto solo" al grabar con Apply Root Motion activado.
+            m_Animator.applyRootMotion = false;
+
             m_Movement = new MovementHandler(m_Controller, m_Transform, m_WalkSpeed, m_RunSpeed, m_RotateSpeed, m_JumpHeight, m_Space);
             m_Animation = new AnimationHandler(m_Animator, m_HorizontalID,  m_VerticalID, m_StateID, m_JumpID);
         }
 
+        private void FixedUpdate()
+        {
+            // Movimiento / fisica en FixedUpdate: timestep estable, no afectado por el deltaTime
+            // variable que fuerza Unity Recorder. Esto estabiliza isGrounded y elimina el jitter al grabar.
+            m_Movement.Move(Time.fixedDeltaTime, in m_Axis, in m_Target, m_IsRun, m_IsJump, m_IsMoving, out m_LastAnimAxis, out m_LastIsAir);
+        }
+
         private void Update()
         {
-            m_Movement.Move(Time.deltaTime, in m_Axis, in m_Target, m_IsRun, m_IsJump, m_IsMoving, out var animAxis, out var isAir);
-            m_Animation.Animate(in animAxis, m_IsRun? 1f : 0f, isAir, Time.deltaTime);
-
+            // Solo animacion visual en Update, usando el ultimo resultado calculado en FixedUpdate.
+            m_Animation.Animate(in m_LastAnimAxis, m_IsRun ? 1f : 0f, m_LastIsAir, Time.deltaTime);
         }
 
         private void OnAnimatorIK()
@@ -229,6 +244,9 @@ namespace Controller
                         var gravity = Physics.gravity;
                         var length = gravity.magnitude;
 
+                        // Reset determinista antes de aplicar el impulso de salto:
+                        // partimos de la gravedad base, no de la velocidad descendente acumulada.
+                        m_GravityAcelleration = Physics.gravity;
                         m_GravityAcelleration += -(gravity / length) * Mathf.Sqrt(m_JumpHeight * 6f * length);
                         m_jumpTimer = m_JumpReload;
                         isAir = true;
@@ -236,6 +254,7 @@ namespace Controller
                         return;
                     }
 
+                    // Anclaje constante al suelo: valor estable cada frame, sin acumulacion.
                     m_GravityAcelleration = Physics.gravity;
                     isAir = false;
 
@@ -326,7 +345,6 @@ namespace Controller
 
             public void Animate(in Vector2 axis, float state, bool isJump, float deltaTime)
             {
-
                 m_Animator.SetFloat(m_HorizontalID, m_FlowAxis.x);
                 m_Animator.SetFloat(m_VerticalID, m_FlowAxis.y);
 

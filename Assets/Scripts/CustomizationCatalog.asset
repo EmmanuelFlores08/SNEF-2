@@ -1,0 +1,327 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6f50ab503017274385d7d7948907fac, type: 3}
+  m_Name: CustomizationCatalog
+  m_EditorClassIdentifier: 
+  bodyPartCatalogArray:
+  - bodyPartType: 0
+    optionArray:
+    - mesh: {fileID: 0}
+      materials: []
+      hairOverride: 0
+    - mesh: {fileID: -6771367002260374918, guid: 53b19cbbda6036749bd50c73a0952b3f, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      hairOverride: 2
+    - mesh: {fileID: 1547650462011832544, guid: 9cdcc8685fbfee84ca31e7e2be9a5d03, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      hairOverride: 2
+    - mesh: {fileID: -272094037939394198, guid: aa31f4c7d8c96024691c6e42735a543b, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      hairOverride: 2
+    - mesh: {fileID: -4470173197721515907, guid: 119d34c779c9c0e498bb70e636b75346, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      hairOverride: 2
+    - mesh: {fileID: -1210907049786396696, guid: c3192d7ad083ecf4688284c9af88e773, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      hairOverride: 2
+    - mesh: {fileID: -1297108719770905208, guid: 448aa14055c12a5469dc9eb7aef48a24, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      hairOverride: 2
+    - mesh: {fileID: 4861141166607117748, guid: b572ccc708f9ee940ab471569de6c349, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      hairOverride: 2
+    - mesh: {fileID: -2344795699758608244, guid: 202e9c88ff1a6d84390f42f3fcaaff4e, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      hairOverride: 2
+    - mesh: {fileID: 3371760329551227306, guid: 4cbdc84dc06b6fa4fbbf0317c374b4e0, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      hairOverride: 2
+    - mesh: {fileID: -5674248301500801536, guid: 8e0b9b1a087fe2a49afd265f71478b7c, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      hairOverride: 2
+    - mesh: {fileID: 5872759942117342413, guid: 6427597c2564048489750a9096574812, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      hairOverride: 0
+    - mesh: {fileID: 7968860779803917414, guid: 6d348e895b735574fb7c8d0274dd05fb, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      hairOverride: 2
+    - mesh: {fileID: 4894720594066381654, guid: 8873e5af559fcde428db1439808b98aa, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      hairOverride: 2
+    - mesh: {fileID: -668942240984229393, guid: eef81339e40700b42b9339093b562149, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      hairOverride: 2
+    - mesh: {fileID: -8905634579895914701, guid: a0073e0602904ba4b80e069057ee5428, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      hairOverride: 2
+    - mesh: {fileID: -6123457707218253605, guid: 7a64ebff13d5bf54e8ef669690b183b7, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      hairOverride: 2
+    - mesh: {fileID: 1222083850321373901, guid: 2bc3944babac0294ab7fb02d1a1e0e1a, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      hairOverride: 2
+    - mesh: {fileID: 4324725956384583524, guid: b14513f5686af424e92393a447c2ce10, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      hairOverride: 2
+    - mesh: {fileID: -2288507286907467232, guid: 870d3e2bffa9a174d8fd36da1639cd15, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      hairOverride: 2
+    - mesh: {fileID: -5515578995233832970, guid: d8c56f0e4c47f934381fa7acda9291dc, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      hairOverride: 2
+    - mesh: {fileID: -4336878629570323307, guid: b8c5851732c7b1e41b0927095181158b, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      hairOverride: 0
+    - mesh: {fileID: 2098320913111731761, guid: b4f8777a8d5a89942831b0feb7f0232a, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      hairOverride: 2
+    - mesh: {fileID: -403007501721934695, guid: dbf135868a89109499a088b436f5761e, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      hairOverride: 2
+    - mesh: {fileID: 5749287922953492849, guid: 06e906c0355899647a09dd3e06e41e75, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      hairOverride: 1
+    - mesh: {fileID: 4553023241709818365, guid: 00c1e96be043b064ca54224ea14497e4, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      hairOverride: 2
+  - bodyPartType: 1
+    optionArray:
+    - mesh: {fileID: 6956645931020787088, guid: 030969d43959fbb48acc3e72ca167b47, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      hairOverride: 0
+    - mesh: {fileID: -2406216502670586917, guid: 24f9d4ace2450db43830584083062ee8, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      hairOverride: 0
+    - mesh: {fileID: 5026729302019614723, guid: cd0da96615d456145bd717f0d68e6580, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      hairOverride: 0
+    - mesh: {fileID: -4976506252765098015, guid: f0aef370f7c5f9f49b45f73e5180a1c8, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      hairOverride: 0
+    - mesh: {fileID: -1602216458834000358, guid: 9048f3b40f1b5464ab7568db2cfc1595, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      hairOverride: 0
+    - mesh: {fileID: 1543909213277224155, guid: e5d23c301ec09e84f8b0c404ea2165e3, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      hairOverride: 0
+    - mesh: {fileID: 4122927898749119769, guid: 99242355d8dcfc3439ab242600a52d3e, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      hairOverride: 0
+    - mesh: {fileID: -7174682663038085362, guid: 1d09f678457bbbc45860b14cc5724e08, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      hairOverride: 0
+    - mesh: {fileID: -6833425477436108569, guid: ccff85ac2068e63449f4d2d5766d905c, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      hairOverride: 0
+    - mesh: {fileID: 8634359377457026240, guid: 5c4904c03b1af4940bbd21c47949bfd4, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      hairOverride: 0
+    - mesh: {fileID: 4548281612387348609, guid: b73931c69c627284192ced68df1fe955, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      hairOverride: 0
+    - mesh: {fileID: 8365846181006807011, guid: 643afe092e34a114b895fddbea309f2b, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      hairOverride: 0
+    - mesh: {fileID: -8129361379744962023, guid: 56c3e25669f347c43890140e8d4b6e58, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      hairOverride: 0
+    - mesh: {fileID: 8960429996560823094, guid: d1442de9de263724c9e649f69bd311ae, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      hairOverride: 0
+    - mesh: {fileID: -1289615888922266597, guid: 6956b049ab6c6e349a4d8a4184cdbf86, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      hairOverride: 0
+  - bodyPartType: 2
+    optionArray:
+    - mesh: {fileID: 1989087924565745759, guid: a7f3564897bbf4947857e0ca4e13fa58, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      hairOverride: 0
+    - mesh: {fileID: 282264812460033723, guid: ac4c8e3d38653ab4daa88140357a5610, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      hairOverride: 0
+    - mesh: {fileID: 5124325090560270018, guid: a3c7095908a0f8d4ea54935c40e70778, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      hairOverride: 0
+    - mesh: {fileID: 3887993829501521360, guid: a146f58fa79227a4a8770382edba720e, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      hairOverride: 0
+    - mesh: {fileID: -585987090817485312, guid: 7f037d0bcdf38ec40b6ad2366b4dfee0, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      hairOverride: 0
+    - mesh: {fileID: -4013734355594090245, guid: b58e765be270cbe40aabd66d605be1ae, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      hairOverride: 0
+    - mesh: {fileID: 3596370362380868383, guid: 398d9a70ac566d8438e23f40741c9ffa, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      hairOverride: 0
+    - mesh: {fileID: 2622311745758301297, guid: 2725408a37e99ed49be01f14fa761bdd, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      hairOverride: 0
+    - mesh: {fileID: 4560160008616458455, guid: 2d8dc961db7406c47b3cf4d67fb5420e, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      hairOverride: 0
+    - mesh: {fileID: 3293909790813873304, guid: 08ebad7a0b98b2d41972534debcea578, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      hairOverride: 0
+    - mesh: {fileID: 8822414061312891240, guid: 3db6c6754f537c04a88e07a0725ddcd7, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      hairOverride: 0
+    - mesh: {fileID: -1242411980669244152, guid: ed4ed24c4f476824f8e041191ff386bb, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      hairOverride: 0
+    - mesh: {fileID: 4846916642008965142, guid: a1b94ee73a1fd3340a608bd6cef0da24, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      hairOverride: 0
+    - mesh: {fileID: 3899179701337655370, guid: 5b758d3c566ae894f99d879612928844, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      hairOverride: 0
+    - mesh: {fileID: 5900903955829827036, guid: 91e0ebfaf55add94a86da598e14c749c, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      hairOverride: 0
+    - mesh: {fileID: -4513934521764671426, guid: 993d07a936e9fc648b130bab07b8c539, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      hairOverride: 0
+    - mesh: {fileID: 696040094093694994, guid: 34de98f4fb0c2e641a64d21167cba44b, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      hairOverride: 0
+    - mesh: {fileID: 1093122283024923084, guid: ca2f516ae6c0fa44aaffebf2c086d95b, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      hairOverride: 0
+    - mesh: {fileID: -6260860148111143606, guid: a92a123a927279f4d86bd3b07e477108, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      hairOverride: 0
+    - mesh: {fileID: -5178100211778524695, guid: 106a5df3a0a68454ab431239f07f1e27, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      hairOverride: 0
+    - mesh: {fileID: -5040264409126451942, guid: 0674d088e4e2e1a45b2353f78376754d, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      hairOverride: 0
+    - mesh: {fileID: -8507966474864796032, guid: e2c41503609b73d468cd9d6cfdd6a32e, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      hairOverride: 0
+  - bodyPartType: 3
+    optionArray:
+    - mesh: {fileID: 0}
+      materials: []
+      hairOverride: 0
+    - mesh: {fileID: 1790028703794667852, guid: 2224e73960ec76948aa534b2c53a07bb, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      - {fileID: 2100000, guid: 086d3e4fefc029442989fd37e2c655fa, type: 2}
+      hairOverride: 0
+    - mesh: {fileID: 6515110658399377313, guid: 1761e444a753ab4479e4fbbe38bc9fc1, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      - {fileID: 2100000, guid: 086d3e4fefc029442989fd37e2c655fa, type: 2}
+      hairOverride: 0
+    - mesh: {fileID: 6798483999639894891, guid: 88f94c4393cd1a24aa1e3a27618aa78f, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      - {fileID: 2100000, guid: 086d3e4fefc029442989fd37e2c655fa, type: 2}
+      hairOverride: 0
+    - mesh: {fileID: 749311080628650126, guid: a8f5ff521de5db949a4976d5473ebd5c, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      - {fileID: 2100000, guid: 086d3e4fefc029442989fd37e2c655fa, type: 2}
+      hairOverride: 0
+    - mesh: {fileID: -159286390556128128, guid: 1f1329db04c2898428241e3ce835764b, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      - {fileID: 2100000, guid: 086d3e4fefc029442989fd37e2c655fa, type: 2}
+      hairOverride: 0
+    - mesh: {fileID: -9172450345181602521, guid: f88b99d7dd54499438ea1378cc1eb2b7, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      - {fileID: 2100000, guid: 086d3e4fefc029442989fd37e2c655fa, type: 2}
+      hairOverride: 0
+    - mesh: {fileID: 3602815358950184671, guid: 0998be6d103b89d4a9c97ea29bb101c3, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      - {fileID: 2100000, guid: 086d3e4fefc029442989fd37e2c655fa, type: 2}
+      hairOverride: 0
+    - mesh: {fileID: 6982626748009360245, guid: 5c7c358ba83c2ce47a1503294d889bca, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      - {fileID: 2100000, guid: 086d3e4fefc029442989fd37e2c655fa, type: 2}
+      hairOverride: 0
+    - mesh: {fileID: 6852173730980118814, guid: 6a124715e7d5d1b4ba2fb49ba8de05b5, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      - {fileID: 2100000, guid: 32fbf3258d698d54ba6f8eee9cd3195f, type: 2}
+      hairOverride: 0
+    - mesh: {fileID: -9029249157746540803, guid: 8a778b55fa653e148a8503d6580560ff, type: 3}
+      materials:
+      - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      - {fileID: 2100000, guid: 32fbf3258d698d54ba6f8eee9cd3195f, type: 2}
+      hairOverride: 0

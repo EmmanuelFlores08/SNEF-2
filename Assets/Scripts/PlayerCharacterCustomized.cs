@@ -1,36 +1,78 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerCharacterCustomized : MonoBehaviour
 {
-    [SerializeField] private BodyPartData[] bodyPartDataArray;
+    [SerializeField] private CustomizationCatalog catalog; // mismo asset para todos
 
-    public enum BodyPartType{
-        Hat,
-        Pants,
-        Shoes,
-    }
-    
+    [Header("Renderers de este personaje, uno por parte")]
+    [SerializeField] private BodyPartRenderer[] bodyPartRenderers;
+
+    [Header("Cabello propio de este personaje")]
+    [SerializeField] private SkinnedMeshRenderer hairRenderer;
+    [SerializeField] private Mesh defaultHairMesh;
+    [SerializeField] private Mesh hatHairMesh;
+    [SerializeField] private Material[] hairMaterials;
+
     [System.Serializable]
-    public class BodyPartData{
-        public BodyPartType bodyPartType;
-        public Mesh[] meshArray;
+    public class BodyPartRenderer{
+        public CustomizationCatalog.BodyPartType bodyPartType;
         public SkinnedMeshRenderer skinnedMeshRenderer;
+        [HideInInspector] public int currentIndex;
     }
 
-    public void ChangeBodyPart(BodyPartType bodyPartType){
-        BodyPartData bodyPartData = GetBodyPartData(bodyPartType);
-        int meshIndex = System.Array.IndexOf(bodyPartData.meshArray, bodyPartData.skinnedMeshRenderer.sharedMesh);
-        bodyPartData.skinnedMeshRenderer.sharedMesh = bodyPartData.meshArray[(meshIndex + 1) % bodyPartData.meshArray.Length];
+    public void ChangeBodyPart(CustomizationCatalog.BodyPartType bodyPartType){
+        BodyPartRenderer rend = GetRenderer(bodyPartType);
+        var cat = catalog.GetCatalog(bodyPartType);
+        if (rend == null || cat == null || cat.optionArray.Length == 0) return;
+
+        rend.currentIndex = (rend.currentIndex + 1) % cat.optionArray.Length;
+        ApplyOption(rend, cat, rend.currentIndex);
     }
 
-    private BodyPartData GetBodyPartData(BodyPartType bodyPartType){
-        foreach (BodyPartData bodyPartData in bodyPartDataArray){
-            if(bodyPartData.bodyPartType == bodyPartType){
-                return bodyPartData;
-            }       
+    private void ApplyOption(BodyPartRenderer rend, CustomizationCatalog.BodyPartCatalog cat, int index){
+        var option = cat.optionArray[index];
+        SetRenderer(rend.skinnedMeshRenderer, option.mesh, option.materials);
+
+        if (rend.bodyPartType == CustomizationCatalog.BodyPartType.Hat){
+            ApplyHairOverride(option);
+        }
+    }
+
+    private void ApplyHairOverride(CustomizationCatalog.BodyPartOption hatOption){
+        if (hairRenderer == null) return;
+
+        switch (hatOption.hairOverride){
+            case CustomizationCatalog.HairOverrideMode.Hide:
+                SetRenderer(hairRenderer, null, null);
+                break;
+            case CustomizationCatalog.HairOverrideMode.Replace:
+                SetRenderer(hairRenderer, hatHairMesh, hairMaterials);
+                break;
+            default:
+                SetRenderer(hairRenderer, defaultHairMesh, hairMaterials);
+                break;
+        }
+    }
+
+    private void SetRenderer(SkinnedMeshRenderer renderer, Mesh mesh, Material[] materials){
+        renderer.sharedMesh = mesh;
+        renderer.sharedMaterials = (mesh == null || materials == null) ? new Material[0] : materials;
+    }
+
+    private BodyPartRenderer GetRenderer(CustomizationCatalog.BodyPartType type){
+        foreach (var r in bodyPartRenderers){
+            if (r.bodyPartType == type) return r;
         }
         return null;
+    }
+
+    private void Start(){
+        foreach (var rend in bodyPartRenderers){
+            var cat = catalog.GetCatalog(rend.bodyPartType);
+            if (cat != null && cat.optionArray.Length > 0){
+                ApplyOption(rend, cat, rend.currentIndex);
+            }
+        }
     }
 }
