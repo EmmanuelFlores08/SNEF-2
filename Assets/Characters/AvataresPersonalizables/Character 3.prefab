@@ -2596,7 +2596,7 @@ GameObject:
   - component: {fileID: 2130517548283389911}
   m_Layer: 0
   m_Name: Character 3
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2795,7 +2795,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d36fb365c5786f479f98b23ad91dfab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterSelector: {fileID: 0}
   rotationSpeed: 0.5
 --- !u!114 &2130517548283389911
 MonoBehaviour:

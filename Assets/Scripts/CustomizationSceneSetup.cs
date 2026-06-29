@@ -7,10 +7,13 @@ public class CustomizationSceneSetup : MonoBehaviour
     [SerializeField] private Transform anchor;
 
     [Header("Juego")]
-    [SerializeField] private PlayerCamera playerCamera;
+    [SerializeField] private PlayerCamera playerCamera;            // cámara de seguimiento (la normal)
 
-    [Header("Panel (escena de Cine)")]
+    [Header("Panel")]
     [SerializeField] private CustomizationPanelController panelController;
+
+    [Header("Cámaras de sala")]
+    [SerializeField] private RoomCameraManager roomCameraManager;
 
     private void Start()
     {
@@ -30,17 +33,24 @@ public class CustomizationSceneSetup : MonoBehaviour
 
         PlayerCharacterCustomized character = Instantiate(prefab, anchor);
         character.transform.localPosition = Vector3.zero;
-        character.transform.localRotation = Quaternion.Euler(0, 180, 0);
+        character.transform.localRotation = Quaternion.identity;
 
-        // Cámara
         MovePlayerInput input = character.GetComponent<MovePlayerInput>();
-        if (input != null && playerCamera != null) input.BindCamera(playerCamera);
-        if (playerCamera != null) playerCamera.BindPlayer(character.transform);
 
-        // Panel de personalización: le pasamos el personaje instanciado
-        if (panelController != null)
+        // Cámara de seguimiento: la conexión inicial la hace el RoomCameraManager.
+        // Si no hay manager asignado, hacemos el bind directo como respaldo.
+        if (roomCameraManager != null)
         {
-            panelController.Bind(character, input);
+            roomCameraManager.Init(character.transform, input);
         }
+        else
+        {
+            if (input != null && playerCamera != null) input.BindCamera(playerCamera);
+            if (playerCamera != null) playerCamera.BindPlayer(character.transform);
+        }
+
+        // Panel de personalización
+        if (panelController != null)
+            panelController.Bind(character, input);
     }
 }

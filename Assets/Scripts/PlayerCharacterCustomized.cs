@@ -30,6 +30,24 @@ public class PlayerCharacterCustomized : MonoBehaviour
         ApplyOption(rend, cat, rend.currentIndex);
     }
 
+    // Añade estos métodos públicos a PlayerCharacterCustomized
+
+    public void SetBodyPart(CustomizationCatalog.BodyPartType bodyPartType, int index)
+    {
+        BodyPartRenderer rend = GetRenderer(bodyPartType);
+        var cat = catalog.GetCatalog(bodyPartType);
+        if (rend == null || cat == null || cat.optionArray.Length == 0) return;
+
+        index = Mathf.Clamp(index, 0, cat.optionArray.Length - 1);
+        rend.currentIndex = index;
+        ApplyOption(rend, cat, index);
+    }
+
+    public int GetCurrentIndex(CustomizationCatalog.BodyPartType bodyPartType)
+    {
+        BodyPartRenderer rend = GetRenderer(bodyPartType);
+        return rend != null ? rend.currentIndex : 0;
+    }
     private void ApplyOption(BodyPartRenderer rend, CustomizationCatalog.BodyPartCatalog cat, int index){
         var option = cat.optionArray[index];
         SetRenderer(rend.skinnedMeshRenderer, option.mesh, option.materials);

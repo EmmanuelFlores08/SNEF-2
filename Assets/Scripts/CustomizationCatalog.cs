@@ -4,21 +4,13 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "CustomizationCatalog", menuName = "Customization/Catalog")]
 public class CustomizationCatalog : ScriptableObject
 {
-    public enum BodyPartType{
-        Hat,
-        Pants,
-        Shoes,
-        Accesories,
-    }
-
-    public enum HairOverrideMode{
-        None,
-        Hide,
-        Replace,
-    }
+    public enum BodyPartType { Hat, Pants, Shoes, Accesories }
+    public enum HairOverrideMode { None, Hide, Replace }
 
     [System.Serializable]
-    public class BodyPartOption{
+    public class BodyPartOption
+    {
+        public Sprite previewSprite;  // ← imagen del recuadro
         public Mesh mesh;             // null = "sin nada"
         public Material[] materials;
 
@@ -27,18 +19,18 @@ public class CustomizationCatalog : ScriptableObject
     }
 
     [System.Serializable]
-    public class BodyPartCatalog{
+    public class BodyPartCatalog
+    {
         public BodyPartType bodyPartType;
         public BodyPartOption[] optionArray;
     }
 
     public BodyPartCatalog[] bodyPartCatalogArray;
 
-    public BodyPartCatalog GetCatalog(BodyPartType type){
-        foreach (var c in bodyPartCatalogArray){
+    public BodyPartCatalog GetCatalog(BodyPartType type)
+    {
+        foreach (var c in bodyPartCatalogArray)
             if (c.bodyPartType == type) return c;
-        }
         return null;
     }
 }
-

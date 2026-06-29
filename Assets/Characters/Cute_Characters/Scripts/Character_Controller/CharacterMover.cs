@@ -132,7 +132,7 @@ namespace Controller
             m_Animator.SetFloat(m_StateID, 0f);
             m_Animator.SetBool(m_JumpID, false);
         }
-        
+
         private void OnControllerColliderHit(ControllerColliderHit hit)
         {
             if(hit.normal.y > m_Controller.stepOffset)
@@ -300,16 +300,19 @@ namespace Controller
 
             private void Turn(in Vector3 targetForward, bool isMoving)
             {
+                // Si no hay input de movimiento, el personaje NO gira.
+                // Esto permite girar la dirección con el mouse y ver al personaje en 360°
+                // sin que rote solo; únicamente gira al presionar una tecla de movimiento.
+                if (!isMoving)
+                {
+                    m_IsRotating = false;
+                    return;
+                }
+
                 var angle = Vector3.SignedAngle(m_Transform.forward, Vector3.ProjectOnPlane(targetForward, Vector3.up), Vector3.up);
 
                 if (!m_IsRotating)
                 {
-                    if (!isMoving && Mathf.Abs(angle) < m_Luft)
-                    {
-                        m_IsRotating = false;
-                        return;
-                    }
-
                     m_IsRotating = true;
                 }
 
