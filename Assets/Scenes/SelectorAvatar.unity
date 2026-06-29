@@ -169,7 +169,7 @@ MonoBehaviour:
   previewInDuration: 0.12
   previewBounceDuration: 0.16
   useButton: {fileID: 1612416324}
-  nextSceneName: Cine Joshi
+  nextSceneName: Cine
 --- !u!4 &1790962
 Transform:
   m_ObjectHideFlags: 0

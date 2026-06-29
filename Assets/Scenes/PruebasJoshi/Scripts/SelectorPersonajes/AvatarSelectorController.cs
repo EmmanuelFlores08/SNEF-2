@@ -107,7 +107,6 @@ public class AvatarSelectorController : MonoBehaviour
             elapsed += Time.unscaledDeltaTime;
             float t = elapsed / duration;
 
-            // Suavizado para que no se sienta lineal.
             t = Mathf.SmoothStep(0f, 1f, t);
 
             avatarPreviewTransform.localScale = Vector3.Lerp(startScale, endScale, t);
@@ -135,7 +134,6 @@ public class AvatarSelectorController : MonoBehaviour
 
         yield return null;
 
-        // Actívalo cuando ya quieras mandar al usuario al cine.
-        // SceneManager.LoadScene(nextSceneName);
+        SceneManager.LoadScene(nextSceneName);
     }
 }

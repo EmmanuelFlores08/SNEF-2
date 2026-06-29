@@ -114,6 +114,25 @@ namespace Controller
             }
         }
 
+        public void ResetToIdle()
+        {
+            // Limpia el estado lógico de movimiento
+            m_Axis = Vector2.zero;
+            m_Target = m_Transform.position;
+            m_IsRun = false;
+            m_IsJump = false;
+            m_IsMoving = false;
+
+            m_LastAnimAxis = Vector2.zero;
+            m_LastIsAir = false;
+
+            // Fuerza los parámetros del Animator a idle de inmediato
+            m_Animator.SetFloat(m_HorizontalID, 0f);
+            m_Animator.SetFloat(m_VerticalID, 0f);
+            m_Animator.SetFloat(m_StateID, 0f);
+            m_Animator.SetBool(m_JumpID, false);
+        }
+        
         private void OnControllerColliderHit(ControllerColliderHit hit)
         {
             if(hit.normal.y > m_Controller.stepOffset)

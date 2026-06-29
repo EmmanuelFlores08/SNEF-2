@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 888400f9008219d4aab2340bdd3371f7, type: 3}
+  m_Name: CharacterDatabase
+  m_EditorClassIdentifier: 
+  characters:
+  - avatarId: avatar_01
+    prefab: {fileID: 2930036278784657807, guid: 5fd5bfdffafa9c5459e22efa36830a25, type: 3}
+  - avatarId: avatar_02
+    prefab: {fileID: 7620210664939191632, guid: 0a3aded8d46ac0b41a62b29d0ed46baf, type: 3}
+  - avatarId: avatar_03
+    prefab: {fileID: 698886285486802225, guid: e2d069db01a28af46bc426e620f94cd9, type: 3}
+  - avatarId: avatar_04
+    prefab: {fileID: 6505591672792660720, guid: d753190ac0d4a1248aeee5cb9b070782, type: 3}
+  - avatarId: avatar_05
+    prefab: {fileID: 4547122441485914173, guid: edff786b2e6df284f9f0b8cfe9123e8c, type: 3}
+  - avatarId: avatar_06
+    prefab: {fileID: 7052094919466470184, guid: ec39c9acd5602214eb92f6c8d31ba893, type: 3}
+  - avatarId: avatar_07
+    prefab: {fileID: 2423893068639692322, guid: 90934042f0473ec4ca827e4844b7626c, type: 3}
+  - avatarId: avatar_08
+    prefab: {fileID: 3602359615114679707, guid: 3054c475c0450ce4896cad763c76318b, type: 3}
+  - avatarId: avatar_09
+    prefab: {fileID: 5663110478174384935, guid: 51f0197b40be9304c8295750b936ff07, type: 3}
+  - avatarId: avatar_10
+    prefab: {fileID: 2079648046083070481, guid: c8dbd02d8013b2a49b716ca46ee10caf, type: 3}
+  - avatarId: avatar_11
+    prefab: {fileID: 2724284370709347915, guid: b16ef3b33d6a6ab46a725080e05ee129, type: 3}
+  - avatarId: avatar_12
+    prefab: {fileID: 5263261603586413251, guid: d473468a9517e044d99feedddf87d41f, type: 3}

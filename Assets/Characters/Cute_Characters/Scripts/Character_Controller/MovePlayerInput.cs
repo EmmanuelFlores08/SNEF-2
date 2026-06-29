@@ -36,7 +36,7 @@ namespace Controller
         private float m_Scroll;
 
         private bool m_IsActive;
-        
+
         public PlayerCamera Camera => m_Camera;
 
         private void Awake()
@@ -59,7 +59,9 @@ namespace Controller
         {
             m_Axis = new Vector2(Input.GetAxis(m_HorizontalAxis), Input.GetAxis(m_VerticalAxis));
             m_IsRun = Input.GetKey(m_RunKey);
-            m_IsJump = Input.GetButton(m_JumpButton);
+
+            // Salto desactivado: el personaje nunca salta.
+            m_IsJump = false;
 
             m_Target = (m_Camera == null) ? Vector3.zero : m_Camera.Target;
             m_MouseDelta = new Vector2(Input.GetAxis(m_MouseX), Input.GetAxis(m_MouseY));

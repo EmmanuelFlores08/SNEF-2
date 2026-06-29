@@ -3,16 +3,19 @@ using UnityEngine.EventSystems;
 
 public class CharacterPreviewRotator : MonoBehaviour, IDragHandler
 {
-    [SerializeField] private CharacterSelector characterSelector;
     [SerializeField] private float rotationSpeed = 0.5f;
 
-    public void OnDrag(PointerEventData eventData){
-        if (characterSelector == null) return;
+    private Transform target;
 
-        PlayerCharacterCustomized active = characterSelector.GetActiveCharacter();
-        if (active == null) return;
+    public void SetTarget(Transform newTarget)
+    {
+        target = newTarget;
+    }
 
+    public void OnDrag(PointerEventData eventData)
+    {
+        if (target == null) return;
         float deltaX = eventData.delta.x;
-        active.transform.Rotate(Vector3.up, -deltaX * rotationSpeed, Space.World);
+        target.Rotate(Vector3.up, -deltaX * rotationSpeed, Space.World);
     }
 }

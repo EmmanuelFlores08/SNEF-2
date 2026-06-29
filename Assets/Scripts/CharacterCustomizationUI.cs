@@ -10,35 +10,29 @@ public class CharacterCustomizationUI : MonoBehaviour
     [SerializeField] private Button ShoesButton;
     [SerializeField] private Button AccesoriesButton;
 
-    [SerializeField] private Button NextCharacterButton;
-    [SerializeField] private Button PreviousCharacterButton;
+    private PlayerCharacterCustomized character;
 
-    [SerializeField] private CharacterSelector characterSelector;
+    public void SetCharacter(PlayerCharacterCustomized newCharacter)
+    {
+        character = newCharacter;
+    }
 
     private void Awake()
     {
         HatButton.onClick.AddListener(() => {
-            characterSelector.GetActiveCharacter().ChangeBodyPart(CustomizationCatalog.BodyPartType.Hat);
+            if (character != null) character.ChangeBodyPart(CustomizationCatalog.BodyPartType.Hat);
         });
 
         PantsButton.onClick.AddListener(() => {
-            characterSelector.GetActiveCharacter().ChangeBodyPart(CustomizationCatalog.BodyPartType.Pants);
+            if (character != null) character.ChangeBodyPart(CustomizationCatalog.BodyPartType.Pants);
         });
 
         ShoesButton.onClick.AddListener(() => {
-            characterSelector.GetActiveCharacter().ChangeBodyPart(CustomizationCatalog.BodyPartType.Shoes);
+            if (character != null) character.ChangeBodyPart(CustomizationCatalog.BodyPartType.Shoes);
         });
 
         AccesoriesButton.onClick.AddListener(() => {
-            characterSelector.GetActiveCharacter().ChangeBodyPart(CustomizationCatalog.BodyPartType.Accesories);
-        });
-
-        NextCharacterButton.onClick.AddListener(() => {
-            characterSelector.NextCharacter();
-        });
-
-        PreviousCharacterButton.onClick.AddListener(() => {
-            characterSelector.PreviousCharacter();
+            if (character != null) character.ChangeBodyPart(CustomizationCatalog.BodyPartType.Accesories);
         });
     }
 }
