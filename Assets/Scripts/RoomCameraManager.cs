@@ -9,12 +9,14 @@ public class RoomCameraManager : MonoBehaviour
     private PlayerCamera activeCamera;
     private Transform player;
 
+    // La cámara fija de la zona en la que está parado el jugador (la registra el trigger)
+    private PlayerCamera currentZoneCamera;
+
     public void Init(Transform playerTransform, MovePlayerInput input)
     {
         player = playerTransform;
         playerInput = input;
 
-        // Aseguramos que la cámara de seguimiento sea la activa y quede conectada
         activeCamera = followCamera;
 
         if (followCamera != null)
@@ -25,12 +27,27 @@ public class RoomCameraManager : MonoBehaviour
         }
     }
 
-    public void ActivateFixedCamera(PlayerCamera fixedCamera)
+    // Llamado por el trigger al ENTRAR a una zona: solo registra cuál es su cámara
+    public void SetZoneCamera(PlayerCamera zoneCamera)
     {
-        if (fixedCamera == null) return;
-        SwitchTo(fixedCamera);
+        currentZoneCamera = zoneCamera;
     }
 
+    // Llamado por el trigger al SALIR de una zona
+    public void ClearZoneCamera(PlayerCamera zoneCamera)
+    {
+        if (currentZoneCamera == zoneCamera)
+            currentZoneCamera = null;
+    }
+
+    // Llamado por el menú de películas al elegir una: activa la cámara fija de la zona actual
+    public void ActivateZoneCamera()
+    {
+        if (currentZoneCamera != null)
+            SwitchTo(currentZoneCamera);
+    }
+
+    // Vuelve a la cámara de seguimiento (botón "dejar de ver")
     public void ActivateFollowCamera()
     {
         SwitchTo(followCamera);
@@ -47,7 +64,5 @@ public class RoomCameraManager : MonoBehaviour
 
         if (player != null) activeCamera.BindPlayer(player);
         if (playerInput != null) playerInput.BindCamera(activeCamera);
-
-        Debug.Log($"SwitchTo: cámara={target.name} | player={(player != null ? player.name : "NULL")}");
     }
 }

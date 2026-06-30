@@ -2,7 +2,6 @@ using Controller;
 using UnityEngine;
 using UnityEngine.UI;
 
-
 public class MovieSelectorController : MonoBehaviour
 {
     [Header("Panel principal")]
@@ -14,6 +13,9 @@ public class MovieSelectorController : MonoBehaviour
     [Header("Botón ver")]
     [SerializeField] private Button watchButton;
 
+    [Header("Botón dejar de ver")]
+    [SerializeField] private GameObject stopWatchingButton;
+
     [Header("Pantalla de cine")]
     [SerializeField] private MovieScreenPlayer movieScreenPlayer;
 
@@ -24,10 +26,18 @@ public class MovieSelectorController : MonoBehaviour
     [Header("Opciones")]
     [SerializeField] private bool closeWithEscape = true;
 
-[Header("Cursor")]
-[SerializeField] private CursorLockManager cursorLockManager;
+    [Header("Cursor")]
+    [SerializeField] private CursorLockManager cursorLockManager;
+
+    [Header("Cámara")]
+    [SerializeField] private RoomCameraManager roomCameraManager;
+
     private MovieCardUI selectedMovie;
     private bool isSelectorOpen;
+    private bool isWatching;
+
+    // El MovePlayerInput del personaje instanciado, conectado en runtime
+    private MonoBehaviour boundPlayerInput;
 
     private void Start()
     {
@@ -39,15 +49,20 @@ public class MovieSelectorController : MonoBehaviour
         if (movieCards.Length > 0)
             SelectMovie(movieCards[0]);
 
-        CloseSelector();
+        if (selectorPanel != null)
+            selectorPanel.SetActive(false);
+
+        if (stopWatchingButton != null)
+            stopWatchingButton.SetActive(false);
+
+        // Asegura que la pantalla empiece en negro
+        if (movieScreenPlayer != null)
+            movieScreenPlayer.ClearScreen();
     }
 
     private void Update()
     {
-        if (!isSelectorOpen)
-            return;
-
-        if (closeWithEscape && Input.GetKeyDown(KeyCode.Escape))
+        if (isSelectorOpen && closeWithEscape && Input.GetKeyDown(KeyCode.Escape))
             CloseSelector();
     }
 
@@ -55,54 +70,50 @@ public class MovieSelectorController : MonoBehaviour
     {
         foreach (MovieCardUI card in movieCards)
         {
-            if (card == null)
-                continue;
-
+            if (card == null) continue;
             card.Init(this);
             card.SetSelected(false);
         }
     }
 
-public void OpenSelector()
-{
-    isSelectorOpen = true;
-
-    if (selectorPanel != null)
-        selectorPanel.SetActive(true);
-
-    SetPlayerControlsEnabled(false);
-
-    if (cursorLockManager != null)
-        cursorLockManager.SetInterfaceMode(true);
-    else
+    // Llamado por el setup tras instanciar el personaje, para poder congelar su input
+    public void BindPlayerInput(MonoBehaviour playerInput)
     {
-        Cursor.visible = true;
-        Cursor.lockState = CursorLockMode.None;
+        boundPlayerInput = playerInput;
     }
-}
 
-public void CloseSelector()
-{
-    isSelectorOpen = false;
-
-    if (selectorPanel != null)
-        selectorPanel.SetActive(false);
-
-    SetPlayerControlsEnabled(true);
-
-    if (cursorLockManager != null)
-        cursorLockManager.SetInterfaceMode(false);
-    else
+    public void OpenSelector()
     {
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
+        isSelectorOpen = true;
+
+        if (selectorPanel != null)
+            selectorPanel.SetActive(true);
+
+        if (stopWatchingButton != null)
+            stopWatchingButton.SetActive(false);
+
+        SetPlayerControlsEnabled(false);
+        ShowCursor(true);
     }
-}
+
+    public void CloseSelector()
+    {
+        isSelectorOpen = false;
+
+        if (selectorPanel != null)
+            selectorPanel.SetActive(false);
+
+        // Solo devolvemos el control si NO estamos viendo película
+        if (!isWatching)
+        {
+            SetPlayerControlsEnabled(true);
+            ShowCursor(false);
+        }
+    }
 
     public void SelectMovie(MovieCardUI movieCard)
     {
-        if (movieCard == null)
-            return;
+        if (movieCard == null) return;
 
         if (selectedMovie != null)
             selectedMovie.SetSelected(false);
@@ -121,28 +132,73 @@ public void CloseSelector()
         }
 
         if (movieScreenPlayer != null)
-        {
             movieScreenPlayer.PlayMovie(selectedMovie);
+
+        // Entramos a modo "viendo película"
+        isWatching = true;
+        isSelectorOpen = false;
+
+        // Oculta el panel de selección pero MANTIENE el control bloqueado y el cursor visible
+        if (selectorPanel != null)
+            selectorPanel.SetActive(false);
+
+        SetPlayerControlsEnabled(false);
+        ShowCursor(true);
+
+        if (roomCameraManager != null)
+            roomCameraManager.ActivateZoneCamera();
+
+        if (stopWatchingButton != null)
+            stopWatchingButton.SetActive(true);
+    }
+
+    // Botón "salir": vuelve al control normal del personaje y cámara libre
+    public void StopWatching()
+    {
+        isWatching = false;
+
+        if (movieScreenPlayer != null)
+        {
+            movieScreenPlayer.Stop();
+            movieScreenPlayer.ClearScreen(); // deja la pantalla en negro de nuevo
+        }
+
+        if (roomCameraManager != null)
+            roomCameraManager.ActivateFollowCamera();
+
+        if (stopWatchingButton != null)
+            stopWatchingButton.SetActive(false);
+
+        // Devuelve el control normal y oculta el cursor
+        SetPlayerControlsEnabled(true);
+        ShowCursor(false);
+    }
+
+    private void ShowCursor(bool show)
+    {
+        if (cursorLockManager != null)
+        {
+            cursorLockManager.SetInterfaceMode(show);
         }
         else
         {
-            Debug.LogWarning("MovieSelectorController: No se asignó MovieScreenPlayer.");
+            Cursor.visible = show;
+            Cursor.lockState = show ? CursorLockMode.None : CursorLockMode.Locked;
         }
-
-        CloseSelector();
-
-        // Aquí después registraremos métrica/backend:
-        // event: movie_started_inside_cinema
-        // movieId: selectedMovie.MovieId
     }
 
     private void SetPlayerControlsEnabled(bool enabled)
     {
+        // Controles asignados en el editor (si los hay)
         foreach (MonoBehaviour component in componentsToDisableWhileOpen)
         {
             if (component != null)
                 component.enabled = enabled;
         }
+
+        // El input del personaje instanciado (incluye la cámara: al desactivarlo, no se mueve)
+        if (boundPlayerInput != null)
+            boundPlayerInput.enabled = enabled;
 
         if (playerRigidbody != null && !enabled)
         {

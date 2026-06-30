@@ -7,13 +7,16 @@ public class CustomizationSceneSetup : MonoBehaviour
     [SerializeField] private Transform anchor;
 
     [Header("Juego")]
-    [SerializeField] private PlayerCamera playerCamera;            // cámara de seguimiento (la normal)
+    [SerializeField] private PlayerCamera playerCamera;
 
     [Header("Panel")]
     [SerializeField] private CustomizationPanelController panelController;
 
     [Header("Cámaras de sala")]
     [SerializeField] private RoomCameraManager roomCameraManager;
+
+    [Header("Menú de películas")]
+    [SerializeField] private MovieSelectorController movieSelectorController;
 
     private void Start()
     {
@@ -37,8 +40,7 @@ public class CustomizationSceneSetup : MonoBehaviour
 
         MovePlayerInput input = character.GetComponent<MovePlayerInput>();
 
-        // Cámara de seguimiento: la conexión inicial la hace el RoomCameraManager.
-        // Si no hay manager asignado, hacemos el bind directo como respaldo.
+        // Cámara de seguimiento / sistema de cámaras de sala
         if (roomCameraManager != null)
         {
             roomCameraManager.Init(character.transform, input);
@@ -52,5 +54,9 @@ public class CustomizationSceneSetup : MonoBehaviour
         // Panel de personalización
         if (panelController != null)
             panelController.Bind(character, input);
+
+        // Menú de películas: le pasamos el input para que pueda congelar al jugador
+        if (movieSelectorController != null && input != null)
+            movieSelectorController.BindPlayerInput(input);
     }
 }

@@ -15,16 +15,13 @@ public class RoomCameraTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log($"Algo entró al trigger: {other.name} | tag: {other.tag}");
         if (!other.CompareTag(playerTag)) return;
-        Debug.Log("Es el player, cambiando a cámara fija");
-        if (cameraManager != null) cameraManager.ActivateFixedCamera(fixedCamera);
+        if (cameraManager != null) cameraManager.SetZoneCamera(fixedCamera);
     }
 
     private void OnTriggerExit(Collider other)
     {
-        Debug.Log($"Algo salió del trigger: {other.name}");
         if (!other.CompareTag(playerTag)) return;
-        if (cameraManager != null) cameraManager.ActivateFollowCamera();
+        if (cameraManager != null) cameraManager.ClearZoneCamera(fixedCamera);
     }
 }

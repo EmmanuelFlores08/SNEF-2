@@ -88,6 +88,27 @@ public class MovieScreenPlayer : MonoBehaviour
         videoPlayer.Prepare();
     }
 
+    public void Stop()
+    {
+        if (videoPlayer != null)
+            videoPlayer.Stop();
+    }
+
+    // Limpia la pantalla a negro (Render Texture vacía)
+    public void ClearScreen()
+    {
+        if (videoPlayer != null)
+            videoPlayer.Stop();
+
+        if (screenRenderTexture != null)
+        {
+            RenderTexture active = RenderTexture.active;
+            RenderTexture.active = screenRenderTexture;
+            GL.Clear(true, true, Color.black);
+            RenderTexture.active = active;
+        }
+    }
+
     private void OnVideoPrepared(VideoPlayer preparedVideoPlayer)
     {
         Debug.Log("MovieScreenPlayer: Video preparado. Reproduciendo...");
