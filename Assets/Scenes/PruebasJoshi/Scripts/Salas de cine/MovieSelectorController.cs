@@ -36,8 +36,9 @@ public class MovieSelectorController : MonoBehaviour
     private bool isSelectorOpen;
     private bool isWatching;
 
-    // El MovePlayerInput del personaje instanciado, conectado en runtime
+    // Referencias del personaje instanciado, conectadas en runtime
     private MonoBehaviour boundPlayerInput;
+    private CharacterMover boundMover;
 
     private void Start()
     {
@@ -76,10 +77,14 @@ public class MovieSelectorController : MonoBehaviour
         }
     }
 
-    // Llamado por el setup tras instanciar el personaje, para poder congelar su input
+    // Llamado por el setup tras instanciar el personaje, para poder congelar y frenar su movimiento
     public void BindPlayerInput(MonoBehaviour playerInput)
     {
         boundPlayerInput = playerInput;
+
+        // Guardamos también el CharacterMover del mismo personaje para poder frenarlo
+        if (playerInput != null)
+            boundMover = playerInput.GetComponent<CharacterMover>();
     }
 
     public void OpenSelector()
@@ -141,6 +146,10 @@ public class MovieSelectorController : MonoBehaviour
         // Oculta el panel de selección pero MANTIENE el control bloqueado y el cursor visible
         if (selectorPanel != null)
             selectorPanel.SetActive(false);
+
+        // Frena el movimiento residual del personaje antes de congelar
+        if (boundMover != null)
+            boundMover.ResetToIdle();
 
         SetPlayerControlsEnabled(false);
         ShowCursor(true);
