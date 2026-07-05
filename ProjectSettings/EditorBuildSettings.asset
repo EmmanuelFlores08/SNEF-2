@@ -6,14 +6,14 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/SelectorAvatar.unity
+    guid: d70af074769bf2e4fb741cc404be289b
+  - enabled: 1
     path: Assets/Scenes/Cine.unity
     guid: 8c8bba297c918bb4d94d34b432dc7532
   - enabled: 0
     path: Assets/Scenes/SetDeGrabacion.unity
     guid: 44a67c40b75199e40a6e3b92b48e6bfc
-  - enabled: 1
-    path: Assets/Scenes/SelectorAvatar.unity
-    guid: d70af074769bf2e4fb741cc404be289b
   - enabled: 0
     path: Assets/Scenes/Pruebas.unity
     guid: dd63e826c24d26941a9b35067e4d9970

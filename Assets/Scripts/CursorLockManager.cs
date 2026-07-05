@@ -1,87 +1,88 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-namespace Controller
+public class CursorLockManager : MonoBehaviour
 {
-    public class CursorLockManager : MonoBehaviour
+    [Header("Estado inicial")]
+    [SerializeField] private bool lockCursorOnStart = true;
+
+    private bool interfaceMode;
+    private bool cursorLocked;
+
+    private void Start()
     {
-        [Tooltip("Tecla para liberar/rebloquear el cursor manualmente")]
-        [SerializeField] private KeyCode m_ToggleKey = KeyCode.Escape;
+        if (lockCursorOnStart)
+            LockCursor();
+        else
+            UnlockCursor();
+    }
 
-        private bool m_WantsLocked = true;
-        private bool m_IsInterfaceOpen = false;
-
-        private void Start()
+    private void Update()
+    {
+        // Si una interfaz está abierta, SIEMPRE deja el cursor libre.
+        if (interfaceMode)
         {
+            UnlockCursor();
+            return;
+        }
+
+        // ESC libera el cursor.
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            UnlockCursor();
+            return;
+        }
+
+        // Click en pantalla vuelve a bloquear el cursor,
+        // pero solo si NO estás encima de UI.
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (IsPointerOverUI())
+                return;
+
             LockCursor();
         }
+    }
 
-        private void Update()
-        {
-            // Si hay una interfaz abierta, no intentamos bloquear el cursor.
-            if (m_IsInterfaceOpen)
-                return;
+    public void SetInterfaceMode(bool enabled)
+    {
+        interfaceMode = enabled;
 
-#if !UNITY_WEBGL
-            if (Input.GetKeyDown(m_ToggleKey))
-            {
-                m_WantsLocked = !m_WantsLocked;
+        if (interfaceMode)
+            UnlockCursor();
+        else
+            LockCursor();
+    }
 
-                if (m_WantsLocked)
-                    LockCursor();
-                else
-                    UnlockCursor();
-            }
-#endif
+    public void LockCursor()
+    {
+        cursorLocked = true;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
 
-#if UNITY_WEBGL
-            if (m_WantsLocked && Cursor.lockState != CursorLockMode.Locked)
-            {
-                Cursor.visible = true;
+    public void UnlockCursor()
+    {
+        cursorLocked = false;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+    }
 
-                if (Input.GetMouseButtonDown(0) || Input.GetMouseButtonDown(1))
-                    LockCursor();
-            }
-#endif
-        }
+    private bool IsPointerOverUI()
+    {
+        if (EventSystem.current == null)
+            return false;
 
-        public void SetInterfaceMode(bool isOpen)
-        {
-            m_IsInterfaceOpen = isOpen;
+        return EventSystem.current.IsPointerOverGameObject();
+    }
 
-            if (m_IsInterfaceOpen)
-            {
-                UnlockCursor();
-            }
-            else
-            {
-                LockCursor();
-            }
-        }
+    public bool IsCursorLocked()
+    {
+        return cursorLocked;
+    }
 
-        public void LockCursor()
-        {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-            m_WantsLocked = true;
-        }
-
-        public void UnlockCursor()
-        {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-            m_WantsLocked = false;
-        }
-
-        private void OnApplicationFocus(bool hasFocus)
-        {
-            if (!hasFocus)
-                return;
-
-            if (m_IsInterfaceOpen)
-                return;
-
-            if (m_WantsLocked)
-                LockCursor();
-        }
+    public bool IsInInterfaceMode()
+    {
+        return interfaceMode;
     }
 }
