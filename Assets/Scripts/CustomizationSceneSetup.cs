@@ -18,6 +18,9 @@ public class CustomizationSceneSetup : MonoBehaviour
     [Header("Menú de películas")]
     [SerializeField] private MovieSelectorController movieSelectorController;
 
+    [Header("Menú de fotos")]
+    [SerializeField] private PhotoKitSelectorController photoKitSelectorController;
+
     private void Start()
     {
         string avatarId = PlayerPrefs.GetString("selectedAvatarId", "");
@@ -55,8 +58,12 @@ public class CustomizationSceneSetup : MonoBehaviour
         if (panelController != null)
             panelController.Bind(character, input);
 
-        // Menú de películas: le pasamos el input para que pueda congelar al jugador
+        // Menú de películas
         if (movieSelectorController != null && input != null)
             movieSelectorController.BindPlayerInput(input);
+
+        // Menú de fotos
+        if (photoKitSelectorController != null && input != null)
+            photoKitSelectorController.BindPlayerInput(input);
     }
 }
