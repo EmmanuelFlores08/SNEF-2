@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 093369a8b4fbf804693242f7fef26ffe, type: 3}
+  m_Name: PhotoKitCatalog
+  m_EditorClassIdentifier: 
+  kits:
+  - kitId: Kit 1
+    previewSprite: {fileID: 21300000, guid: a75b2efff01e70e4d891d9a807e85901, type: 3}
+    backgroundSprite: {fileID: 21300000, guid: 5148918e3ddf4d340848afe87f6a7d80, type: 3}
+    objects:
+    - prefab: {fileID: 919132149155446097, guid: 02b504fc19ff80844b155ffd0e712a50, type: 3}
+      localPosition: {x: 1, y: 0, z: 0}
+      localEulerAngles: {x: 0, y: 0, z: 0}
+    - prefab: {fileID: 919132149155446097, guid: 6ed5960c492fd554eb706b13af97566b, type: 3}
+      localPosition: {x: -1, y: 0, z: 0}
+      localEulerAngles: {x: 0, y: 0, z: 0}
+  - kitId: Kit 2
+    previewSprite: {fileID: 21300000, guid: 7fa0474a796bd434b97b671aba02a995, type: 3}
+    backgroundSprite: {fileID: 21300000, guid: f99ed66b1a388bb4ea8b5f9216421e4f, type: 3}
+    objects:
+    - prefab: {fileID: 919132149155446097, guid: b60206b7245c00c4b978c07aaad9110c, type: 3}
+      localPosition: {x: 1, y: 0, z: 0}
+      localEulerAngles: {x: 0, y: 0, z: 0}
+    - prefab: {fileID: 919132149155446097, guid: 00a008e9988516e44831a99a2f96b4aa, type: 3}
+      localPosition: {x: -1, y: 0, z: 0}
+      localEulerAngles: {x: 0, y: 0, z: 0}
+  - kitId: Kit 3
+    previewSprite: {fileID: 21300000, guid: 7fa0474a796bd434b97b671aba02a995, type: 3}
+    backgroundSprite: {fileID: 21300000, guid: f99ed66b1a388bb4ea8b5f9216421e4f, type: 3}
+    objects:
+    - prefab: {fileID: 2083870381738153140, guid: d04850c4271b7654abb44813eee8a58a, type: 3}
+      localPosition: {x: 1, y: 0, z: 0}
+      localEulerAngles: {x: 0, y: 0, z: 0}
+    - prefab: {fileID: 919132149155446097, guid: 6f61e92a586820f49bc51e88cf42813b, type: 3}
+      localPosition: {x: -1, y: 0, z: 0}
+      localEulerAngles: {x: 0, y: 0, z: 0}
+  - kitId: Kit 4
+    previewSprite: {fileID: 21300000, guid: 7fa0474a796bd434b97b671aba02a995, type: 3}
+    backgroundSprite: {fileID: 21300000, guid: f99ed66b1a388bb4ea8b5f9216421e4f, type: 3}
+    objects:
+    - prefab: {fileID: 919132149155446097, guid: 28f7d8ecc31c69e4caa920b9987dfa23, type: 3}
+      localPosition: {x: 1, y: 0, z: 0}
+      localEulerAngles: {x: 0, y: 0, z: 0}
+    - prefab: {fileID: 919132149155446097, guid: fb98bc8455e142144968dbba4e20f40e, type: 3}
+      localPosition: {x: -1, y: 0, z: 0}
+      localEulerAngles: {x: 0, y: 0, z: 0}
+  - kitId: Kit 5
+    previewSprite: {fileID: 21300000, guid: 7fa0474a796bd434b97b671aba02a995, type: 3}
+    backgroundSprite: {fileID: 21300000, guid: f99ed66b1a388bb4ea8b5f9216421e4f, type: 3}
+    objects:
+    - prefab: {fileID: 919132149155446097, guid: c6aee0a6158891c489cda20ebb1c5e44, type: 3}
+      localPosition: {x: 1, y: 0, z: 0}
+      localEulerAngles: {x: 0, y: 0, z: 0}
+    - prefab: {fileID: 919132149155446097, guid: ca5437f692bdc144f896374cf91d67db, type: 3}
+      localPosition: {x: -1, y: 0, z: 0}
+      localEulerAngles: {x: 0, y: 0, z: 0}
