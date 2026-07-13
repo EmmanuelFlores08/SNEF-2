@@ -1,43 +1,41 @@
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
-public class ClothingSlotUI : MonoBehaviour
+public class ShopSlotUI : MonoBehaviour
 {
     [SerializeField] private Image iconImage;
+    [SerializeField] private TextMeshProUGUI priceText;
+    [SerializeField] private GameObject ownedMark;
     [SerializeField] private GameObject selectedBorder;
-    [SerializeField] private GameObject lockedOverlay;  // candado
     [SerializeField] private Button button;
 
     private int optionIndex;
-    private System.Action<int> onClick;
-    private bool isLocked;
+    private System.Action<int> onSelect;
 
     private void Awake()
     {
         if (button == null) button = GetComponent<Button>();
-        button.onClick.AddListener(() =>
-        {
-            if (isLocked) return;   // bloqueado: no hace nada
-            onClick?.Invoke(optionIndex);
-        });
+        button.onClick.AddListener(() => onSelect?.Invoke(optionIndex));
     }
 
-    public void Setup(int index, Sprite sprite, bool locked, System.Action<int> clickCallback)
+    public void Setup(int index, Sprite sprite, int price, bool owned, System.Action<int> selectCallback)
     {
         optionIndex = index;
-        onClick = clickCallback;
-        isLocked = locked;
+        onSelect = selectCallback;
 
         if (iconImage != null)
         {
             iconImage.sprite = sprite;
             iconImage.enabled = (sprite != null);
             iconImage.preserveAspect = true;
-            iconImage.color = locked ? new Color(0.4f, 0.4f, 0.4f, 1f) : Color.white;
         }
 
-        if (lockedOverlay != null)
-            lockedOverlay.SetActive(locked);
+        if (priceText != null)
+            priceText.text = owned ? "Comprado" : price.ToString();
+
+        if (ownedMark != null)
+            ownedMark.SetActive(owned);
 
         gameObject.SetActive(true);
         SetSelected(false);

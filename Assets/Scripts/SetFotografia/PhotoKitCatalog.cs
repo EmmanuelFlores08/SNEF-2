@@ -6,18 +6,22 @@ public class PhotoKitCatalog : ScriptableObject
     [System.Serializable]
     public class KitObject
     {
-        public GameObject prefab;        // objeto 3D del kit
-        public Vector3 localPosition;    // dónde va, relativo al set
-        public Vector3 localEulerAngles; // rotación
+        public GameObject prefab;
+        public Vector3 localPosition;
+        public Vector3 localEulerAngles;
     }
 
     [System.Serializable]
     public class PhotoKit
     {
         public string kitId;
-        public Sprite previewSprite;     // imagen del recuadro en el menú
-        public Sprite backgroundSprite;  // el fondo 2D del set
-        public KitObject[] objects;      // los 2 objetos (o los que quieras)
+        public Sprite previewSprite;
+        public Sprite backgroundSprite;
+        public KitObject[] objects;
+
+        [Header("Tienda")]
+        public int precio = 0;
+        public bool gratuito = false;
     }
 
     public PhotoKit[] kits;

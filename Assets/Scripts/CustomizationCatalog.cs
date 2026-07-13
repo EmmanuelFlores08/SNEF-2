@@ -10,9 +10,14 @@ public class CustomizationCatalog : ScriptableObject
     [System.Serializable]
     public class BodyPartOption
     {
-        public Sprite previewSprite;  // ← imagen del recuadro
-        public Mesh mesh;             // null = "sin nada"
+        public string optionId;       // ID único, ej: "hat_01"
+        public Sprite previewSprite;
+        public Mesh mesh;
         public Material[] materials;
+
+        [Header("Tienda")]
+        public int precio = 0;
+        public bool gratuito = false; // true = desbloqueado desde el inicio
 
         [Header("Solo para sombreros")]
         public HairOverrideMode hairOverride = HairOverrideMode.None;

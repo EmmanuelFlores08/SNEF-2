@@ -16,7 +16,7 @@ public class CustomizationPanelController : MonoBehaviour
     [SerializeField] private CharacterPreviewRotator previewRotator;
 
     [Header("Tecla")]
-    [SerializeField] private KeyCode toggleKey = KeyCode.E;
+    [SerializeField] private KeyCode toggleKey = KeyCode.Q;
 
     private PlayerCharacterCustomized character;
     private MovePlayerInput playerInput;
@@ -94,10 +94,8 @@ public class CustomizationPanelController : MonoBehaviour
 
         if (previewCamera != null) previewCamera.gameObject.SetActive(true);
 
-        // Cede el cursor al panel
-        if (cursorLockManager != null) cursorLockManager.enabled = false;
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
+        // Cede el cursor al panel mediante el manejador unificado
+        if (cursorLockManager != null) cursorLockManager.SetInterfaceMode(true);
     }
 
     public void ClosePanel()
@@ -129,7 +127,7 @@ public class CustomizationPanelController : MonoBehaviour
 
         if (playerInput != null) playerInput.enabled = true;
 
-        // Devuelve el control del cursor a tu manejador
-        if (cursorLockManager != null) cursorLockManager.enabled = true;
+        // Devuelve el control del cursor al manejador unificado
+        if (cursorLockManager != null) cursorLockManager.SetInterfaceMode(false);
     }
 }

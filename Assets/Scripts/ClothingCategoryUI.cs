@@ -6,18 +6,18 @@ public class ClothingCategoryUI : MonoBehaviour
     [SerializeField] private CustomizationCatalog.BodyPartType bodyPartType;
     [SerializeField] private CustomizationCatalog catalog;
 
-    [Header("Recuadros (5 fijos en el Canvas)")]
-    [SerializeField] private ClothingSlotUI[] slots; // exactamente 5
+    [Header("Recuadros (5 fijos)")]
+    [SerializeField] private ClothingSlotUI[] slots;
 
     [Header("Paginación")]
     [SerializeField] private Button prevPageButton;
     [SerializeField] private Button nextPageButton;
 
     private PlayerCharacterCustomized character;
-    private int pageStart = 0;       // índice de la primera opción visible
+    private int pageStart = 0;
     private int selectedIndex = 0;
 
-    private int PageSize => slots.Length; // 5
+    private int PageSize => slots.Length;
 
     private void Awake()
     {
@@ -31,7 +31,6 @@ public class ClothingCategoryUI : MonoBehaviour
         if (character != null)
             selectedIndex = character.GetCurrentIndex(bodyPartType);
 
-        // Arranca en la página donde está la opción seleccionada
         pageStart = (selectedIndex / PageSize) * PageSize;
         Refresh();
     }
@@ -66,7 +65,7 @@ public class ClothingCategoryUI : MonoBehaviour
         UpdateSelectionHighlight();
     }
 
-    private void Refresh()
+    public void Refresh()
     {
         var cat = catalog.GetCatalog(bodyPartType);
         if (cat == null) return;
@@ -79,12 +78,17 @@ public class ClothingCategoryUI : MonoBehaviour
 
             if (optionIndex < total)
             {
-                Sprite sprite = cat.optionArray[optionIndex].previewSprite;
-                slots[i].Setup(optionIndex, sprite, OnSlotClicked);
+                var option = cat.optionArray[optionIndex];
+
+                bool locked = !option.gratuito
+                    && PlayerInventory.Instance != null
+                    && !PlayerInventory.Instance.IsOwned(option.optionId);
+
+                slots[i].Setup(optionIndex, option.previewSprite, locked, OnSlotClicked);
             }
             else
             {
-                slots[i].Hide(); // sobran recuadros en la última página
+                slots[i].Hide();
             }
         }
 
@@ -103,9 +107,7 @@ public class ClothingCategoryUI : MonoBehaviour
 
     private void UpdatePageButtons(int total)
     {
-        if (prevPageButton != null)
-            prevPageButton.interactable = (pageStart > 0);
-        if (nextPageButton != null)
-            nextPageButton.interactable = (pageStart + PageSize < total);
+        if (prevPageButton != null) prevPageButton.interactable = (pageStart > 0);
+        if (nextPageButton != null) nextPageButton.interactable = (pageStart + PageSize < total);
     }
 }

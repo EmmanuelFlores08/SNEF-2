@@ -21,6 +21,9 @@ public class CustomizationSceneSetup : MonoBehaviour
     [Header("Menú de fotos")]
     [SerializeField] private PhotoKitSelectorController photoKitSelectorController;
 
+    [Header("Tienda")]
+    [SerializeField] private TiendaObjetosUI tiendaObjetosUI;
+
     private void Start()
     {
         string avatarId = PlayerPrefs.GetString("selectedAvatarId", "");
@@ -65,5 +68,9 @@ public class CustomizationSceneSetup : MonoBehaviour
         // Menú de fotos
         if (photoKitSelectorController != null && input != null)
             photoKitSelectorController.BindPlayerInput(input);
+
+        // Tienda
+        if (tiendaObjetosUI != null)
+            tiendaObjetosUI.Bind(character, input);
     }
 }

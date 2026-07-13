@@ -15,387 +15,617 @@ MonoBehaviour:
   bodyPartCatalogArray:
   - bodyPartType: 0
     optionArray:
-    - previewSprite: {fileID: 0}
+    - optionId: Hat_0
+      previewSprite: {fileID: 0}
       mesh: {fileID: 0}
       materials: []
+      precio: 0
+      gratuito: 1
       hairOverride: 0
-    - previewSprite: {fileID: 21300000, guid: e36a2d22a0c1c4a4586f3f5f3fe3569e, type: 3}
+    - optionId: Hat_1
+      previewSprite: {fileID: 21300000, guid: e36a2d22a0c1c4a4586f3f5f3fe3569e, type: 3}
       mesh: {fileID: -6771367002260374918, guid: 53b19cbbda6036749bd50c73a0952b3f, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      precio: 0
+      gratuito: 1
       hairOverride: 2
-    - previewSprite: {fileID: 21300000, guid: e9287edafe5e9204dad3a55871e843b0, type: 3}
+    - optionId: Hat_2
+      previewSprite: {fileID: 21300000, guid: e9287edafe5e9204dad3a55871e843b0, type: 3}
       mesh: {fileID: 1547650462011832544, guid: 9cdcc8685fbfee84ca31e7e2be9a5d03, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      precio: 150
+      gratuito: 0
       hairOverride: 2
-    - previewSprite: {fileID: 21300000, guid: 930b8389e152ee047b611e9b8f77391a, type: 3}
+    - optionId: Hat_3
+      previewSprite: {fileID: 21300000, guid: 930b8389e152ee047b611e9b8f77391a, type: 3}
       mesh: {fileID: -272094037939394198, guid: aa31f4c7d8c96024691c6e42735a543b, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      precio: 150
+      gratuito: 0
       hairOverride: 2
-    - previewSprite: {fileID: 21300000, guid: 7f6b7f352872be943a21afa19ea429aa, type: 3}
+    - optionId: Hat_4
+      previewSprite: {fileID: 21300000, guid: 7f6b7f352872be943a21afa19ea429aa, type: 3}
       mesh: {fileID: -4470173197721515907, guid: 119d34c779c9c0e498bb70e636b75346, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      precio: 150
+      gratuito: 0
       hairOverride: 2
-    - previewSprite: {fileID: 21300000, guid: 379ba0d260799bd4087b9f6a9df394b8, type: 3}
+    - optionId: Hat_5
+      previewSprite: {fileID: 21300000, guid: 379ba0d260799bd4087b9f6a9df394b8, type: 3}
       mesh: {fileID: -1210907049786396696, guid: c3192d7ad083ecf4688284c9af88e773, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      precio: 200
+      gratuito: 0
       hairOverride: 2
-    - previewSprite: {fileID: 21300000, guid: 5ae09f0888b1d274997316f4f1198adc, type: 3}
+    - optionId: Hat_6
+      previewSprite: {fileID: 21300000, guid: 5ae09f0888b1d274997316f4f1198adc, type: 3}
       mesh: {fileID: -1297108719770905208, guid: 448aa14055c12a5469dc9eb7aef48a24, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      precio: 200
+      gratuito: 0
       hairOverride: 2
-    - previewSprite: {fileID: 21300000, guid: b7ee1a4f2bfcb1e49b1807c53d096706, type: 3}
+    - optionId: Hat_7
+      previewSprite: {fileID: 21300000, guid: b7ee1a4f2bfcb1e49b1807c53d096706, type: 3}
       mesh: {fileID: 4861141166607117748, guid: b572ccc708f9ee940ab471569de6c349, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      precio: 0
+      gratuito: 0
       hairOverride: 2
-    - previewSprite: {fileID: 21300000, guid: 3f4cb7052c7564b46a89e444080ad375, type: 3}
+    - optionId: Hat_8
+      previewSprite: {fileID: 21300000, guid: 3f4cb7052c7564b46a89e444080ad375, type: 3}
       mesh: {fileID: -2344795699758608244, guid: 202e9c88ff1a6d84390f42f3fcaaff4e, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      precio: 0
+      gratuito: 0
       hairOverride: 2
-    - previewSprite: {fileID: 21300000, guid: 0003f95302c2ac142a563ae6ff9faca1, type: 3}
+    - optionId: Hat_9
+      previewSprite: {fileID: 21300000, guid: 0003f95302c2ac142a563ae6ff9faca1, type: 3}
       mesh: {fileID: 3371760329551227306, guid: 4cbdc84dc06b6fa4fbbf0317c374b4e0, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      precio: 0
+      gratuito: 0
       hairOverride: 2
-    - previewSprite: {fileID: 21300000, guid: daadf7f6b8be56e40848e45e4eb30e67, type: 3}
+    - optionId: Hat_10
+      previewSprite: {fileID: 21300000, guid: daadf7f6b8be56e40848e45e4eb30e67, type: 3}
       mesh: {fileID: -5674248301500801536, guid: 8e0b9b1a087fe2a49afd265f71478b7c, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      precio: 0
+      gratuito: 0
       hairOverride: 2
-    - previewSprite: {fileID: 21300000, guid: 021d3e095a3d7a441bf4e8e6fe6a885c, type: 3}
+    - optionId: Hat_11
+      previewSprite: {fileID: 21300000, guid: 021d3e095a3d7a441bf4e8e6fe6a885c, type: 3}
       mesh: {fileID: 5872759942117342413, guid: 6427597c2564048489750a9096574812, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      precio: 0
+      gratuito: 0
       hairOverride: 0
-    - previewSprite: {fileID: 21300000, guid: 7d0ebd0d9b675b14bb5d3f9ae94f21e5, type: 3}
+    - optionId: Hat_12
+      previewSprite: {fileID: 21300000, guid: 7d0ebd0d9b675b14bb5d3f9ae94f21e5, type: 3}
       mesh: {fileID: 7968860779803917414, guid: 6d348e895b735574fb7c8d0274dd05fb, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      precio: 0
+      gratuito: 0
       hairOverride: 2
-    - previewSprite: {fileID: 21300000, guid: 2cb1f62bfd031bd4eacd1bfd5b39a9c8, type: 3}
+    - optionId: Hat_13
+      previewSprite: {fileID: 21300000, guid: 2cb1f62bfd031bd4eacd1bfd5b39a9c8, type: 3}
       mesh: {fileID: 4894720594066381654, guid: 8873e5af559fcde428db1439808b98aa, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      precio: 0
+      gratuito: 0
       hairOverride: 2
-    - previewSprite: {fileID: 21300000, guid: a7c8993301f0edb4fa949f43138ed735, type: 3}
+    - optionId: Hat_14
+      previewSprite: {fileID: 21300000, guid: a7c8993301f0edb4fa949f43138ed735, type: 3}
       mesh: {fileID: -668942240984229393, guid: eef81339e40700b42b9339093b562149, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      precio: 0
+      gratuito: 0
       hairOverride: 2
-    - previewSprite: {fileID: 21300000, guid: 6510b0762f2be49429c0bc6753d4fddd, type: 3}
+    - optionId: Hat_15
+      previewSprite: {fileID: 21300000, guid: 6510b0762f2be49429c0bc6753d4fddd, type: 3}
       mesh: {fileID: -8905634579895914701, guid: a0073e0602904ba4b80e069057ee5428, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      precio: 0
+      gratuito: 0
       hairOverride: 2
-    - previewSprite: {fileID: 21300000, guid: 79178d74d1b2526439573413f10a44eb, type: 3}
+    - optionId: Hat_16
+      previewSprite: {fileID: 21300000, guid: 79178d74d1b2526439573413f10a44eb, type: 3}
       mesh: {fileID: -6123457707218253605, guid: 7a64ebff13d5bf54e8ef669690b183b7, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      precio: 0
+      gratuito: 0
       hairOverride: 2
-    - previewSprite: {fileID: 21300000, guid: 2710fde45ec849143871138cd2fffe6b, type: 3}
+    - optionId: Hat_17
+      previewSprite: {fileID: 21300000, guid: 2710fde45ec849143871138cd2fffe6b, type: 3}
       mesh: {fileID: 1222083850321373901, guid: 2bc3944babac0294ab7fb02d1a1e0e1a, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      precio: 0
+      gratuito: 0
       hairOverride: 2
-    - previewSprite: {fileID: 21300000, guid: 99d2065336590fe4b84750b64c789b6a, type: 3}
+    - optionId: Hat_18
+      previewSprite: {fileID: 21300000, guid: 99d2065336590fe4b84750b64c789b6a, type: 3}
       mesh: {fileID: 4324725956384583524, guid: b14513f5686af424e92393a447c2ce10, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      precio: 0
+      gratuito: 0
       hairOverride: 2
-    - previewSprite: {fileID: 21300000, guid: 3e6fd3b248cdd7c4182ec0d862fd778a, type: 3}
+    - optionId: Hat_19
+      previewSprite: {fileID: 21300000, guid: 3e6fd3b248cdd7c4182ec0d862fd778a, type: 3}
       mesh: {fileID: -2288507286907467232, guid: 870d3e2bffa9a174d8fd36da1639cd15, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      precio: 0
+      gratuito: 0
       hairOverride: 2
-    - previewSprite: {fileID: 21300000, guid: 5c271ec2af513b340b3e1cc169bfadc7, type: 3}
+    - optionId: Hat_20
+      previewSprite: {fileID: 21300000, guid: 5c271ec2af513b340b3e1cc169bfadc7, type: 3}
       mesh: {fileID: -5515578995233832970, guid: d8c56f0e4c47f934381fa7acda9291dc, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      precio: 0
+      gratuito: 0
       hairOverride: 2
-    - previewSprite: {fileID: 21300000, guid: b8ee21fdd6cdb5f41abd55d89af09184, type: 3}
+    - optionId: Hat_21
+      previewSprite: {fileID: 21300000, guid: b8ee21fdd6cdb5f41abd55d89af09184, type: 3}
       mesh: {fileID: -4336878629570323307, guid: b8c5851732c7b1e41b0927095181158b, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      precio: 0
+      gratuito: 0
       hairOverride: 0
-    - previewSprite: {fileID: 21300000, guid: ab8e942e1c3d5f44dbe87b975c465d83, type: 3}
+    - optionId: Hat_22
+      previewSprite: {fileID: 21300000, guid: ab8e942e1c3d5f44dbe87b975c465d83, type: 3}
       mesh: {fileID: 2098320913111731761, guid: b4f8777a8d5a89942831b0feb7f0232a, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      precio: 0
+      gratuito: 0
       hairOverride: 2
-    - previewSprite: {fileID: 21300000, guid: 8d984e0c75305ae4a8bfcf23c59e89b5, type: 3}
+    - optionId: Hat_23
+      previewSprite: {fileID: 21300000, guid: 8d984e0c75305ae4a8bfcf23c59e89b5, type: 3}
       mesh: {fileID: -403007501721934695, guid: dbf135868a89109499a088b436f5761e, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      precio: 0
+      gratuito: 0
       hairOverride: 2
-    - previewSprite: {fileID: 21300000, guid: b42b61d0164bd294789ad8d1dad2a813, type: 3}
+    - optionId: Hat_24
+      previewSprite: {fileID: 21300000, guid: b42b61d0164bd294789ad8d1dad2a813, type: 3}
       mesh: {fileID: 5749287922953492849, guid: 06e906c0355899647a09dd3e06e41e75, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      precio: 0
+      gratuito: 0
       hairOverride: 1
-    - previewSprite: {fileID: 21300000, guid: ce2e2b392fd5c2343b37e712ebccbed5, type: 3}
+    - optionId: Hat_25
+      previewSprite: {fileID: 21300000, guid: ce2e2b392fd5c2343b37e712ebccbed5, type: 3}
       mesh: {fileID: 4553023241709818365, guid: 00c1e96be043b064ca54224ea14497e4, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      precio: 0
+      gratuito: 0
       hairOverride: 2
+    - optionId: Hat_26
+      previewSprite: {fileID: 21300000, guid: cdf0452cae0b46b4ebf04e9798cf62d8, type: 3}
+      mesh: {fileID: -2931941369805337993, guid: 58414fea4ef6faa4dae5c0ecd81a6d23, type: 3}
+      materials:
+      - {fileID: 2100000, guid: d41e1c23d0fa8454cab837649197ef2f, type: 2}
+      precio: 0
+      gratuito: 1
+      hairOverride: 1
   - bodyPartType: 1
     optionArray:
-    - previewSprite: {fileID: 21300000, guid: 81502348dffc7114c80a99d9e087095a, type: 3}
+    - optionId: Pants_0
+      previewSprite: {fileID: 21300000, guid: 81502348dffc7114c80a99d9e087095a, type: 3}
       mesh: {fileID: 6956645931020787088, guid: 030969d43959fbb48acc3e72ca167b47, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      precio: 0
+      gratuito: 0
       hairOverride: 0
-    - previewSprite: {fileID: 21300000, guid: b73ab203ca8e10b409efb2793cf064cf, type: 3}
+    - optionId: Pants_1
+      previewSprite: {fileID: 21300000, guid: b73ab203ca8e10b409efb2793cf064cf, type: 3}
       mesh: {fileID: -2406216502670586917, guid: 24f9d4ace2450db43830584083062ee8, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      precio: 0
+      gratuito: 0
       hairOverride: 0
-    - previewSprite: {fileID: 21300000, guid: 43e8a01b9a07b4344aba41e02a2f844f, type: 3}
+    - optionId: Pants_2
+      previewSprite: {fileID: 21300000, guid: 43e8a01b9a07b4344aba41e02a2f844f, type: 3}
       mesh: {fileID: 5026729302019614723, guid: cd0da96615d456145bd717f0d68e6580, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      precio: 0
+      gratuito: 0
       hairOverride: 0
-    - previewSprite: {fileID: 21300000, guid: 466336d0754c6154ba392d80f69817e1, type: 3}
+    - optionId: Pants_3
+      previewSprite: {fileID: 21300000, guid: 466336d0754c6154ba392d80f69817e1, type: 3}
       mesh: {fileID: -4976506252765098015, guid: f0aef370f7c5f9f49b45f73e5180a1c8, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      precio: 0
+      gratuito: 0
       hairOverride: 0
-    - previewSprite: {fileID: 21300000, guid: 120d20a6c36dfc84cac24cfac303cb29, type: 3}
+    - optionId: Pants_4
+      previewSprite: {fileID: 21300000, guid: 120d20a6c36dfc84cac24cfac303cb29, type: 3}
       mesh: {fileID: -1602216458834000358, guid: 9048f3b40f1b5464ab7568db2cfc1595, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      precio: 0
+      gratuito: 0
       hairOverride: 0
-    - previewSprite: {fileID: 21300000, guid: 7888f3040dedb5d4498b33d34fd23c88, type: 3}
+    - optionId: Pants_5
+      previewSprite: {fileID: 21300000, guid: 7888f3040dedb5d4498b33d34fd23c88, type: 3}
       mesh: {fileID: 1543909213277224155, guid: e5d23c301ec09e84f8b0c404ea2165e3, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      precio: 0
+      gratuito: 0
       hairOverride: 0
-    - previewSprite: {fileID: 21300000, guid: 02bede7fbab3102439524048689a0b56, type: 3}
+    - optionId: Pants_6
+      previewSprite: {fileID: 21300000, guid: 02bede7fbab3102439524048689a0b56, type: 3}
       mesh: {fileID: 4122927898749119769, guid: 99242355d8dcfc3439ab242600a52d3e, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      precio: 0
+      gratuito: 0
       hairOverride: 0
-    - previewSprite: {fileID: 21300000, guid: efa50bce6492bbc448faff83557a24dd, type: 3}
+    - optionId: Pants_7
+      previewSprite: {fileID: 21300000, guid: efa50bce6492bbc448faff83557a24dd, type: 3}
       mesh: {fileID: -7174682663038085362, guid: 1d09f678457bbbc45860b14cc5724e08, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      precio: 0
+      gratuito: 0
       hairOverride: 0
-    - previewSprite: {fileID: 21300000, guid: d9a0a44fba745224fb825f492b3933c9, type: 3}
+    - optionId: Pants_8
+      previewSprite: {fileID: 21300000, guid: d9a0a44fba745224fb825f492b3933c9, type: 3}
       mesh: {fileID: -6833425477436108569, guid: ccff85ac2068e63449f4d2d5766d905c, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      precio: 0
+      gratuito: 0
       hairOverride: 0
-    - previewSprite: {fileID: 21300000, guid: 712cab5419ecec848b272be32e23f1b5, type: 3}
+    - optionId: Pants_9
+      previewSprite: {fileID: 21300000, guid: 712cab5419ecec848b272be32e23f1b5, type: 3}
       mesh: {fileID: 8634359377457026240, guid: 5c4904c03b1af4940bbd21c47949bfd4, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      precio: 0
+      gratuito: 0
       hairOverride: 0
-    - previewSprite: {fileID: 21300000, guid: e82ba2485c96b4f4dac81e0589cd13d2, type: 3}
+    - optionId: Pants_10
+      previewSprite: {fileID: 21300000, guid: e82ba2485c96b4f4dac81e0589cd13d2, type: 3}
       mesh: {fileID: 4548281612387348609, guid: b73931c69c627284192ced68df1fe955, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      precio: 0
+      gratuito: 0
       hairOverride: 0
-    - previewSprite: {fileID: 21300000, guid: 9b49fdc9a5effb44e8c5eb8d122f85b3, type: 3}
+    - optionId: Pants_11
+      previewSprite: {fileID: 21300000, guid: 9b49fdc9a5effb44e8c5eb8d122f85b3, type: 3}
       mesh: {fileID: 8365846181006807011, guid: 643afe092e34a114b895fddbea309f2b, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      precio: 0
+      gratuito: 0
       hairOverride: 0
-    - previewSprite: {fileID: 21300000, guid: 949e92290ae67e149b3f99f9412cb12b, type: 3}
+    - optionId: Pants_12
+      previewSprite: {fileID: 21300000, guid: 949e92290ae67e149b3f99f9412cb12b, type: 3}
       mesh: {fileID: -8129361379744962023, guid: 56c3e25669f347c43890140e8d4b6e58, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      precio: 0
+      gratuito: 0
       hairOverride: 0
-    - previewSprite: {fileID: 21300000, guid: e26954e0f517a154c9cf8c4036d94f03, type: 3}
+    - optionId: Pants_13
+      previewSprite: {fileID: 21300000, guid: e26954e0f517a154c9cf8c4036d94f03, type: 3}
       mesh: {fileID: 8960429996560823094, guid: d1442de9de263724c9e649f69bd311ae, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      precio: 0
+      gratuito: 0
       hairOverride: 0
-    - previewSprite: {fileID: 21300000, guid: a90e05aad8be7fa4e9dc5289beada2d8, type: 3}
+    - optionId: Pants_14
+      previewSprite: {fileID: 21300000, guid: a90e05aad8be7fa4e9dc5289beada2d8, type: 3}
       mesh: {fileID: -1289615888922266597, guid: 6956b049ab6c6e349a4d8a4184cdbf86, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      precio: 0
+      gratuito: 0
       hairOverride: 0
   - bodyPartType: 2
     optionArray:
-    - previewSprite: {fileID: 21300000, guid: 13f76f62058f719488f83d3412d4337f, type: 3}
+    - optionId: Shoes_0
+      previewSprite: {fileID: 21300000, guid: 13f76f62058f719488f83d3412d4337f, type: 3}
       mesh: {fileID: 1989087924565745759, guid: a7f3564897bbf4947857e0ca4e13fa58, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      precio: 0
+      gratuito: 0
       hairOverride: 0
-    - previewSprite: {fileID: 21300000, guid: 617a02340d5dcdb40891328fb8468d86, type: 3}
+    - optionId: Shoes_1
+      previewSprite: {fileID: 21300000, guid: 617a02340d5dcdb40891328fb8468d86, type: 3}
       mesh: {fileID: 282264812460033723, guid: ac4c8e3d38653ab4daa88140357a5610, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      precio: 0
+      gratuito: 0
       hairOverride: 0
-    - previewSprite: {fileID: 21300000, guid: 7c9b78aa5b8e4064ea7381a7537ad3a2, type: 3}
+    - optionId: Shoes_2
+      previewSprite: {fileID: 21300000, guid: 7c9b78aa5b8e4064ea7381a7537ad3a2, type: 3}
       mesh: {fileID: 5124325090560270018, guid: a3c7095908a0f8d4ea54935c40e70778, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      precio: 0
+      gratuito: 0
       hairOverride: 0
-    - previewSprite: {fileID: 21300000, guid: 7b6f44e6055c4364a8354376f1a21b06, type: 3}
+    - optionId: Shoes_3
+      previewSprite: {fileID: 21300000, guid: 7b6f44e6055c4364a8354376f1a21b06, type: 3}
       mesh: {fileID: 3887993829501521360, guid: a146f58fa79227a4a8770382edba720e, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      precio: 0
+      gratuito: 0
       hairOverride: 0
-    - previewSprite: {fileID: 21300000, guid: 882d71dbbe65b4b4786422e586e6eff8, type: 3}
+    - optionId: Shoes_4
+      previewSprite: {fileID: 21300000, guid: 882d71dbbe65b4b4786422e586e6eff8, type: 3}
       mesh: {fileID: -585987090817485312, guid: 7f037d0bcdf38ec40b6ad2366b4dfee0, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      precio: 0
+      gratuito: 0
       hairOverride: 0
-    - previewSprite: {fileID: 21300000, guid: b3722e0aa474b894593db51c7edef399, type: 3}
+    - optionId: Shoes_5
+      previewSprite: {fileID: 21300000, guid: b3722e0aa474b894593db51c7edef399, type: 3}
       mesh: {fileID: -4013734355594090245, guid: b58e765be270cbe40aabd66d605be1ae, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      precio: 0
+      gratuito: 0
       hairOverride: 0
-    - previewSprite: {fileID: 21300000, guid: b973c4304819c1744960d07265d61f10, type: 3}
+    - optionId: Shoes_6
+      previewSprite: {fileID: 21300000, guid: b973c4304819c1744960d07265d61f10, type: 3}
       mesh: {fileID: 3596370362380868383, guid: 398d9a70ac566d8438e23f40741c9ffa, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      precio: 0
+      gratuito: 0
       hairOverride: 0
-    - previewSprite: {fileID: 21300000, guid: 1534257e631b36145994f254491e214a, type: 3}
+    - optionId: Shoes_7
+      previewSprite: {fileID: 21300000, guid: 1534257e631b36145994f254491e214a, type: 3}
       mesh: {fileID: 2622311745758301297, guid: 2725408a37e99ed49be01f14fa761bdd, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      precio: 0
+      gratuito: 0
       hairOverride: 0
-    - previewSprite: {fileID: 21300000, guid: 5727e55f1ea25d04d98dc4aee4a1aec2, type: 3}
+    - optionId: Shoes_8
+      previewSprite: {fileID: 21300000, guid: 5727e55f1ea25d04d98dc4aee4a1aec2, type: 3}
       mesh: {fileID: 4560160008616458455, guid: 2d8dc961db7406c47b3cf4d67fb5420e, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      precio: 0
+      gratuito: 0
       hairOverride: 0
-    - previewSprite: {fileID: 21300000, guid: b3ea45730c7657d4aaee9b0b0a8d3d33, type: 3}
+    - optionId: Shoes_9
+      previewSprite: {fileID: 21300000, guid: b3ea45730c7657d4aaee9b0b0a8d3d33, type: 3}
       mesh: {fileID: 3293909790813873304, guid: 08ebad7a0b98b2d41972534debcea578, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      precio: 0
+      gratuito: 0
       hairOverride: 0
-    - previewSprite: {fileID: 21300000, guid: 4e432f897ce11f747904b68ccc410e28, type: 3}
+    - optionId: Shoes_10
+      previewSprite: {fileID: 21300000, guid: 4e432f897ce11f747904b68ccc410e28, type: 3}
       mesh: {fileID: 8822414061312891240, guid: 3db6c6754f537c04a88e07a0725ddcd7, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      precio: 0
+      gratuito: 0
       hairOverride: 0
-    - previewSprite: {fileID: 21300000, guid: 00a49abbaa66f1e4595ed3e0cd0695ad, type: 3}
+    - optionId: Shoes_11
+      previewSprite: {fileID: 21300000, guid: 00a49abbaa66f1e4595ed3e0cd0695ad, type: 3}
       mesh: {fileID: -1242411980669244152, guid: ed4ed24c4f476824f8e041191ff386bb, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      precio: 0
+      gratuito: 0
       hairOverride: 0
-    - previewSprite: {fileID: 21300000, guid: e1d4f490887d5e34fbf57d290d2faa39, type: 3}
+    - optionId: Shoes_12
+      previewSprite: {fileID: 21300000, guid: e1d4f490887d5e34fbf57d290d2faa39, type: 3}
       mesh: {fileID: 4846916642008965142, guid: a1b94ee73a1fd3340a608bd6cef0da24, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      precio: 0
+      gratuito: 0
       hairOverride: 0
-    - previewSprite: {fileID: 21300000, guid: e7a9897dc23c4ea449520891c73c05b1, type: 3}
+    - optionId: Shoes_13
+      previewSprite: {fileID: 21300000, guid: e7a9897dc23c4ea449520891c73c05b1, type: 3}
       mesh: {fileID: 3899179701337655370, guid: 5b758d3c566ae894f99d879612928844, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      precio: 0
+      gratuito: 0
       hairOverride: 0
-    - previewSprite: {fileID: 21300000, guid: 404421e3e8330ae448aec756871d9ca5, type: 3}
+    - optionId: Shoes_14
+      previewSprite: {fileID: 21300000, guid: 404421e3e8330ae448aec756871d9ca5, type: 3}
       mesh: {fileID: 5900903955829827036, guid: 91e0ebfaf55add94a86da598e14c749c, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      precio: 0
+      gratuito: 0
       hairOverride: 0
-    - previewSprite: {fileID: 21300000, guid: 325aabe32b8fd6a42b52657d09d6e302, type: 3}
+    - optionId: Shoes_15
+      previewSprite: {fileID: 21300000, guid: 325aabe32b8fd6a42b52657d09d6e302, type: 3}
       mesh: {fileID: -4513934521764671426, guid: 993d07a936e9fc648b130bab07b8c539, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      precio: 0
+      gratuito: 0
       hairOverride: 0
-    - previewSprite: {fileID: 21300000, guid: 599d094b06ce7f04388c8f6fce4dbaa0, type: 3}
+    - optionId: Shoes_16
+      previewSprite: {fileID: 21300000, guid: 599d094b06ce7f04388c8f6fce4dbaa0, type: 3}
       mesh: {fileID: 696040094093694994, guid: 34de98f4fb0c2e641a64d21167cba44b, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      precio: 0
+      gratuito: 0
       hairOverride: 0
-    - previewSprite: {fileID: 21300000, guid: c047a03a21b786348adbe50a8e05da57, type: 3}
+    - optionId: Shoes_17
+      previewSprite: {fileID: 21300000, guid: c047a03a21b786348adbe50a8e05da57, type: 3}
       mesh: {fileID: 1093122283024923084, guid: ca2f516ae6c0fa44aaffebf2c086d95b, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      precio: 0
+      gratuito: 0
       hairOverride: 0
-    - previewSprite: {fileID: 21300000, guid: 393f82a36fbc1ff42aacaddb4a8da336, type: 3}
+    - optionId: Shoes_18
+      previewSprite: {fileID: 21300000, guid: 393f82a36fbc1ff42aacaddb4a8da336, type: 3}
       mesh: {fileID: -6260860148111143606, guid: a92a123a927279f4d86bd3b07e477108, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      precio: 0
+      gratuito: 0
       hairOverride: 0
-    - previewSprite: {fileID: 21300000, guid: 93ca3c6c40012634681f025da5e90606, type: 3}
+    - optionId: Shoes_19
+      previewSprite: {fileID: 21300000, guid: 93ca3c6c40012634681f025da5e90606, type: 3}
       mesh: {fileID: -5178100211778524695, guid: 106a5df3a0a68454ab431239f07f1e27, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      precio: 0
+      gratuito: 0
       hairOverride: 0
-    - previewSprite: {fileID: 21300000, guid: 13f76f62058f719488f83d3412d4337f, type: 3}
+    - optionId: Shoes_20
+      previewSprite: {fileID: 21300000, guid: 13f76f62058f719488f83d3412d4337f, type: 3}
       mesh: {fileID: -5040264409126451942, guid: 0674d088e4e2e1a45b2353f78376754d, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      precio: 0
+      gratuito: 0
       hairOverride: 0
-    - previewSprite: {fileID: 21300000, guid: 10072b2e186e3404ba30ececd018fab8, type: 3}
+    - optionId: Shoes_21
+      previewSprite: {fileID: 21300000, guid: 10072b2e186e3404ba30ececd018fab8, type: 3}
       mesh: {fileID: -8507966474864796032, guid: e2c41503609b73d468cd9d6cfdd6a32e, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
+      precio: 0
+      gratuito: 0
       hairOverride: 0
   - bodyPartType: 3
     optionArray:
-    - previewSprite: {fileID: 0}
+    - optionId: Acce_0
+      previewSprite: {fileID: 0}
       mesh: {fileID: 0}
       materials: []
+      precio: 0
+      gratuito: 1
       hairOverride: 0
-    - previewSprite: {fileID: 21300000, guid: 7153f5d17b7bc414ba31f0e09623e7e4, type: 3}
+    - optionId: Acce_1
+      previewSprite: {fileID: 21300000, guid: 7153f5d17b7bc414ba31f0e09623e7e4, type: 3}
       mesh: {fileID: 1790028703794667852, guid: 2224e73960ec76948aa534b2c53a07bb, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
       - {fileID: 2100000, guid: 086d3e4fefc029442989fd37e2c655fa, type: 2}
+      precio: 0
+      gratuito: 0
       hairOverride: 0
-    - previewSprite: {fileID: 21300000, guid: c6af04edde7f7b5468a4bad0b17bdc35, type: 3}
+    - optionId: Acce_2
+      previewSprite: {fileID: 21300000, guid: c6af04edde7f7b5468a4bad0b17bdc35, type: 3}
       mesh: {fileID: 6515110658399377313, guid: 1761e444a753ab4479e4fbbe38bc9fc1, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
       - {fileID: 2100000, guid: 086d3e4fefc029442989fd37e2c655fa, type: 2}
+      precio: 0
+      gratuito: 0
       hairOverride: 0
-    - previewSprite: {fileID: 21300000, guid: c90067f0f4a199e4fb55be9b6af0ef11, type: 3}
+    - optionId: Acce_3
+      previewSprite: {fileID: 21300000, guid: c90067f0f4a199e4fb55be9b6af0ef11, type: 3}
       mesh: {fileID: 6798483999639894891, guid: 88f94c4393cd1a24aa1e3a27618aa78f, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
       - {fileID: 2100000, guid: 086d3e4fefc029442989fd37e2c655fa, type: 2}
+      precio: 0
+      gratuito: 0
       hairOverride: 0
-    - previewSprite: {fileID: 21300000, guid: 0968a000fb5f62c46bd9bceeecbf9bdc, type: 3}
+    - optionId: Acce_4
+      previewSprite: {fileID: 21300000, guid: 0968a000fb5f62c46bd9bceeecbf9bdc, type: 3}
       mesh: {fileID: 749311080628650126, guid: a8f5ff521de5db949a4976d5473ebd5c, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
       - {fileID: 2100000, guid: 086d3e4fefc029442989fd37e2c655fa, type: 2}
+      precio: 0
+      gratuito: 0
       hairOverride: 0
-    - previewSprite: {fileID: 21300000, guid: bad84188237a025499b6cc3d2ba4e295, type: 3}
+    - optionId: Acce_5
+      previewSprite: {fileID: 21300000, guid: bad84188237a025499b6cc3d2ba4e295, type: 3}
       mesh: {fileID: -159286390556128128, guid: 1f1329db04c2898428241e3ce835764b, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
       - {fileID: 2100000, guid: 086d3e4fefc029442989fd37e2c655fa, type: 2}
+      precio: 0
+      gratuito: 0
       hairOverride: 0
-    - previewSprite: {fileID: 21300000, guid: 18ea1686e0758c144a4333a84a81a978, type: 3}
+    - optionId: Acce_6
+      previewSprite: {fileID: 21300000, guid: 18ea1686e0758c144a4333a84a81a978, type: 3}
       mesh: {fileID: -9172450345181602521, guid: f88b99d7dd54499438ea1378cc1eb2b7, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
       - {fileID: 2100000, guid: 086d3e4fefc029442989fd37e2c655fa, type: 2}
+      precio: 0
+      gratuito: 0
       hairOverride: 0
-    - previewSprite: {fileID: 21300000, guid: 5d863e45c15abfd499403c7bb9a4cf22, type: 3}
+    - optionId: Acce_7
+      previewSprite: {fileID: 21300000, guid: 5d863e45c15abfd499403c7bb9a4cf22, type: 3}
       mesh: {fileID: 3602815358950184671, guid: 0998be6d103b89d4a9c97ea29bb101c3, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
       - {fileID: 2100000, guid: 086d3e4fefc029442989fd37e2c655fa, type: 2}
+      precio: 0
+      gratuito: 0
       hairOverride: 0
-    - previewSprite: {fileID: 21300000, guid: 0ec9cc818227c8c40bb42937dc607cf4, type: 3}
+    - optionId: Acce_8
+      previewSprite: {fileID: 21300000, guid: 0ec9cc818227c8c40bb42937dc607cf4, type: 3}
       mesh: {fileID: 6982626748009360245, guid: 5c7c358ba83c2ce47a1503294d889bca, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
       - {fileID: 2100000, guid: 086d3e4fefc029442989fd37e2c655fa, type: 2}
+      precio: 0
+      gratuito: 0
       hairOverride: 0
-    - previewSprite: {fileID: 21300000, guid: a0e85fd737da63a4993a106ff2d1cbe3, type: 3}
+    - optionId: Acce_9
+      previewSprite: {fileID: 21300000, guid: a0e85fd737da63a4993a106ff2d1cbe3, type: 3}
       mesh: {fileID: 6852173730980118814, guid: 6a124715e7d5d1b4ba2fb49ba8de05b5, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
       - {fileID: 2100000, guid: 32fbf3258d698d54ba6f8eee9cd3195f, type: 2}
+      precio: 0
+      gratuito: 0
       hairOverride: 0
-    - previewSprite: {fileID: 21300000, guid: c602b154d019b034fa666d448bc057b6, type: 3}
+    - optionId: Acce_10
+      previewSprite: {fileID: 21300000, guid: c602b154d019b034fa666d448bc057b6, type: 3}
       mesh: {fileID: -9029249157746540803, guid: 8a778b55fa653e148a8503d6580560ff, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
       - {fileID: 2100000, guid: 32fbf3258d698d54ba6f8eee9cd3195f, type: 2}
+      precio: 0
+      gratuito: 0
       hairOverride: 0

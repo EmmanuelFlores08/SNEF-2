@@ -182,6 +182,10 @@ namespace Controller
 
             private float m_jumpTimer;
 
+            // Coyote time: evita el parpadeo idle/caída cuando isGrounded titila a FPS bajos
+            private float m_AirTime;
+            private readonly float m_CoyoteTime = 0.15f;
+
             public MovementHandler(CharacterController controller, Transform transform, float walkSpeed, float runSpeed, float rotateSpeed, float jumpHeight, Space space)
             {
                 m_Controller = controller;
@@ -216,6 +220,7 @@ namespace Controller
 
                 ConvertMovement(in axis, in targetForward, out var movement);
                 CaculateGravity(isJump, deltaTime, out isAir);
+                isAir = false; // ← PRUEBA TEMPORAL: fuerza que nunca esté "en el aire"
                 Displace(deltaTime, in movement, isRun);
                 Turn(in targetForward, isMoving);
                 UpdateRotation(deltaTime);
@@ -256,8 +261,12 @@ namespace Controller
             {
                 m_jumpTimer = Mathf.Max(m_jumpTimer - deltaTime, 0f);
 
-                if (m_Controller.isGrounded)
+                bool grounded = m_Controller.isGrounded;
+
+                if (grounded)
                 {
+                    m_AirTime = 0f; // tocó suelo, reinicia el contador de tiempo en el aire
+
                     if (isJump && m_jumpTimer <= 0)
                     {
                         var gravity = Physics.gravity;
@@ -280,9 +289,17 @@ namespace Controller
                     return;
                 }
 
-                isAir = true;
+                // No toca suelo ESTE frame: acumulamos tiempo en el aire.
+                m_AirTime += deltaTime;
 
+                // La gravedad se sigue aplicando para que caiga de verdad si está en el aire.
                 m_GravityAcelleration += Physics.gravity * deltaTime;
+
+                // Pero para la ANIMACIÓN, solo lo consideramos "en el aire" si lleva más
+                // que el coyote time sin tocar suelo. Así ignoramos los parpadeos de
+                // isGrounded de 1-2 frames que a FPS bajos rompían el idle.
+                isAir = m_AirTime > m_CoyoteTime;
+
                 return;
             }
 
@@ -373,8 +390,11 @@ namespace Controller
                 m_Animator.SetFloat(m_StateID, Mathf.Clamp01(m_FlowState));
                 m_Animator.SetBool(m_JumpID, isJump);
 
-                m_FlowAxis = Vector2.ClampMagnitude(m_FlowAxis + k_InputFlow * deltaTime * (axis - m_FlowAxis).normalized, 1f);
-                m_FlowState = Mathf.Clamp01(m_FlowState + k_InputFlow * deltaTime * Mathf.Sign(state - m_FlowState));
+                // MoveTowards avanza hacia el objetivo y se detiene exactamente al llegar,
+                // sin pasarse. Esto elimina el temblor/convulsión que causaba el suavizado
+                // anterior (con .normalized y Sign) al hacer overshoot a FPS bajos.
+                m_FlowAxis = Vector2.MoveTowards(m_FlowAxis, axis, k_InputFlow * deltaTime);
+                m_FlowState = Mathf.MoveTowards(m_FlowState, state, k_InputFlow * deltaTime);
             }
 
             public void AnimateIK(in Vector3 target, in LookWeight lookWeight)

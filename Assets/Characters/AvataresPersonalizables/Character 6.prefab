@@ -436,7 +436,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_WalkSpeed: 1
   m_RunSpeed: 4
-  m_RotateSpeed: 90
+  m_RotateSpeed: 360
   m_Space: 1
   m_JumpHeight: 5
   m_HorizontalID: Hor
@@ -524,7 +524,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d4bd6eba533408c428436f31e5e4bca0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ToggleKey: 27
+  lockCursorOnStart: 1
 --- !u!1 &701507912075612981
 GameObject:
   m_ObjectHideFlags: 0
