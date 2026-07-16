@@ -6,7 +6,7 @@ public class ShopSlotUI : MonoBehaviour
 {
     [SerializeField] private Image iconImage;
     [SerializeField] private TextMeshProUGUI priceText;
-    [SerializeField] private GameObject ownedMark;
+    [SerializeField] private GameObject ownedMark;      // marca/palomita de "comprado"
     [SerializeField] private GameObject selectedBorder;
     [SerializeField] private Button button;
 
@@ -32,7 +32,7 @@ public class ShopSlotUI : MonoBehaviour
         }
 
         if (priceText != null)
-            priceText.text = owned ? "Comprado" : price.ToString();
+            priceText.text = owned ? "--" : price.ToString();
 
         if (ownedMark != null)
             ownedMark.SetActive(owned);

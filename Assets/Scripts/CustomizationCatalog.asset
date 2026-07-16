@@ -59,7 +59,7 @@ MonoBehaviour:
       mesh: {fileID: -1210907049786396696, guid: c3192d7ad083ecf4688284c9af88e773, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
-      precio: 200
+      precio: 150
       gratuito: 0
       hairOverride: 2
     - optionId: Hat_6
@@ -67,7 +67,7 @@ MonoBehaviour:
       mesh: {fileID: -1297108719770905208, guid: 448aa14055c12a5469dc9eb7aef48a24, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
-      precio: 200
+      precio: 150
       gratuito: 0
       hairOverride: 2
     - optionId: Hat_7
@@ -75,7 +75,7 @@ MonoBehaviour:
       mesh: {fileID: 4861141166607117748, guid: b572ccc708f9ee940ab471569de6c349, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
-      precio: 0
+      precio: 150
       gratuito: 0
       hairOverride: 2
     - optionId: Hat_8
@@ -83,7 +83,7 @@ MonoBehaviour:
       mesh: {fileID: -2344795699758608244, guid: 202e9c88ff1a6d84390f42f3fcaaff4e, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
-      precio: 0
+      precio: 150
       gratuito: 0
       hairOverride: 2
     - optionId: Hat_9
@@ -91,7 +91,7 @@ MonoBehaviour:
       mesh: {fileID: 3371760329551227306, guid: 4cbdc84dc06b6fa4fbbf0317c374b4e0, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
-      precio: 0
+      precio: 200
       gratuito: 0
       hairOverride: 2
     - optionId: Hat_10
@@ -99,7 +99,7 @@ MonoBehaviour:
       mesh: {fileID: -5674248301500801536, guid: 8e0b9b1a087fe2a49afd265f71478b7c, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
-      precio: 0
+      precio: 200
       gratuito: 0
       hairOverride: 2
     - optionId: Hat_11
@@ -107,7 +107,7 @@ MonoBehaviour:
       mesh: {fileID: 5872759942117342413, guid: 6427597c2564048489750a9096574812, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
-      precio: 0
+      precio: 200
       gratuito: 0
       hairOverride: 0
     - optionId: Hat_12
@@ -115,7 +115,7 @@ MonoBehaviour:
       mesh: {fileID: 7968860779803917414, guid: 6d348e895b735574fb7c8d0274dd05fb, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
-      precio: 0
+      precio: 200
       gratuito: 0
       hairOverride: 2
     - optionId: Hat_13
@@ -123,7 +123,7 @@ MonoBehaviour:
       mesh: {fileID: 4894720594066381654, guid: 8873e5af559fcde428db1439808b98aa, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
-      precio: 0
+      precio: 200
       gratuito: 0
       hairOverride: 2
     - optionId: Hat_14
@@ -131,7 +131,7 @@ MonoBehaviour:
       mesh: {fileID: -668942240984229393, guid: eef81339e40700b42b9339093b562149, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
-      precio: 0
+      precio: 200
       gratuito: 0
       hairOverride: 2
     - optionId: Hat_15
@@ -139,7 +139,7 @@ MonoBehaviour:
       mesh: {fileID: -8905634579895914701, guid: a0073e0602904ba4b80e069057ee5428, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
-      precio: 0
+      precio: 200
       gratuito: 0
       hairOverride: 2
     - optionId: Hat_16
@@ -147,7 +147,7 @@ MonoBehaviour:
       mesh: {fileID: -6123457707218253605, guid: 7a64ebff13d5bf54e8ef669690b183b7, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
-      precio: 0
+      precio: 200
       gratuito: 0
       hairOverride: 2
     - optionId: Hat_17
@@ -155,7 +155,7 @@ MonoBehaviour:
       mesh: {fileID: 1222083850321373901, guid: 2bc3944babac0294ab7fb02d1a1e0e1a, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
-      precio: 0
+      precio: 200
       gratuito: 0
       hairOverride: 2
     - optionId: Hat_18
@@ -163,7 +163,7 @@ MonoBehaviour:
       mesh: {fileID: 4324725956384583524, guid: b14513f5686af424e92393a447c2ce10, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
-      precio: 0
+      precio: 200
       gratuito: 0
       hairOverride: 2
     - optionId: Hat_19
@@ -171,7 +171,7 @@ MonoBehaviour:
       mesh: {fileID: -2288507286907467232, guid: 870d3e2bffa9a174d8fd36da1639cd15, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
-      precio: 0
+      precio: 300
       gratuito: 0
       hairOverride: 2
     - optionId: Hat_20
@@ -179,7 +179,7 @@ MonoBehaviour:
       mesh: {fileID: -5515578995233832970, guid: d8c56f0e4c47f934381fa7acda9291dc, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
-      precio: 0
+      precio: 300
       gratuito: 0
       hairOverride: 2
     - optionId: Hat_21
@@ -187,7 +187,7 @@ MonoBehaviour:
       mesh: {fileID: -4336878629570323307, guid: b8c5851732c7b1e41b0927095181158b, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
-      precio: 0
+      precio: 300
       gratuito: 0
       hairOverride: 0
     - optionId: Hat_22
@@ -195,7 +195,7 @@ MonoBehaviour:
       mesh: {fileID: 2098320913111731761, guid: b4f8777a8d5a89942831b0feb7f0232a, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
-      precio: 0
+      precio: 300
       gratuito: 0
       hairOverride: 2
     - optionId: Hat_23
@@ -203,7 +203,7 @@ MonoBehaviour:
       mesh: {fileID: -403007501721934695, guid: dbf135868a89109499a088b436f5761e, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
-      precio: 0
+      precio: 300
       gratuito: 0
       hairOverride: 2
     - optionId: Hat_24
@@ -219,7 +219,7 @@ MonoBehaviour:
       mesh: {fileID: 4553023241709818365, guid: 00c1e96be043b064ca54224ea14497e4, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
-      precio: 0
+      precio: 300
       gratuito: 0
       hairOverride: 2
     - optionId: Hat_26
@@ -238,7 +238,7 @@ MonoBehaviour:
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
       precio: 0
-      gratuito: 0
+      gratuito: 1
       hairOverride: 0
     - optionId: Pants_1
       previewSprite: {fileID: 21300000, guid: b73ab203ca8e10b409efb2793cf064cf, type: 3}
@@ -246,7 +246,7 @@ MonoBehaviour:
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
       precio: 0
-      gratuito: 0
+      gratuito: 1
       hairOverride: 0
     - optionId: Pants_2
       previewSprite: {fileID: 21300000, guid: 43e8a01b9a07b4344aba41e02a2f844f, type: 3}
@@ -254,7 +254,7 @@ MonoBehaviour:
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
       precio: 0
-      gratuito: 0
+      gratuito: 1
       hairOverride: 0
     - optionId: Pants_3
       previewSprite: {fileID: 21300000, guid: 466336d0754c6154ba392d80f69817e1, type: 3}
@@ -262,7 +262,7 @@ MonoBehaviour:
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
       precio: 0
-      gratuito: 0
+      gratuito: 1
       hairOverride: 0
     - optionId: Pants_4
       previewSprite: {fileID: 21300000, guid: 120d20a6c36dfc84cac24cfac303cb29, type: 3}
@@ -270,7 +270,7 @@ MonoBehaviour:
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
       precio: 0
-      gratuito: 0
+      gratuito: 1
       hairOverride: 0
     - optionId: Pants_5
       previewSprite: {fileID: 21300000, guid: 7888f3040dedb5d4498b33d34fd23c88, type: 3}
@@ -278,7 +278,7 @@ MonoBehaviour:
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
       precio: 0
-      gratuito: 0
+      gratuito: 1
       hairOverride: 0
     - optionId: Pants_6
       previewSprite: {fileID: 21300000, guid: 02bede7fbab3102439524048689a0b56, type: 3}
@@ -286,7 +286,7 @@ MonoBehaviour:
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
       precio: 0
-      gratuito: 0
+      gratuito: 1
       hairOverride: 0
     - optionId: Pants_7
       previewSprite: {fileID: 21300000, guid: efa50bce6492bbc448faff83557a24dd, type: 3}
@@ -294,7 +294,7 @@ MonoBehaviour:
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
       precio: 0
-      gratuito: 0
+      gratuito: 1
       hairOverride: 0
     - optionId: Pants_8
       previewSprite: {fileID: 21300000, guid: d9a0a44fba745224fb825f492b3933c9, type: 3}
@@ -302,7 +302,7 @@ MonoBehaviour:
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
       precio: 0
-      gratuito: 0
+      gratuito: 1
       hairOverride: 0
     - optionId: Pants_9
       previewSprite: {fileID: 21300000, guid: 712cab5419ecec848b272be32e23f1b5, type: 3}
@@ -310,7 +310,7 @@ MonoBehaviour:
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
       precio: 0
-      gratuito: 0
+      gratuito: 1
       hairOverride: 0
     - optionId: Pants_10
       previewSprite: {fileID: 21300000, guid: e82ba2485c96b4f4dac81e0589cd13d2, type: 3}
@@ -318,7 +318,7 @@ MonoBehaviour:
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
       precio: 0
-      gratuito: 0
+      gratuito: 1
       hairOverride: 0
     - optionId: Pants_11
       previewSprite: {fileID: 21300000, guid: 9b49fdc9a5effb44e8c5eb8d122f85b3, type: 3}
@@ -326,7 +326,7 @@ MonoBehaviour:
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
       precio: 0
-      gratuito: 0
+      gratuito: 1
       hairOverride: 0
     - optionId: Pants_12
       previewSprite: {fileID: 21300000, guid: 949e92290ae67e149b3f99f9412cb12b, type: 3}
@@ -334,7 +334,7 @@ MonoBehaviour:
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
       precio: 0
-      gratuito: 0
+      gratuito: 1
       hairOverride: 0
     - optionId: Pants_13
       previewSprite: {fileID: 21300000, guid: e26954e0f517a154c9cf8c4036d94f03, type: 3}
@@ -342,7 +342,7 @@ MonoBehaviour:
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
       precio: 0
-      gratuito: 0
+      gratuito: 1
       hairOverride: 0
     - optionId: Pants_14
       previewSprite: {fileID: 21300000, guid: a90e05aad8be7fa4e9dc5289beada2d8, type: 3}
@@ -350,7 +350,7 @@ MonoBehaviour:
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
       precio: 0
-      gratuito: 0
+      gratuito: 1
       hairOverride: 0
   - bodyPartType: 2
     optionArray:
@@ -360,14 +360,14 @@ MonoBehaviour:
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
       precio: 0
-      gratuito: 0
+      gratuito: 1
       hairOverride: 0
     - optionId: Shoes_1
       previewSprite: {fileID: 21300000, guid: 617a02340d5dcdb40891328fb8468d86, type: 3}
       mesh: {fileID: 282264812460033723, guid: ac4c8e3d38653ab4daa88140357a5610, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
-      precio: 0
+      precio: 150
       gratuito: 0
       hairOverride: 0
     - optionId: Shoes_2
@@ -375,7 +375,7 @@ MonoBehaviour:
       mesh: {fileID: 5124325090560270018, guid: a3c7095908a0f8d4ea54935c40e70778, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
-      precio: 0
+      precio: 150
       gratuito: 0
       hairOverride: 0
     - optionId: Shoes_3
@@ -383,7 +383,7 @@ MonoBehaviour:
       mesh: {fileID: 3887993829501521360, guid: a146f58fa79227a4a8770382edba720e, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
-      precio: 0
+      precio: 150
       gratuito: 0
       hairOverride: 0
     - optionId: Shoes_4
@@ -391,7 +391,7 @@ MonoBehaviour:
       mesh: {fileID: -585987090817485312, guid: 7f037d0bcdf38ec40b6ad2366b4dfee0, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
-      precio: 0
+      precio: 150
       gratuito: 0
       hairOverride: 0
     - optionId: Shoes_5
@@ -399,7 +399,7 @@ MonoBehaviour:
       mesh: {fileID: -4013734355594090245, guid: b58e765be270cbe40aabd66d605be1ae, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
-      precio: 0
+      precio: 150
       gratuito: 0
       hairOverride: 0
     - optionId: Shoes_6
@@ -407,7 +407,7 @@ MonoBehaviour:
       mesh: {fileID: 3596370362380868383, guid: 398d9a70ac566d8438e23f40741c9ffa, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
-      precio: 0
+      precio: 150
       gratuito: 0
       hairOverride: 0
     - optionId: Shoes_7
@@ -415,7 +415,7 @@ MonoBehaviour:
       mesh: {fileID: 2622311745758301297, guid: 2725408a37e99ed49be01f14fa761bdd, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
-      precio: 0
+      precio: 150
       gratuito: 0
       hairOverride: 0
     - optionId: Shoes_8
@@ -423,7 +423,7 @@ MonoBehaviour:
       mesh: {fileID: 4560160008616458455, guid: 2d8dc961db7406c47b3cf4d67fb5420e, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
-      precio: 0
+      precio: 150
       gratuito: 0
       hairOverride: 0
     - optionId: Shoes_9
@@ -431,7 +431,7 @@ MonoBehaviour:
       mesh: {fileID: 3293909790813873304, guid: 08ebad7a0b98b2d41972534debcea578, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
-      precio: 0
+      precio: 200
       gratuito: 0
       hairOverride: 0
     - optionId: Shoes_10
@@ -439,7 +439,7 @@ MonoBehaviour:
       mesh: {fileID: 8822414061312891240, guid: 3db6c6754f537c04a88e07a0725ddcd7, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
-      precio: 0
+      precio: 200
       gratuito: 0
       hairOverride: 0
     - optionId: Shoes_11
@@ -447,7 +447,7 @@ MonoBehaviour:
       mesh: {fileID: -1242411980669244152, guid: ed4ed24c4f476824f8e041191ff386bb, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
-      precio: 0
+      precio: 200
       gratuito: 0
       hairOverride: 0
     - optionId: Shoes_12
@@ -455,7 +455,7 @@ MonoBehaviour:
       mesh: {fileID: 4846916642008965142, guid: a1b94ee73a1fd3340a608bd6cef0da24, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
-      precio: 0
+      precio: 200
       gratuito: 0
       hairOverride: 0
     - optionId: Shoes_13
@@ -463,7 +463,7 @@ MonoBehaviour:
       mesh: {fileID: 3899179701337655370, guid: 5b758d3c566ae894f99d879612928844, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
-      precio: 0
+      precio: 200
       gratuito: 0
       hairOverride: 0
     - optionId: Shoes_14
@@ -471,7 +471,7 @@ MonoBehaviour:
       mesh: {fileID: 5900903955829827036, guid: 91e0ebfaf55add94a86da598e14c749c, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
-      precio: 0
+      precio: 200
       gratuito: 0
       hairOverride: 0
     - optionId: Shoes_15
@@ -479,7 +479,7 @@ MonoBehaviour:
       mesh: {fileID: -4513934521764671426, guid: 993d07a936e9fc648b130bab07b8c539, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
-      precio: 0
+      precio: 200
       gratuito: 0
       hairOverride: 0
     - optionId: Shoes_16
@@ -487,7 +487,7 @@ MonoBehaviour:
       mesh: {fileID: 696040094093694994, guid: 34de98f4fb0c2e641a64d21167cba44b, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
-      precio: 0
+      precio: 200
       gratuito: 0
       hairOverride: 0
     - optionId: Shoes_17
@@ -495,7 +495,7 @@ MonoBehaviour:
       mesh: {fileID: 1093122283024923084, guid: ca2f516ae6c0fa44aaffebf2c086d95b, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
-      precio: 0
+      precio: 250
       gratuito: 0
       hairOverride: 0
     - optionId: Shoes_18
@@ -503,7 +503,7 @@ MonoBehaviour:
       mesh: {fileID: -6260860148111143606, guid: a92a123a927279f4d86bd3b07e477108, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
-      precio: 0
+      precio: 250
       gratuito: 0
       hairOverride: 0
     - optionId: Shoes_19
@@ -511,7 +511,7 @@ MonoBehaviour:
       mesh: {fileID: -5178100211778524695, guid: 106a5df3a0a68454ab431239f07f1e27, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
-      precio: 0
+      precio: 250
       gratuito: 0
       hairOverride: 0
     - optionId: Shoes_20
@@ -519,7 +519,7 @@ MonoBehaviour:
       mesh: {fileID: -5040264409126451942, guid: 0674d088e4e2e1a45b2353f78376754d, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
-      precio: 0
+      precio: 250
       gratuito: 0
       hairOverride: 0
     - optionId: Shoes_21
@@ -527,7 +527,7 @@ MonoBehaviour:
       mesh: {fileID: -8507966474864796032, guid: e2c41503609b73d468cd9d6cfdd6a32e, type: 3}
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
-      precio: 0
+      precio: 250
       gratuito: 0
       hairOverride: 0
   - bodyPartType: 3
@@ -545,7 +545,7 @@ MonoBehaviour:
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
       - {fileID: 2100000, guid: 086d3e4fefc029442989fd37e2c655fa, type: 2}
-      precio: 0
+      precio: 150
       gratuito: 0
       hairOverride: 0
     - optionId: Acce_2
@@ -554,7 +554,7 @@ MonoBehaviour:
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
       - {fileID: 2100000, guid: 086d3e4fefc029442989fd37e2c655fa, type: 2}
-      precio: 0
+      precio: 150
       gratuito: 0
       hairOverride: 0
     - optionId: Acce_3
@@ -563,7 +563,7 @@ MonoBehaviour:
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
       - {fileID: 2100000, guid: 086d3e4fefc029442989fd37e2c655fa, type: 2}
-      precio: 0
+      precio: 150
       gratuito: 0
       hairOverride: 0
     - optionId: Acce_4
@@ -572,7 +572,7 @@ MonoBehaviour:
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
       - {fileID: 2100000, guid: 086d3e4fefc029442989fd37e2c655fa, type: 2}
-      precio: 0
+      precio: 150
       gratuito: 0
       hairOverride: 0
     - optionId: Acce_5
@@ -581,7 +581,7 @@ MonoBehaviour:
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
       - {fileID: 2100000, guid: 086d3e4fefc029442989fd37e2c655fa, type: 2}
-      precio: 0
+      precio: 200
       gratuito: 0
       hairOverride: 0
     - optionId: Acce_6
@@ -590,7 +590,7 @@ MonoBehaviour:
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
       - {fileID: 2100000, guid: 086d3e4fefc029442989fd37e2c655fa, type: 2}
-      precio: 0
+      precio: 200
       gratuito: 0
       hairOverride: 0
     - optionId: Acce_7
@@ -599,7 +599,7 @@ MonoBehaviour:
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
       - {fileID: 2100000, guid: 086d3e4fefc029442989fd37e2c655fa, type: 2}
-      precio: 0
+      precio: 200
       gratuito: 0
       hairOverride: 0
     - optionId: Acce_8
@@ -608,7 +608,7 @@ MonoBehaviour:
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
       - {fileID: 2100000, guid: 086d3e4fefc029442989fd37e2c655fa, type: 2}
-      precio: 0
+      precio: 250
       gratuito: 0
       hairOverride: 0
     - optionId: Acce_9
@@ -617,7 +617,7 @@ MonoBehaviour:
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
       - {fileID: 2100000, guid: 32fbf3258d698d54ba6f8eee9cd3195f, type: 2}
-      precio: 0
+      precio: 250
       gratuito: 0
       hairOverride: 0
     - optionId: Acce_10
@@ -626,6 +626,6 @@ MonoBehaviour:
       materials:
       - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
       - {fileID: 2100000, guid: 32fbf3258d698d54ba6f8eee9cd3195f, type: 2}
-      precio: 0
+      precio: 250
       gratuito: 0
       hairOverride: 0

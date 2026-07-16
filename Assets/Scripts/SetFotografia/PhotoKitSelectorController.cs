@@ -1,6 +1,7 @@
 using Controller;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public class PhotoKitSelectorController : MonoBehaviour
 {
@@ -34,6 +35,9 @@ public class PhotoKitSelectorController : MonoBehaviour
     private CharacterMover boundMover;
     private Transform boundCharacter;
 
+    // Mapea la posición de cada card visible al índice REAL del kit en el catálogo
+    private readonly List<int> ownedKitIndices = new List<int>();
+
     private int selectedKitIndex = -1;
     private bool isSelectorOpen;
     private bool isInSet;
@@ -45,11 +49,6 @@ public class PhotoKitSelectorController : MonoBehaviour
 
     private void Start()
     {
-        for (int i = 0; i < kitCards.Length; i++)
-        {
-            if (kitCards[i] != null) kitCards[i].Init(this, i);
-        }
-
         if (useKitButton != null)
             useKitButton.onClick.AddListener(UseSelectedKit);
 
@@ -75,6 +74,8 @@ public class PhotoKitSelectorController : MonoBehaviour
         if (exitButton != null) exitButton.SetActive(false);
         if (changeKitButton != null) changeKitButton.SetActive(false);
 
+        RefreshKitCards(); // muestra solo los kits comprados
+
         SetPlayerControlsEnabled(false);
         ShowCursor(true);
     }
@@ -91,13 +92,56 @@ public class PhotoKitSelectorController : MonoBehaviour
         }
     }
 
-    // Llamado por cada card al hacer clic
-    public void SelectKit(int index)
+    // Construye la lista de kits comprados y llena solo esas cards; oculta el resto
+    private void RefreshKitCards()
     {
-        selectedKitIndex = index;
-        for (int i = 0; i < kitCards.Length; i++)
+        ownedKitIndices.Clear();
+
+        int total = catalog != null ? catalog.kits.Length : 0;
+
+        for (int i = 0; i < total; i++)
         {
-            if (kitCards[i] != null) kitCards[i].SetSelected(i == index);
+            var kit = catalog.GetKit(i);
+            if (kit == null) continue;
+
+            bool owned = kit.gratuito ||
+                (PlayerInventory.Instance != null && PlayerInventory.Instance.IsOwned(kit.kitId));
+
+            if (owned)
+                ownedKitIndices.Add(i);
+        }
+
+        for (int c = 0; c < kitCards.Length; c++)
+        {
+            if (kitCards[c] == null) continue;
+
+            if (c < ownedKitIndices.Count)
+            {
+                int catalogIndex = ownedKitIndices[c];
+                var kit = catalog.GetKit(catalogIndex);
+
+                kitCards[c].Init(this, catalogIndex);
+                kitCards[c].Setup(catalogIndex, kit.previewSprite);
+            }
+            else
+            {
+                kitCards[c].Hide();
+            }
+        }
+
+        selectedKitIndex = -1;
+    }
+
+    // Llamado por cada card al hacer clic (index es el índice REAL del catálogo)
+    public void SelectKit(int catalogIndex)
+    {
+        selectedKitIndex = catalogIndex;
+
+        for (int c = 0; c < kitCards.Length; c++)
+        {
+            if (kitCards[c] == null) continue;
+            bool isThis = (c < ownedKitIndices.Count && ownedKitIndices[c] == catalogIndex);
+            kitCards[c].SetSelected(isThis);
         }
     }
 
@@ -156,11 +200,11 @@ public class PhotoKitSelectorController : MonoBehaviour
 
         if (selectorPanel != null) selectorPanel.SetActive(true);
 
+        RefreshKitCards(); // refresca por si compró más kits
+
         // Oculta los botones del modo "viendo" mientras eliges de nuevo
         if (exitButton != null) exitButton.SetActive(false);
         if (changeKitButton != null) changeKitButton.SetActive(false);
-
-        // El cursor sigue visible y el control bloqueado; no hace falta tocarlos
     }
 
     // Botón "salir": limpia el kit, vuelve el avatar a su sitio y devuelve el control

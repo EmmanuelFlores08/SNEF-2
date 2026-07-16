@@ -9,6 +9,9 @@ public class PhotoKitCatalog : ScriptableObject
         public GameObject prefab;
         public Vector3 localPosition;
         public Vector3 localEulerAngles;
+
+        [Header("Tienda")]
+        public Sprite previewSprite; // imagen del objeto para mostrar en la tienda
     }
 
     [System.Serializable]

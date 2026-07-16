@@ -17,7 +17,8 @@ public class TiendaObjetosUI : MonoBehaviour
     [SerializeField] private Button buttonPersonaje;
     [SerializeField] private Button buttonSetDeGrabacion;
     [SerializeField] private Button buttonCerrar;
-    [SerializeField] private Button buttonComprar;
+    [SerializeField] private Button buttonComprarPrenda;
+    [SerializeField] private Button buttonComprarKit;
 
     [Header("Animaciones de tabs")]
     [SerializeField] private BotonUIAnimado animacionButtonPersonaje;
@@ -29,10 +30,15 @@ public class TiendaObjetosUI : MonoBehaviour
     [Header("Categorías de tienda")]
     [SerializeField] private ShopCategoryUI[] categoriasTienda;
 
-    [Header("Preview del avatar")]
+    [Header("Preview del avatar (prendas)")]
+    [SerializeField] private GameObject avatarPreviewRoot;
     [SerializeField] private Transform previewAnchor;
     [SerializeField] private Camera previewCamera;
     [SerializeField] private CharacterPreviewRotator previewRotator;
+
+    [Header("Preview de kit (set de grabación)")]
+    [SerializeField] private KitPreviewPanel kitPreviewPanel;
+    [SerializeField] private PhotoKitCatalog kitCatalog;
 
     [Header("Cursor")]
     [SerializeField] private CursorLockManager cursorLockManager;
@@ -43,19 +49,15 @@ public class TiendaObjetosUI : MonoBehaviour
 
     public bool EstaAbierta { get; private set; }
 
-    // Referencias del personaje (asignadas en runtime)
     private PlayerCharacterCustomized character;
     private MovePlayerInput playerInput;
 
-    // Posición previa del avatar
     private Vector3 savedPosition;
     private Quaternion savedRotation;
 
-    // Lo que llevaba puesto antes de previsualizar (para restaurar si no compra)
     private Dictionary<CustomizationCatalog.BodyPartType, int> originalOutfit
         = new Dictionary<CustomizationCatalog.BodyPartType, int>();
 
-    // Selección actual
     private ShopCategoryUI selectedCategory;
     private int selectedIndex = -1;
 
@@ -75,16 +77,16 @@ public class TiendaObjetosUI : MonoBehaviour
         if (buttonCerrar != null)
             buttonCerrar.onClick.AddListener(CerrarTienda);
 
-        if (buttonComprar != null)
-            buttonComprar.onClick.AddListener(ComprarSeleccionado);
+        if (buttonComprarPrenda != null)
+            buttonComprarPrenda.onClick.AddListener(ComprarPrendaSeleccionada);
 
-        // Escucha la selección de cada categoría
+        if (buttonComprarKit != null)
+            buttonComprarKit.onClick.AddListener(ComprarKitSeleccionado);
+
         if (categoriasTienda != null)
         {
             foreach (var cat in categoriasTienda)
-            {
                 if (cat != null) cat.OnItemSelected += OnItemSelected;
-            }
         }
     }
 
@@ -122,24 +124,28 @@ public class TiendaObjetosUI : MonoBehaviour
             CerrarTienda();
     }
 
-    // Llamado por CustomizationSceneSetup tras instanciar el personaje
     public void Bind(PlayerCharacterCustomized newCharacter, MovePlayerInput newInput)
     {
         character = newCharacter;
         playerInput = newInput;
     }
 
-    // ---- Selección y preview ----
-
     private void OnItemSelected(ShopCategoryUI categoria, int index)
     {
         selectedCategory = categoria;
         selectedIndex = index;
 
-        // Solo previsualizamos prendas (los kits no se ponen en el avatar)
         if (categoria.Tipo == ShopCategoryUI.TipoCategoria.Prenda && character != null)
         {
             character.SetBodyPart(categoria.BodyPartType, index);
+        }
+        else if (categoria.Tipo == ShopCategoryUI.TipoCategoria.Kit)
+        {
+            if (kitPreviewPanel != null && kitCatalog != null)
+            {
+                var kit = kitCatalog.GetKit(index);
+                if (kit != null) kitPreviewPanel.ShowKit(kit);
+            }
         }
 
         ActualizarBotonComprar();
@@ -147,13 +153,11 @@ public class TiendaObjetosUI : MonoBehaviour
 
     private void ActualizarBotonComprar()
     {
-        if (buttonComprar == null) return;
+        // Por defecto, ambos botones desactivados
+        if (buttonComprarPrenda != null) buttonComprarPrenda.interactable = false;
+        if (buttonComprarKit != null) buttonComprarKit.interactable = false;
 
-        if (selectedCategory == null || selectedIndex < 0)
-        {
-            buttonComprar.interactable = false;
-            return;
-        }
+        if (selectedCategory == null || selectedIndex < 0) return;
 
         selectedCategory.GetItem(selectedIndex, out string id, out _, out int price, out bool gratuito);
 
@@ -163,32 +167,39 @@ public class TiendaObjetosUI : MonoBehaviour
         bool canAfford = PlayerInventory.Instance != null &&
             PlayerInventory.Instance.CanAfford(price);
 
-        buttonComprar.interactable = !owned && canAfford;
+        bool comprable = !owned && canAfford;
+
+        // Activa solo el botón que corresponde al tipo seleccionado
+        if (selectedCategory.Tipo == ShopCategoryUI.TipoCategoria.Prenda)
+        {
+            if (buttonComprarPrenda != null) buttonComprarPrenda.interactable = comprable;
+        }
+        else if (selectedCategory.Tipo == ShopCategoryUI.TipoCategoria.Kit)
+        {
+            if (buttonComprarKit != null) buttonComprarKit.interactable = comprable;
+        }
     }
 
-    private void ComprarSeleccionado()
+    private void ComprarPrendaSeleccionada()
     {
-        Debug.Log("ComprarSeleccionado fue llamado");
+        ComprarSeleccionado(ShopCategoryUI.TipoCategoria.Prenda);
+    }
 
-        if (selectedCategory == null || selectedIndex < 0)
-        {
-            Debug.LogWarning($"Sin selección válida: cat={(selectedCategory != null ? "OK" : "NULL")}, index={selectedIndex}");
-            return;
-        }
+    private void ComprarKitSeleccionado()
+    {
+        ComprarSeleccionado(ShopCategoryUI.TipoCategoria.Kit);
+    }
 
-        if (PlayerInventory.Instance == null)
-        {
-            Debug.LogWarning("PlayerInventory.Instance es NULL");
-            return;
-        }
+    // Compra genérica, verifica que lo seleccionado sea del tipo esperado
+    private void ComprarSeleccionado(ShopCategoryUI.TipoCategoria tipoEsperado)
+    {
+        if (selectedCategory == null || selectedIndex < 0) return;
+        if (selectedCategory.Tipo != tipoEsperado) return; // el botón no coincide con lo seleccionado
+        if (PlayerInventory.Instance == null) return;
 
         selectedCategory.GetItem(selectedIndex, out string id, out _, out int price, out _);
-        Debug.Log($"Intentando comprar: id='{id}' precio={price} | monedas={PlayerInventory.Instance.Coins}");
 
-        bool ok = PlayerInventory.Instance.TryPurchase(id, price);
-        Debug.Log($"TryPurchase devolvió: {ok}");
-
-        if (ok)
+        if (PlayerInventory.Instance.TryPurchase(id, price))
         {
             if (selectedCategory.Tipo == ShopCategoryUI.TipoCategoria.Prenda)
                 originalOutfit[selectedCategory.BodyPartType] = selectedIndex;
@@ -198,8 +209,6 @@ public class TiendaObjetosUI : MonoBehaviour
         }
     }
 
-    // ---- Abrir / Cerrar ----
-
     public void AbrirTienda()
     {
         if (EstaAbierta) return;
@@ -208,7 +217,6 @@ public class TiendaObjetosUI : MonoBehaviour
         EstaAbierta = true;
         uiTaquilla.SetActive(true);
 
-        // Congela al jugador
         if (character != null)
         {
             CharacterMover mover = character.GetComponent<CharacterMover>();
@@ -220,10 +228,8 @@ public class TiendaObjetosUI : MonoBehaviour
         }
         if (playerInput != null) playerInput.enabled = false;
 
-        // Guarda el outfit actual para restaurarlo si no compra
         GuardarOutfitActual();
 
-        // Teletransporta al avatar al preview
         if (character != null && previewAnchor != null)
         {
             savedPosition = character.transform.position;
@@ -260,14 +266,12 @@ public class TiendaObjetosUI : MonoBehaviour
 
         EstaAbierta = false;
 
-        // Restaura el outfit: quita lo que solo estaba previsualizando
         RestaurarOutfitOriginal();
 
         if (uiTaquilla != null) uiTaquilla.SetActive(false);
         if (previewCamera != null) previewCamera.gameObject.SetActive(false);
         if (previewRotator != null) previewRotator.SetTarget(null);
 
-        // Devuelve al avatar a su sitio
         if (character != null && previewAnchor != null)
         {
             CharacterController cc = character.GetComponent<CharacterController>();
@@ -278,7 +282,6 @@ public class TiendaObjetosUI : MonoBehaviour
             if (cc != null) cc.enabled = true;
         }
 
-        // Reactiva el control
         if (character != null)
         {
             CharacterMover mover = character.GetComponent<CharacterMover>();
@@ -288,8 +291,6 @@ public class TiendaObjetosUI : MonoBehaviour
 
         if (cursorLockManager != null) cursorLockManager.SetInterfaceMode(false);
     }
-
-    // ---- Outfit ----
 
     private void GuardarOutfitActual()
     {
@@ -309,12 +310,8 @@ public class TiendaObjetosUI : MonoBehaviour
         if (character == null) return;
 
         foreach (var kvp in originalOutfit)
-        {
             character.SetBodyPart(kvp.Key, kvp.Value);
-        }
     }
-
-    // ---- Saldo y categorías ----
 
     private void ActualizarSaldo(int monedas)
     {
@@ -340,10 +337,10 @@ public class TiendaObjetosUI : MonoBehaviour
                 if (cat != null) cat.ClearSelection();
         }
 
+        if (kitPreviewPanel != null) kitPreviewPanel.Clear();
+
         ActualizarBotonComprar();
     }
-
-    // ---- Pestañas (igual que antes) ----
 
     private void ObtenerAnimacionesAutomaticamente()
     {
@@ -364,16 +361,32 @@ public class TiendaObjetosUI : MonoBehaviour
     public void MostrarPanelPersonaje()
     {
         panelActual = TipoPanel.Personaje;
+
         if (panelObjetosPersonaje != null) panelObjetosPersonaje.SetActive(true);
         if (panelObjetosSetDeGrabacion != null) panelObjetosSetDeGrabacion.SetActive(false);
+
+        if (avatarPreviewRoot != null) avatarPreviewRoot.SetActive(true);
+        if (kitPreviewPanel != null) kitPreviewPanel.gameObject.SetActive(false);
+
+        LimpiarSeleccion();
         ActualizarEstadoVisualTabs();
     }
 
     public void MostrarPanelSetDeGrabacion()
     {
         panelActual = TipoPanel.SetDeGrabacion;
+
         if (panelObjetosPersonaje != null) panelObjetosPersonaje.SetActive(false);
         if (panelObjetosSetDeGrabacion != null) panelObjetosSetDeGrabacion.SetActive(true);
+
+        if (avatarPreviewRoot != null) avatarPreviewRoot.SetActive(false);
+        if (kitPreviewPanel != null)
+        {
+            kitPreviewPanel.gameObject.SetActive(true);
+            kitPreviewPanel.Clear();
+        }
+
+        LimpiarSeleccion();
         ActualizarEstadoVisualTabs();
     }
 
@@ -402,6 +415,7 @@ public class TiendaObjetosUI : MonoBehaviour
         if (buttonPersonaje != null) buttonPersonaje.onClick.RemoveListener(MostrarPanelPersonaje);
         if (buttonSetDeGrabacion != null) buttonSetDeGrabacion.onClick.RemoveListener(MostrarPanelSetDeGrabacion);
         if (buttonCerrar != null) buttonCerrar.onClick.RemoveListener(CerrarTienda);
-        if (buttonComprar != null) buttonComprar.onClick.RemoveListener(ComprarSeleccionado);
+        if (buttonComprarPrenda != null) buttonComprarPrenda.onClick.RemoveListener(ComprarPrendaSeleccionada);
+        if (buttonComprarKit != null) buttonComprarKit.onClick.RemoveListener(ComprarKitSeleccionado);
     }
 }

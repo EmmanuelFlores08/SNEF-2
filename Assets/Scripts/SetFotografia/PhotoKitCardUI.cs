@@ -23,8 +23,29 @@ public class PhotoKitCardUI : MonoBehaviour
         kitIndex = index;
     }
 
+    // Configura la card para un kit concreto (con su imagen)
+    public void Setup(int index, Sprite sprite)
+    {
+        kitIndex = index;
+
+        if (previewImage != null)
+        {
+            previewImage.sprite = sprite;
+            previewImage.enabled = (sprite != null);
+            previewImage.preserveAspect = true;
+        }
+
+        gameObject.SetActive(true);
+        SetSelected(false);
+    }
+
     public void SetSelected(bool selected)
     {
         if (selectedBorder != null) selectedBorder.SetActive(selected);
+    }
+
+    public void Hide()
+    {
+        gameObject.SetActive(false);
     }
 }
