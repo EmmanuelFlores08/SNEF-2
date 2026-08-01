@@ -201,6 +201,9 @@ public class TiendaObjetosUI : MonoBehaviour
 
         if (PlayerInventory.Instance.TryPurchase(id, price))
         {
+            if (UISoundManager.Instance != null)
+                UISoundManager.Instance.PlayCompra();   // ← sonido de compra
+            
             if (selectedCategory.Tipo == ShopCategoryUI.TipoCategoria.Prenda)
                 originalOutfit[selectedCategory.BodyPartType] = selectedIndex;
 
@@ -263,7 +266,7 @@ public class TiendaObjetosUI : MonoBehaviour
     public void CerrarTienda()
     {
         if (!EstaAbierta) return;
-
+        
         EstaAbierta = false;
 
         RestaurarOutfitOriginal();
@@ -290,6 +293,9 @@ public class TiendaObjetosUI : MonoBehaviour
         if (playerInput != null) playerInput.enabled = true;
 
         if (cursorLockManager != null) cursorLockManager.SetInterfaceMode(false);
+        
+        if (UISoundManager.Instance != null)
+            UISoundManager.Instance.PlayCerrarMenu();
     }
 
     private void GuardarOutfitActual()
@@ -367,7 +373,9 @@ public class TiendaObjetosUI : MonoBehaviour
 
         if (avatarPreviewRoot != null) avatarPreviewRoot.SetActive(true);
         if (kitPreviewPanel != null) kitPreviewPanel.gameObject.SetActive(false);
-
+        
+        if (UISoundManager.Instance != null)
+            UISoundManager.Instance.PlayAbrirMenu();
         LimpiarSeleccion();
         ActualizarEstadoVisualTabs();
     }
@@ -385,6 +393,9 @@ public class TiendaObjetosUI : MonoBehaviour
             kitPreviewPanel.gameObject.SetActive(true);
             kitPreviewPanel.Clear();
         }
+
+        if (UISoundManager.Instance != null)
+            UISoundManager.Instance.PlayAbrirMenu();
 
         LimpiarSeleccion();
         ActualizarEstadoVisualTabs();

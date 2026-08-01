@@ -2071,6 +2071,9 @@ GameObject:
   - component: {fileID: 2930036278784657807}
   - component: {fileID: 5604740984548392396}
   - component: {fileID: 3746610275831151988}
+  - component: {fileID: -8556003897799802400}
+  - component: {fileID: -7334690295663833535}
+  - component: {fileID: 1434591860578021655}
   m_Layer: 0
   m_Name: Character
   m_TagString: Player
@@ -2120,7 +2123,7 @@ Animator:
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 571adabd431d59248ab0524b96f6d52a, type: 3}
   m_Controller: {fileID: 9100000, guid: fac54571ff27f2b46b28cd6d82cd3c4c, type: 2}
-  m_CullingMode: 0
+  m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
@@ -2286,6 +2289,137 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lockCursorOnStart: 1
+--- !u!81 &-8556003897799802400
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3769294628966805174}
+  m_Enabled: 1
+--- !u!82 &-7334690295663833535
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3769294628966805174}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 0
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 0.1
+  MaxDistance: 50
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &1434591860578021655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3769294628966805174}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcfaeed185e39c74293c31eb809c3ea9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioSource: {fileID: -7334690295663833535}
+  footstepClips:
+  - {fileID: 8300000, guid: b8173427ad3bf0d46ab65624a2e2bf38, type: 3}
+  - {fileID: 8300000, guid: 35f7100bd9d47da43aeaf4d124abcaa8, type: 3}
+  - {fileID: 8300000, guid: 9b83a636507d5a449b0090145f56bd28, type: 3}
+  - {fileID: 8300000, guid: cd83acf31c435884f8c3099ba49d5eaf, type: 3}
+  - {fileID: 8300000, guid: e8897dc346126b544916c9af49550495, type: 3}
+  - {fileID: 8300000, guid: 35714c9a29db87c4998e66ceb0d1ad50, type: 3}
+  walkStepInterval: 0.45
+  runStepInterval: 0.3
+  walkVolume: 0.6
+  runVolume: 1
+  minPitch: 0.9
+  maxPitch: 1.1
 --- !u!1 &3794161248551313001
 GameObject:
   m_ObjectHideFlags: 0

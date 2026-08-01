@@ -90,7 +90,8 @@ public class MovieSelectorController : MonoBehaviour
     public void OpenSelector()
     {
         isSelectorOpen = true;
-
+        if (UISoundManager.Instance != null)
+            UISoundManager.Instance.PlayAbrirMenu();
         if (selectorPanel != null)
             selectorPanel.SetActive(true);
 
@@ -114,6 +115,9 @@ public class MovieSelectorController : MonoBehaviour
             SetPlayerControlsEnabled(true);
             ShowCursor(false);
         }
+        
+        if (UISoundManager.Instance != null)
+            UISoundManager.Instance.PlayCerrarMenu();
     }
 
     public void SelectMovie(MovieCardUI movieCard)
@@ -123,6 +127,8 @@ public class MovieSelectorController : MonoBehaviour
         if (selectedMovie != null)
             selectedMovie.SetSelected(false);
 
+        if (UISoundManager.Instance != null)
+            UISoundManager.Instance.PlaySeleccion();
         selectedMovie = movieCard;
         selectedMovie.SetSelected(true);
         selectedMovie.PlaySelectionAnimation();
@@ -159,6 +165,9 @@ public class MovieSelectorController : MonoBehaviour
 
         if (stopWatchingButton != null)
             stopWatchingButton.SetActive(true);
+        
+        if (UISoundManager.Instance != null)
+            UISoundManager.Instance.PausarMusica(); 
     }
 
     // Botón "salir": vuelve al control normal del personaje y cámara libre
@@ -177,7 +186,12 @@ public class MovieSelectorController : MonoBehaviour
 
         if (stopWatchingButton != null)
             stopWatchingButton.SetActive(false);
-
+        
+        if (UISoundManager.Instance != null)
+            UISoundManager.Instance.PlayCerrarMenu();
+        
+        if (UISoundManager.Instance != null)
+            UISoundManager.Instance.ReanudarMusica();
         // Devuelve el control normal y oculta el cursor
         SetPlayerControlsEnabled(true);
         ShowCursor(false);

@@ -45,6 +45,8 @@ public class ClothingCategoryUI : MonoBehaviour
             pageStart += PageSize;
             Refresh();
         }
+        if (UISoundManager.Instance != null)
+            UISoundManager.Instance.PlaySeleccion();
     }
 
     private void PrevPage()
@@ -54,12 +56,15 @@ public class ClothingCategoryUI : MonoBehaviour
             pageStart -= PageSize;
             Refresh();
         }
+        if (UISoundManager.Instance != null)
+            UISoundManager.Instance.PlaySeleccion();
     }
 
     private void OnSlotClicked(int optionIndex)
     {
         if (character == null) return;
-
+        if (UISoundManager.Instance != null)
+            UISoundManager.Instance.PlaySeleccion();
         selectedIndex = optionIndex;
         character.SetBodyPart(bodyPartType, optionIndex);
         UpdateSelectionHighlight();

@@ -17,9 +17,17 @@ public class ClothingSlotUI : MonoBehaviour
         if (button == null) button = GetComponent<Button>();
         button.onClick.AddListener(() =>
         {
-            if (isLocked) return;   // bloqueado: no hace nada
-            onClick?.Invoke(optionIndex);
-        });
+            button.onClick.AddListener(() =>
+            {
+                if (isLocked)
+                {
+                    if (UISoundManager.Instance != null)
+                        UISoundManager.Instance.PlayCompraErrada();
+                    return;
+                }
+                onClick?.Invoke(optionIndex);
+            }); 
+                });
     }
 
     public void Setup(int index, Sprite sprite, bool locked, System.Action<int> clickCallback)
@@ -49,4 +57,5 @@ public class ClothingSlotUI : MonoBehaviour
     }
 
     public void Hide() => gameObject.SetActive(false);
+
 }

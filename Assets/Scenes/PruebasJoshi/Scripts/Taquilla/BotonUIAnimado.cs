@@ -99,6 +99,8 @@ public class BotonUIAnimado : MonoBehaviour,
     public void OnPointerEnter(PointerEventData eventData)
     {
         Inicializar();
+        if (UISoundManager.Instance != null)
+            UISoundManager.Instance.PlayBoton();   // ← sonido al pasar el cursor
 
         punteroEncima = true;
         AnimarHaciaEstadoActual();

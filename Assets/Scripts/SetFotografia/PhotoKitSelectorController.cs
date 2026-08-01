@@ -73,7 +73,8 @@ public class PhotoKitSelectorController : MonoBehaviour
         if (selectorPanel != null) selectorPanel.SetActive(true);
         if (exitButton != null) exitButton.SetActive(false);
         if (changeKitButton != null) changeKitButton.SetActive(false);
-
+        if (UISoundManager.Instance != null)
+            UISoundManager.Instance.PlayAbrirMenu();
         RefreshKitCards(); // muestra solo los kits comprados
 
         SetPlayerControlsEnabled(false);
@@ -90,6 +91,8 @@ public class PhotoKitSelectorController : MonoBehaviour
             SetPlayerControlsEnabled(true);
             ShowCursor(false);
         }
+        if (UISoundManager.Instance != null)
+            UISoundManager.Instance.PlayCerrarMenu();
     }
 
     // Construye la lista de kits comprados y llena solo esas cards; oculta el resto
@@ -143,6 +146,8 @@ public class PhotoKitSelectorController : MonoBehaviour
             bool isThis = (c < ownedKitIndices.Count && ownedKitIndices[c] == catalogIndex);
             kitCards[c].SetSelected(isThis);
         }
+        if (UISoundManager.Instance != null)
+            UISoundManager.Instance.PlaySeleccion();
     }
 
     private void UseSelectedKit()
@@ -154,7 +159,9 @@ public class PhotoKitSelectorController : MonoBehaviour
 
         if (photoSetManager != null)
             photoSetManager.ApplyKit(kit);
-
+        
+        if (UISoundManager.Instance != null)
+            UISoundManager.Instance.PlayUsarKit();
         // Guarda la posición previa del avatar la primera vez que entra al set
         if (!hasSavedPosition && boundCharacter != null)
         {
@@ -191,6 +198,9 @@ public class PhotoKitSelectorController : MonoBehaviour
 
         if (exitButton != null) exitButton.SetActive(true);
         if (changeKitButton != null) changeKitButton.SetActive(true);
+
+        if (UISoundManager.Instance != null)
+            UISoundManager.Instance.PlayMusicaSet();
     }
 
     // Botón "cambiar kit": reabre el menú sin salir del set
@@ -233,7 +243,10 @@ public class PhotoKitSelectorController : MonoBehaviour
 
         if (exitButton != null) exitButton.SetActive(false);
         if (changeKitButton != null) changeKitButton.SetActive(false);
-
+        if (UISoundManager.Instance != null)
+            UISoundManager.Instance.PlayCerrarMenu();
+        if (UISoundManager.Instance != null)
+            UISoundManager.Instance.PlayMusicaGeneral();            
         SetPlayerControlsEnabled(true);
         ShowCursor(false);
     }

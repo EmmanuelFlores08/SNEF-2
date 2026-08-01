@@ -96,6 +96,8 @@ public class ShopCategoryUI : MonoBehaviour
         selectedIndex = index;
         UpdateSelectionHighlight();
         OnItemSelected?.Invoke(this, index);
+        if (UISoundManager.Instance != null)
+            UISoundManager.Instance.PlaySeleccion();
     }
 
     public void ClearSelection()
@@ -116,12 +118,26 @@ public class ShopCategoryUI : MonoBehaviour
     private void NextPage()
     {
         int total = GetTotal();
-        if (pageStart + PageSize < total) { pageStart += PageSize; Refresh(); }
+        if (pageStart + PageSize < total)
+        {
+            pageStart += PageSize;
+            Refresh();
+
+            if (UISoundManager.Instance != null)
+                UISoundManager.Instance.PlayBoton();
+        }
     }
 
     private void PrevPage()
     {
-        if (pageStart - PageSize >= 0) { pageStart -= PageSize; Refresh(); }
+        if (pageStart - PageSize >= 0)
+        {
+            pageStart -= PageSize;
+            Refresh();
+
+            if (UISoundManager.Instance != null)
+                UISoundManager.Instance.PlayBoton();
+        }
     }
 
     private void UpdatePageButtons(int total)

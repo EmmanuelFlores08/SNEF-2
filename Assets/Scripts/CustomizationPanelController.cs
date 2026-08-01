@@ -59,7 +59,8 @@ public class CustomizationPanelController : MonoBehaviour
     {
         isOpen = true;
         if (customizationPanel != null) customizationPanel.SetActive(true);
-
+        if (UISoundManager.Instance != null)
+            UISoundManager.Instance.PlayAbrirMenu();
         // Deja de leer input de juego
         if (playerInput != null) playerInput.enabled = false;
 
@@ -129,5 +130,7 @@ public class CustomizationPanelController : MonoBehaviour
 
         // Devuelve el control del cursor al manejador unificado
         if (cursorLockManager != null) cursorLockManager.SetInterfaceMode(false);
+        if (UISoundManager.Instance != null)
+            UISoundManager.Instance.PlayCerrarMenu();
     }
 }
