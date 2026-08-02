@@ -19876,6 +19876,10 @@ MonoBehaviour:
   movieTitle: "Dusef salva el d\xEDa"
   videoClip: {fileID: 32900000, guid: 26aa81960a6f616448056f10d983c5ac, type: 3}
   videoUrl: 
+  triviaButton: {fileID: 0}
+  usarDatosDePrueba: 0
+  triviaData:
+    questions: []
   selectedBorder: {fileID: 1894491025}
   animatedTarget: {fileID: 241738432}
   normalScale: 1
@@ -26806,6 +26810,10 @@ PrefabInstance:
       value: Banner (3)
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: f2d1f1736ce69a942b06f0ae056f6657, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: f2d1f1736ce69a942b06f0ae056f6657, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
@@ -27941,6 +27949,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: f2d1f1736ce69a942b06f0ae056f6657, type: 3}
       propertyPath: m_Name
       value: Banner (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: f2d1f1736ce69a942b06f0ae056f6657, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: f2d1f1736ce69a942b06f0ae056f6657, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -31953,6 +31965,10 @@ PrefabInstance:
       value: Banner (2)
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: f2d1f1736ce69a942b06f0ae056f6657, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: f2d1f1736ce69a942b06f0ae056f6657, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
@@ -32607,6 +32623,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: f2d1f1736ce69a942b06f0ae056f6657, type: 3}
       propertyPath: m_Name
       value: Banner (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: f2d1f1736ce69a942b06f0ae056f6657, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: f2d1f1736ce69a942b06f0ae056f6657, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -33325,6 +33345,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: f2d1f1736ce69a942b06f0ae056f6657, type: 3}
       propertyPath: m_Name
       value: Banner (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: f2d1f1736ce69a942b06f0ae056f6657, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: f2d1f1736ce69a942b06f0ae056f6657, type: 3}
       propertyPath: m_StaticEditorFlags
@@ -59720,8 +59744,8 @@ Transform:
   m_GameObject: {fileID: 896518190}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -38.208885, y: 1.7500424, z: -6.073081}
-  m_LocalScale: {x: 0.1426249, y: 0.1426249, z: 0.1426249}
+  m_LocalPosition: {x: -38.208885, y: 1.888, z: -6.073081}
+  m_LocalScale: {x: 0.2609465, y: 0.2609465, z: 0.2609465}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1817447133}
@@ -61898,6 +61922,10 @@ MonoBehaviour:
   movieTitle: "Dusef salva el d\xEDa"
   videoClip: {fileID: 32900000, guid: 26aa81960a6f616448056f10d983c5ac, type: 3}
   videoUrl: 
+  triviaButton: {fileID: 0}
+  usarDatosDePrueba: 0
+  triviaData:
+    questions: []
   selectedBorder: {fileID: 133409228}
   animatedTarget: {fileID: 156124750}
   normalScale: 1
@@ -62878,7 +62906,7 @@ Transform:
   m_GameObject: {fileID: 989333114}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: -0.00043116463, y: 0.012595981, z: 0.5008826}
+  m_LocalPosition: {x: -0.00043116463, y: 0.012595981, z: 0.78}
   m_LocalScale: {x: 0.99104494, y: 0.89081717, z: 27.827738}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -65048,6 +65076,10 @@ PrefabInstance:
       value: Banner (6)
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: f2d1f1736ce69a942b06f0ae056f6657, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: f2d1f1736ce69a942b06f0ae056f6657, type: 3}
       propertyPath: m_StaticEditorFlags
       value: 0
       objectReference: {fileID: 0}
@@ -65431,7 +65463,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1059497878
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -75434,6 +75466,10 @@ MonoBehaviour:
   movieTitle: "Dusef salva el d\xEDa"
   videoClip: {fileID: 32900000, guid: 26aa81960a6f616448056f10d983c5ac, type: 3}
   videoUrl: 
+  triviaButton: {fileID: 0}
+  usarDatosDePrueba: 0
+  triviaData:
+    questions: []
   selectedBorder: {fileID: 641803438}
   animatedTarget: {fileID: 1338397323}
   normalScale: 1
@@ -84288,6 +84324,10 @@ MonoBehaviour:
   movieTitle: "Dusef salva el d\xEDa"
   videoClip: {fileID: 32900000, guid: 26aa81960a6f616448056f10d983c5ac, type: 3}
   videoUrl: 
+  triviaButton: {fileID: 0}
+  usarDatosDePrueba: 0
+  triviaData:
+    questions: []
   selectedBorder: {fileID: 2097025207}
   animatedTarget: {fileID: 1580701075}
   normalScale: 1
@@ -94566,11 +94606,12 @@ MonoBehaviour:
   watchButton: {fileID: 226139427}
   stopWatchingButton: {fileID: 763754630}
   movieScreenPlayer: {fileID: 1861682968}
+  movieTriviaController: {fileID: 0}
   componentsToDisableWhileOpen: []
   playerRigidbody: {fileID: 0}
   closeWithEscape: 1
   cursorLockManager: {fileID: 1110660430}
-  roomCameraManager: {fileID: 793019627}
+  cinemaCameraMover: {fileID: 0}
 --- !u!224 &1843243672
 RectTransform:
   m_ObjectHideFlags: 0
@@ -99580,6 +99621,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: f2d1f1736ce69a942b06f0ae056f6657, type: 3}
       propertyPath: m_Name
       value: Banner (7)
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: f2d1f1736ce69a942b06f0ae056f6657, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: f2d1f1736ce69a942b06f0ae056f6657, type: 3}
       propertyPath: m_StaticEditorFlags

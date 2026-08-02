@@ -36,8 +36,8 @@ public class MovieTriviaController : MonoBehaviour
     [SerializeField] private int maxQuestions = 4;
 
     [Header("Colores resultado")]
-    [SerializeField] private Color starOnColor = new Color(1f, 0.82f, 0.12f, 1f);
-    [SerializeField] private Color starOffColor = new Color(0.62f, 0.62f, 0.62f, 1f);
+    [SerializeField] private Color starOnColor = new Color(1f, 0.84f, 0f, 1f);
+    [SerializeField] private Color starOffColor = new Color(0.65f, 0.65f, 0.65f, 1f);
 
     [Header("Animaciones")]
     [SerializeField] private float panelFadeDuration = 0.18f;
@@ -80,12 +80,18 @@ public class MovieTriviaController : MonoBehaviour
         if (worldSpaceCanvas == null)
             worldSpaceCanvas = GetComponentInChildren<Canvas>(true);
 
-        if (worldSpaceCanvas != null &&
-            worldSpaceCanvas.renderMode == RenderMode.WorldSpace &&
-            worldSpaceCanvas.worldCamera == null &&
-            Camera.main != null)
+        if (worldSpaceCanvas != null && worldSpaceCanvas.renderMode == RenderMode.WorldSpace)
         {
-            worldSpaceCanvas.worldCamera = Camera.main;
+            if (Camera.main != null)
+                worldSpaceCanvas.worldCamera = Camera.main;
+
+            GraphicRaycaster raycaster = worldSpaceCanvas.GetComponent<GraphicRaycaster>();
+
+            if (raycaster == null)
+                raycaster = worldSpaceCanvas.gameObject.AddComponent<GraphicRaycaster>();
+
+            raycaster.ignoreReversedGraphics = true;
+            raycaster.blockingObjects = GraphicRaycaster.BlockingObjects.None;
         }
 
         for (int i = 0; i < answerButtons.Length; i++)
@@ -112,6 +118,8 @@ public class MovieTriviaController : MonoBehaviour
 
         currentQuestionIndex = 0;
         correctAnswers = 0;
+        totalQuestions = 0;
+
         isResolvingAnswer = false;
         waitingAfterWrongAnswer = false;
 
@@ -143,6 +151,11 @@ public class MovieTriviaController : MonoBehaviour
 
     public void CloseInstant()
     {
+        StopAllCoroutines();
+
+        isResolvingAnswer = false;
+        waitingAfterWrongAnswer = false;
+
         if (panelPreguntas != null)
             panelPreguntas.SetActive(false);
 
@@ -302,6 +315,8 @@ public class MovieTriviaController : MonoBehaviour
 
         SetUIText(textoRespuestasCorrectas, $"{correctAnswers}/{totalQuestions} respuestas correctas");
 
+        UpdateStars();
+
         StartCoroutine(ResultRoutine());
     }
 
@@ -315,7 +330,8 @@ public class MovieTriviaController : MonoBehaviour
                 continue;
 
             bool earned = i < correctAnswers;
-            estrellas[i].color = earned ? starOnColor : starOffColor;
+
+            ApplyStarColor(estrellas[i], earned ? starOnColor : starOffColor);
 
             RectTransform starRect = estrellas[i].GetComponent<RectTransform>();
 
@@ -337,18 +353,51 @@ public class MovieTriviaController : MonoBehaviour
         onTriviaFinished = null;
     }
 
+    private void UpdateStars()
+    {
+        for (int i = 0; i < estrellas.Length; i++)
+        {
+            if (estrellas[i] == null)
+            {
+                Debug.LogWarning($"MovieTriviaController: La estrella en índice {i} no está asignada.");
+                continue;
+            }
+
+            bool earned = i < correctAnswers;
+            ApplyStarColor(estrellas[i], earned ? starOnColor : starOffColor);
+
+            Debug.Log($"MovieTriviaController: Estrella {i + 1} => {(earned ? "AMARILLA" : "GRIS")}");
+        }
+    }
+
     private void ResetStars()
     {
-        foreach (Image star in estrellas)
+        for (int i = 0; i < estrellas.Length; i++)
         {
-            if (star == null)
+            if (estrellas[i] == null)
                 continue;
 
-            star.color = starOffColor;
+            ApplyStarColor(estrellas[i], starOffColor);
 
-            RectTransform starRect = star.GetComponent<RectTransform>();
+            RectTransform starRect = estrellas[i].GetComponent<RectTransform>();
             if (starRect != null)
                 starRect.localScale = GetOriginalScale(starRect);
+        }
+    }
+
+    private void ApplyStarColor(Image star, Color color)
+    {
+        if (star == null)
+            return;
+
+        star.color = color;
+
+        Graphic[] childGraphics = star.GetComponentsInChildren<Graphic>(true);
+
+        foreach (Graphic graphic in childGraphics)
+        {
+            if (graphic != null)
+                graphic.color = color;
         }
     }
 
@@ -442,6 +491,7 @@ public class MovieTriviaController : MonoBehaviour
         while (elapsed < panelFadeDuration)
         {
             elapsed += Time.unscaledDeltaTime;
+
             float t = Mathf.Clamp01(elapsed / panelFadeDuration);
             float eased = Mathf.SmoothStep(0f, 1f, t);
 
@@ -501,6 +551,7 @@ public class MovieTriviaController : MonoBehaviour
         while (elapsed < shakeDuration)
         {
             elapsed += Time.unscaledDeltaTime;
+
             float t = Mathf.Clamp01(elapsed / shakeDuration);
             float strength = 1f - t;
 
@@ -523,6 +574,7 @@ public class MovieTriviaController : MonoBehaviour
         while (elapsed < duration)
         {
             elapsed += Time.unscaledDeltaTime;
+
             float t = Mathf.Clamp01(elapsed / duration);
             float eased = Mathf.SmoothStep(0f, 1f, t);
 
