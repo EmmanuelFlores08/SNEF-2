@@ -9,6 +9,8 @@ public class MovieScreenPlayer : MonoBehaviour
     [Header("Render Texture de la pantalla")]
     [SerializeField] private RenderTexture screenRenderTexture;
 
+    public bool IsPlaying => videoPlayer != null && videoPlayer.isPlaying;
+
     private void Awake()
     {
         if (videoPlayer == null)
@@ -88,13 +90,30 @@ public class MovieScreenPlayer : MonoBehaviour
         videoPlayer.Prepare();
     }
 
+    public void Pause()
+    {
+        if (videoPlayer == null)
+            return;
+
+        if (videoPlayer.isPlaying)
+            videoPlayer.Pause();
+    }
+
+    public void Resume()
+    {
+        if (videoPlayer == null)
+            return;
+
+        if (videoPlayer.isPrepared && !videoPlayer.isPlaying)
+            videoPlayer.Play();
+    }
+
     public void Stop()
     {
         if (videoPlayer != null)
             videoPlayer.Stop();
     }
 
-    // Limpia la pantalla a negro (Render Texture vacía)
     public void ClearScreen()
     {
         if (videoPlayer != null)

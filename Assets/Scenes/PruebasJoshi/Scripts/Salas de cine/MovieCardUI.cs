@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -15,6 +16,15 @@ public class MovieCardUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
     [Header("Video futuro backend / CDN")]
     [SerializeField] private string videoUrl;
+
+    [Header("Trivia")]
+    [SerializeField] private Button triviaButton;
+
+    [Tooltip("Actívalo para usar una trivia genérica de prueba sin capturar datos manuales.")]
+    [SerializeField] private bool usarDatosDePrueba = false;
+
+    [Tooltip("Trivia real de esta película. Si 'Usar datos de prueba' está activo, se ignora temporalmente esta data.")]
+    [SerializeField] private MovieTriviaData triviaData;
 
     [Header("Referencias visuales")]
     [SerializeField] private GameObject selectedBorder;
@@ -37,10 +47,28 @@ public class MovieCardUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     private bool isSelected;
     private bool isSelectionAnimating;
 
+    private MovieTriviaData testTriviaData;
+
     public string MovieId => movieId;
     public string MovieTitle => movieTitle;
     public VideoClip VideoClip => videoClip;
     public string VideoUrl => videoUrl;
+
+    public MovieTriviaData TriviaData
+    {
+        get
+        {
+            if (usarDatosDePrueba)
+            {
+                if (testTriviaData == null)
+                    testTriviaData = CreateTestTriviaData();
+
+                return testTriviaData;
+            }
+
+            return triviaData;
+        }
+    }
 
     private void Awake()
     {
@@ -54,6 +82,12 @@ public class MovieCardUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
 
         if (button != null)
             button.onClick.AddListener(HandleClick);
+
+        if (triviaButton != null)
+            triviaButton.onClick.AddListener(HandleTriviaClick);
+
+        if (usarDatosDePrueba)
+            testTriviaData = CreateTestTriviaData();
     }
 
     public void Init(MovieSelectorController selectorController)
@@ -67,6 +101,14 @@ public class MovieCardUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
             return;
 
         controller.SelectMovie(this);
+    }
+
+    private void HandleTriviaClick()
+    {
+        if (controller == null)
+            return;
+
+        controller.OpenTriviaForMovie(this);
     }
 
     public void SetSelected(bool selected)
@@ -142,5 +184,141 @@ public class MovieCardUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
         }
 
         animatedTarget.localScale = endScale;
+    }
+
+    private MovieTriviaData CreateTestTriviaData()
+    {
+        MovieTriviaData data = new MovieTriviaData();
+        data.questions = new List<TriviaQuestionData>();
+
+        data.questions.Add(new TriviaQuestionData
+        {
+            question = "¿Cuál de las siguientes acciones sí forma parte de las funciones de la CONDUSEF?",
+            answers = new List<TriviaAnswerData>
+            {
+                new TriviaAnswerData
+                {
+                    answerText = "Resolver controversias entre usuarios e instituciones financieras.",
+                    isCorrect = true,
+                    wrongJustification = ""
+                },
+                new TriviaAnswerData
+                {
+                    answerText = "Autorizar la apertura de nuevos bancos comerciales.",
+                    isCorrect = false,
+                    wrongJustification = "Esa función no corresponde a CONDUSEF. La CONDUSEF orienta y defiende a usuarios financieros."
+                },
+                new TriviaAnswerData
+                {
+                    answerText = "Emitir tarjetas de crédito directamente a los usuarios.",
+                    isCorrect = false,
+                    wrongJustification = "CONDUSEF no emite productos financieros. Su función es proteger y orientar a los usuarios."
+                },
+                new TriviaAnswerData
+                {
+                    answerText = "Fijar diariamente el tipo de cambio del peso.",
+                    isCorrect = false,
+                    wrongJustification = "El tipo de cambio no es definido por CONDUSEF. Su labor está enfocada en usuarios financieros."
+                }
+            }
+        });
+
+        data.questions.Add(new TriviaQuestionData
+        {
+            question = "¿Qué hábito ayuda a tener mejor control financiero?",
+            answers = new List<TriviaAnswerData>
+            {
+                new TriviaAnswerData
+                {
+                    answerText = "Registrar ingresos y gastos de forma constante.",
+                    isCorrect = true,
+                    wrongJustification = ""
+                },
+                new TriviaAnswerData
+                {
+                    answerText = "Comprar sin revisar el presupuesto disponible.",
+                    isCorrect = false,
+                    wrongJustification = "Comprar sin revisar el presupuesto puede provocar descontrol financiero y endeudamiento."
+                },
+                new TriviaAnswerData
+                {
+                    answerText = "Usar todo el crédito disponible cada mes.",
+                    isCorrect = false,
+                    wrongJustification = "Usar todo el crédito disponible puede afectar tu capacidad de pago y generar intereses."
+                },
+                new TriviaAnswerData
+                {
+                    answerText = "No revisar estados de cuenta.",
+                    isCorrect = false,
+                    wrongJustification = "Revisar estados de cuenta ayuda a detectar cargos, errores y hábitos de consumo."
+                }
+            }
+        });
+
+        data.questions.Add(new TriviaQuestionData
+        {
+            question = "¿Para qué sirve comparar productos financieros?",
+            answers = new List<TriviaAnswerData>
+            {
+                new TriviaAnswerData
+                {
+                    answerText = "Para elegir la opción que mejor se adapta a tus necesidades.",
+                    isCorrect = true,
+                    wrongJustification = ""
+                },
+                new TriviaAnswerData
+                {
+                    answerText = "Para contratar siempre el producto más caro.",
+                    isCorrect = false,
+                    wrongJustification = "El producto más caro no siempre es el mejor. Lo importante es comparar costos, beneficios y condiciones."
+                },
+                new TriviaAnswerData
+                {
+                    answerText = "Para evitar leer contratos.",
+                    isCorrect = false,
+                    wrongJustification = "Leer contratos es necesario para conocer obligaciones, comisiones y condiciones."
+                },
+                new TriviaAnswerData
+                {
+                    answerText = "Para ignorar las comisiones.",
+                    isCorrect = false,
+                    wrongJustification = "Las comisiones son parte importante del costo real de un producto financiero."
+                }
+            }
+        });
+
+        data.questions.Add(new TriviaQuestionData
+        {
+            question = "¿Qué acción puede ayudarte a evitar problemas con tus finanzas?",
+            answers = new List<TriviaAnswerData>
+            {
+                new TriviaAnswerData
+                {
+                    answerText = "Leer condiciones antes de contratar un producto financiero.",
+                    isCorrect = true,
+                    wrongJustification = ""
+                },
+                new TriviaAnswerData
+                {
+                    answerText = "Aceptar cualquier crédito sin revisar intereses.",
+                    isCorrect = false,
+                    wrongJustification = "Antes de aceptar un crédito debes revisar intereses, plazos, comisiones y tu capacidad de pago."
+                },
+                new TriviaAnswerData
+                {
+                    answerText = "Compartir contraseñas bancarias con otras personas.",
+                    isCorrect = false,
+                    wrongJustification = "Compartir contraseñas pone en riesgo tu información y tu dinero."
+                },
+                new TriviaAnswerData
+                {
+                    answerText = "Ignorar cargos desconocidos.",
+                    isCorrect = false,
+                    wrongJustification = "Los cargos desconocidos deben revisarse y reportarse lo antes posible."
+                }
+            }
+        });
+
+        return data;
     }
 }
