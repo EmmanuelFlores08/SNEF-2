@@ -1190,7 +1190,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: -8507966474864796032, guid: e2c41503609b73d468cd9d6cfdd6a32e, type: 3}
+  m_Mesh: {fileID: 1989087924565745759, guid: a7f3564897bbf4947857e0ca4e13fa58, type: 3}
   m_Bones:
   - {fileID: 3374755124668189983}
   - {fileID: 541631595095120074}
@@ -2260,7 +2260,7 @@ MonoBehaviour:
     currentIndex: 0
   hairRenderer: {fileID: 9096293794656262112}
   defaultHairMesh: {fileID: 9061160270243903156, guid: de1145904f857b7448eb208405cc40f9, type: 3}
-  hatHairMesh: {fileID: -7840697787668821939, guid: e577ea4cead5e8347a24cbb9de4a81dd, type: 3}
+  hatHairMesh: {fileID: 2221861953002556806, guid: 3992a4a71038cf94098c0a1fa7bfa034, type: 3}
   hairMaterials:
   - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
 --- !u!114 &5604740984548392396

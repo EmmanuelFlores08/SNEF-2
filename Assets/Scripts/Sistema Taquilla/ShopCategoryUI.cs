@@ -18,6 +18,9 @@ public class ShopCategoryUI : MonoBehaviour
     [SerializeField] private Button prevPageButton;
     [SerializeField] private Button nextPageButton;
 
+    [Header("Puntos de página")]
+    [SerializeField] private PageDotsUI pageDots;
+
     private int pageStart = 0;
     private int selectedIndex = -1;
     private int PageSize => slots.Length;
@@ -88,6 +91,7 @@ public class ShopCategoryUI : MonoBehaviour
         }
 
         UpdatePageButtons(total);
+        UpdatePageDots();   // ← agrega esta línea al final
     }
 
     private void OnSlotClicked(int index)
@@ -145,4 +149,20 @@ public class ShopCategoryUI : MonoBehaviour
         if (prevPageButton != null) prevPageButton.interactable = (pageStart > 0);
         if (nextPageButton != null) nextPageButton.interactable = (pageStart + PageSize < total);
     }
-}
+
+    private void UpdatePageDots()
+    {
+        if (pageDots == null) return;
+
+        int total = GetTotal();
+
+        // Cuántas páginas hay: total de ítems entre 5 (o el tamaño de página), redondeado hacia arriba
+        int totalPages = Mathf.CeilToInt((float)total / PageSize);
+        if (totalPages < 1) totalPages = 1;
+
+        // En qué página estás: pageStart dividido entre el tamaño de página
+        int currentPage = pageStart / PageSize;
+
+        pageDots.SetPages(totalPages, currentPage);
+    }
+}   

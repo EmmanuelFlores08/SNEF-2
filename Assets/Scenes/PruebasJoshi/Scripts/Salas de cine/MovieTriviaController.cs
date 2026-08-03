@@ -7,6 +7,9 @@ using UnityEngine.UI;
 
 public class MovieTriviaController : MonoBehaviour
 {
+    [Header("Cámara para los clics (World Space)")]
+    [SerializeField] private Camera triviaEventCamera;
+
     [Header("Canvas / raíz")]
     [SerializeField] private GameObject triviaCanvasRoot;
     [SerializeField] private Canvas worldSpaceCanvas;
@@ -112,7 +115,12 @@ public class MovieTriviaController : MonoBehaviour
     public void OpenTrivia(MovieTriviaData triviaData, string movieTitle, Action<int, int> finishCallback)
     {
         EnsureInitialized();
-
+        if (worldSpaceCanvas != null && worldSpaceCanvas.renderMode == RenderMode.WorldSpace)
+        {
+        Camera cam = (triviaEventCamera != null) ? triviaEventCamera : Camera.main;
+        if (cam != null)
+            worldSpaceCanvas.worldCamera = cam;
+        }
         activeTrivia = triviaData;
         onTriviaFinished = finishCallback;
 
@@ -223,6 +231,9 @@ public class MovieTriviaController : MonoBehaviour
 
     private void SelectAnswer(int answerIndex)
     {
+        
+        Debug.Log($"SelectAnswer llamado: {answerIndex}");
+
         if (isResolvingAnswer || waitingAfterWrongAnswer)
             return;
 

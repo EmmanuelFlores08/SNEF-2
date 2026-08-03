@@ -9,6 +9,9 @@ public class TiendaObjetosUI : MonoBehaviour
     [Header("Interfaz completa")]
     [SerializeField] private GameObject uiTaquilla;
 
+    [Header("Texto del botón comprar/usar prenda")]
+    [SerializeField] private TextMeshProUGUI textoBotonPrenda;  
+
     [Header("Paneles de contenido")]
     [SerializeField] private GameObject panelObjetosPersonaje;
     [SerializeField] private GameObject panelObjetosSetDeGrabacion;
@@ -172,17 +175,47 @@ public class TiendaObjetosUI : MonoBehaviour
         // Activa solo el botón que corresponde al tipo seleccionado
         if (selectedCategory.Tipo == ShopCategoryUI.TipoCategoria.Prenda)
         {
-            if (buttonComprarPrenda != null) buttonComprarPrenda.interactable = comprable;
+            // Cambia el texto del botón según si ya lo tiene
+            if (textoBotonPrenda != null)
+                textoBotonPrenda.text = owned ? "Usar" : "Comprar";
+
+            // Se puede presionar si: puede comprar (no lo tiene y le alcanza), O ya lo tiene (para usar)
+            if (buttonComprarPrenda != null)
+                buttonComprarPrenda.interactable = comprable || owned;
         }
         else if (selectedCategory.Tipo == ShopCategoryUI.TipoCategoria.Kit)
         {
-            if (buttonComprarKit != null) buttonComprarKit.interactable = comprable;
+            if (buttonComprarKit != null)
+                buttonComprarKit.interactable = comprable;
         }
     }
 
     private void ComprarPrendaSeleccionada()
     {
-        ComprarSeleccionado(ShopCategoryUI.TipoCategoria.Prenda);
+        if (selectedCategory == null || selectedIndex < 0) return;
+        if (selectedCategory.Tipo != ShopCategoryUI.TipoCategoria.Prenda) return;
+
+        selectedCategory.GetItem(selectedIndex, out string id, out _, out int price, out bool gratuito);
+
+        bool owned = gratuito ||
+            (PlayerInventory.Instance != null && PlayerInventory.Instance.IsOwned(id));
+
+        if (owned)
+        {
+            // Ya lo tiene: USAR (dejar la prenda puesta definitivamente)
+            if (character != null)
+            {
+                character.SetBodyPart(selectedCategory.BodyPartType, selectedIndex);
+                originalOutfit[selectedCategory.BodyPartType] = selectedIndex;
+            }
+            if (UISoundManager.Instance != null)
+                UISoundManager.Instance.PlaySeleccion();
+        }
+        else
+        {
+            // No lo tiene: COMPRAR
+            ComprarSeleccionado(ShopCategoryUI.TipoCategoria.Prenda);
+        }
     }
 
     private void ComprarKitSeleccionado()
@@ -209,6 +242,11 @@ public class TiendaObjetosUI : MonoBehaviour
 
             RefrescarCategorias();
             ActualizarBotonComprar();
+        }
+        else
+        {
+            if (UISoundManager.Instance != null)
+                UISoundManager.Instance.PlayCompraErrada();
         }
     }
 

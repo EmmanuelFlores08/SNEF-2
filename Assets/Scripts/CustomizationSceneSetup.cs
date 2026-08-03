@@ -6,6 +6,9 @@ public class CustomizationSceneSetup : MonoBehaviour
     [SerializeField] private CharacterDatabase characterDatabase;
     [SerializeField] private Transform anchor;
 
+    [Header("Salas de cine")]
+    [SerializeField] private MovieSelectorController[] movieSelectorControllers;
+
     [Header("Juego")]
     [SerializeField] private PlayerCamera playerCamera;
 
@@ -14,9 +17,6 @@ public class CustomizationSceneSetup : MonoBehaviour
 
     [Header("Cámaras de sala")]
     [SerializeField] private RoomCameraManager roomCameraManager;
-
-    [Header("Menú de películas")]
-    [SerializeField] private MovieSelectorController movieSelectorController;
 
     [Header("Menú de fotos")]
     [SerializeField] private PhotoKitSelectorController photoKitSelectorController;
@@ -62,8 +62,13 @@ public class CustomizationSceneSetup : MonoBehaviour
             panelController.Bind(character, input);
 
         // Menú de películas
-        if (movieSelectorController != null && input != null)
-            movieSelectorController.BindPlayerInput(input);
+        if (movieSelectorControllers != null && input != null)
+        {
+            foreach (var sala in movieSelectorControllers)
+            {
+                if (sala != null) sala.BindPlayerInput(input);
+            }
+        }
 
         // Menú de fotos
         if (photoKitSelectorController != null && input != null)

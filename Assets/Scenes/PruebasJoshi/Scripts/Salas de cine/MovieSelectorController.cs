@@ -121,12 +121,22 @@ private CharacterMover boundMover;
         }
     }
 
+    private Behaviour boundCameraComponent;
+
     public void BindPlayerInput(MonoBehaviour playerInput)
     {
         boundPlayerInput = playerInput;
 
         if (playerInput != null)
+        {
             boundMover = playerInput.GetComponent<CharacterMover>();
+
+            MovePlayerInput mpi = playerInput as MovePlayerInput;
+            if (mpi != null && mpi.Camera != null)
+                boundCameraComponent = mpi.Camera;
+
+            Debug.Log($"BindPlayerInput: mpi={(mpi != null ? "OK" : "NULL")} | camara={(boundCameraComponent != null ? boundCameraComponent.name : "NULL")}");
+        }
     }
 
     public void OpenSelector()
@@ -147,6 +157,9 @@ private CharacterMover boundMover;
 
         SetPlayerControlsEnabled(false);
         ShowCursor(true);
+
+        Debug.Log($"OpenSelector llamado. boundPlayerInput={(boundPlayerInput != null ? "OK" : "NULL")} | components={componentsToDisableWhileOpen.Length}");
+        // ... resto
     }
 
     public void CloseSelector()
@@ -217,6 +230,8 @@ private CharacterMover boundMover;
 
         if (stopWatchingButtonComponent != null)
             stopWatchingButtonComponent.interactable = true;
+
+        Debug.Log("WatchSelectedMovie llamado");
 
         if (UISoundManager.Instance != null)
             UISoundManager.Instance.PausarMusica();
@@ -352,25 +367,30 @@ private CharacterMover boundMover;
         }
     }
 
-    private void SetPlayerControlsEnabled(bool enabled)
+private void SetPlayerControlsEnabled(bool enabled)
+{
+    foreach (MonoBehaviour component in componentsToDisableWhileOpen)
     {
-        foreach (MonoBehaviour component in componentsToDisableWhileOpen)
-        {
-            if (component != null)
-                component.enabled = enabled;
-        }
-
-        if (boundPlayerInput != null)
-            boundPlayerInput.enabled = enabled;
-
-        if (playerRigidbody != null && !enabled)
-        {
-#if UNITY_6000_0_OR_NEWER
-            playerRigidbody.linearVelocity = Vector3.zero;
-#else
-            playerRigidbody.velocity = Vector3.zero;
-#endif
-            playerRigidbody.angularVelocity = Vector3.zero;
-        }
+        if (component != null)
+            component.enabled = enabled;
     }
+
+    if (boundPlayerInput != null)
+        boundPlayerInput.enabled = enabled;
+
+    if (boundCameraComponent != null)
+        boundCameraComponent.enabled = enabled;
+
+    Debug.Log($"SetPlayerControlsEnabled({enabled}): input={(boundPlayerInput != null ? "OK" : "NULL")} | camara={(boundCameraComponent != null ? "OK" : "NULL")}");
+
+    if (playerRigidbody != null && !enabled)
+    {
+#if UNITY_6000_0_OR_NEWER
+        playerRigidbody.linearVelocity = Vector3.zero;
+#else
+        playerRigidbody.velocity = Vector3.zero;
+#endif
+        playerRigidbody.angularVelocity = Vector3.zero;
+    }
+}
 }

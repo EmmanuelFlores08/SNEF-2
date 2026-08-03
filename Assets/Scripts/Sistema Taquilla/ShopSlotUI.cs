@@ -31,11 +31,12 @@ public class ShopSlotUI : MonoBehaviour
             iconImage.preserveAspect = true;
         }
 
+        // Precio y marca de comprado ocupan la MISMA zona (abajo), se alternan
         if (priceText != null)
-            priceText.text = owned ? "--" : price.ToString();
+            priceText.gameObject.SetActive(!owned);   // oculta el precio si está comprado
 
         if (ownedMark != null)
-            ownedMark.SetActive(owned);
+            ownedMark.SetActive(owned);                // muestra "COMPRADO" en la banda inferior
 
         gameObject.SetActive(true);
         SetSelected(false);

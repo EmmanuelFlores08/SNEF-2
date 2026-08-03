@@ -499,7 +499,7 @@ MonoBehaviour:
     currentIndex: 0
   hairRenderer: {fileID: 385928070211722078}
   defaultHairMesh: {fileID: -1068320908263121244, guid: 375114c58863b4547819e92c92f18969, type: 3}
-  hatHairMesh: {fileID: -6043340416718389272, guid: ffd5fe3840cd41a46836655b59e6e512, type: 3}
+  hatHairMesh: {fileID: -7894189610443699115, guid: 310d5b46fbb0a5944bd42a9e87cad1fb, type: 3}
   hairMaterials:
   - {fileID: 2100000, guid: 6a4c0a5109ac9314e97b0138b1203c35, type: 2}
 --- !u!114 &7465247957865690080
