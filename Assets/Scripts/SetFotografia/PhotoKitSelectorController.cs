@@ -18,14 +18,17 @@ public class PhotoKitSelectorController : MonoBehaviour
     [Header("Botón usar kit")]
     [SerializeField] private Button useKitButton;
 
-    [Header("Botón salir del set")]
+    [Header("Botones del set")]
     [SerializeField] private GameObject exitButton;
-
-    [Header("Botón cambiar kit")]
     [SerializeField] private GameObject changeKitButton;
+    [SerializeField] private GameObject takePhotoButton;
+
+    [Header("Panel de fotografía")]
+    [Tooltip("Objeto raíz del menú de previsualización: fondoFotografia.")]
+    [SerializeField] private GameObject photoPanel;
 
     [Header("Posición del avatar en el set")]
-    [SerializeField] private Transform avatarPhotoAnchor; // dónde se para el avatar al elegir kit
+    [SerializeField] private Transform avatarPhotoAnchor;
 
     [Header("Cursor / Cámara")]
     [SerializeField] private CursorLockManager cursorLockManager;
@@ -35,134 +38,203 @@ public class PhotoKitSelectorController : MonoBehaviour
     private CharacterMover boundMover;
     private Transform boundCharacter;
 
-    // Mapea la posición de cada card visible al índice REAL del kit en el catálogo
+    // Relaciona cada card visible con el índice real del kit en el catálogo.
     private readonly List<int> ownedKitIndices = new List<int>();
 
     private int selectedKitIndex = -1;
     private bool isSelectorOpen;
     private bool isInSet;
 
-    // Para devolver al avatar a donde estaba antes de entrar al set
+    // Posición del avatar antes de entrar al set.
     private Vector3 savedPosition;
     private Quaternion savedRotation;
     private bool hasSavedPosition;
+
+    public bool IsInSet => isInSet;
+    public bool IsSelectorOpen => isSelectorOpen;
 
     private void Start()
     {
         if (useKitButton != null)
             useKitButton.onClick.AddListener(UseSelectedKit);
 
-        if (selectorPanel != null) selectorPanel.SetActive(false);
-        if (exitButton != null) exitButton.SetActive(false);
-        if (changeKitButton != null) changeKitButton.SetActive(false);
+        if (selectorPanel != null)
+            selectorPanel.SetActive(false);
+
+        if (photoPanel != null)
+            photoPanel.SetActive(false);
+
+        SetSetButtonsVisible(false);
     }
 
     public void BindPlayerInput(MonoBehaviour playerInput)
     {
         boundPlayerInput = playerInput;
-        if (playerInput != null)
+
+        if (playerInput == null)
         {
-            boundMover = playerInput.GetComponent<CharacterMover>();
-            boundCharacter = playerInput.transform;
+            boundMover = null;
+            boundCharacter = null;
+            return;
         }
+
+        boundMover = playerInput.GetComponent<CharacterMover>();
+        boundCharacter = playerInput.transform;
     }
 
     public void OpenSelector()
     {
         isSelectorOpen = true;
-        if (selectorPanel != null) selectorPanel.SetActive(true);
-        if (exitButton != null) exitButton.SetActive(false);
-        if (changeKitButton != null) changeKitButton.SetActive(false);
-        if (UISoundManager.Instance != null)
-            UISoundManager.Instance.PlayAbrirMenu();
-        RefreshKitCards(); // muestra solo los kits comprados
+
+        if (selectorPanel != null)
+            selectorPanel.SetActive(true);
+
+        if (photoPanel != null)
+            photoPanel.SetActive(false);
+
+        SetSetButtonsVisible(false);
+
+        RefreshKitCards();
 
         SetPlayerControlsEnabled(false);
         ShowCursor(true);
+
+        if (UISoundManager.Instance != null)
+            UISoundManager.Instance.PlayAbrirMenu();
     }
 
     public void CloseSelector()
     {
         isSelectorOpen = false;
-        if (selectorPanel != null) selectorPanel.SetActive(false);
 
-        if (!isInSet)
+        if (selectorPanel != null)
+            selectorPanel.SetActive(false);
+
+        if (isInSet)
         {
+            // Si ya estaba dentro del set y cerró el selector,
+            // vuelve a mostrar las acciones del set.
+            SetSetButtonsVisible(true);
+            SetPlayerControlsEnabled(false);
+            ShowCursor(true);
+        }
+        else
+        {
+            SetSetButtonsVisible(false);
             SetPlayerControlsEnabled(true);
             ShowCursor(false);
         }
+
         if (UISoundManager.Instance != null)
             UISoundManager.Instance.PlayCerrarMenu();
     }
 
-    // Construye la lista de kits comprados y llena solo esas cards; oculta el resto
     private void RefreshKitCards()
     {
         ownedKitIndices.Clear();
 
-        int total = catalog != null ? catalog.kits.Length : 0;
+        int total = catalog != null && catalog.kits != null
+            ? catalog.kits.Length
+            : 0;
 
         for (int i = 0; i < total; i++)
         {
-            var kit = catalog.GetKit(i);
-            if (kit == null) continue;
+            PhotoKitCatalog.PhotoKit kit = catalog.GetKit(i);
 
-            bool owned = kit.gratuito ||
-                (PlayerInventory.Instance != null && PlayerInventory.Instance.IsOwned(kit.kitId));
+            if (kit == null)
+                continue;
+
+            bool owned =
+                kit.gratuito ||
+                (PlayerInventory.Instance != null &&
+                 PlayerInventory.Instance.IsOwned(kit.kitId));
 
             if (owned)
                 ownedKitIndices.Add(i);
         }
 
-        for (int c = 0; c < kitCards.Length; c++)
+        if (kitCards == null)
         {
-            if (kitCards[c] == null) continue;
+            selectedKitIndex = -1;
+            return;
+        }
 
-            if (c < ownedKitIndices.Count)
+        for (int cardIndex = 0; cardIndex < kitCards.Length; cardIndex++)
+        {
+            PhotoKitCardUI card = kitCards[cardIndex];
+
+            if (card == null)
+                continue;
+
+            if (cardIndex < ownedKitIndices.Count)
             {
-                int catalogIndex = ownedKitIndices[c];
-                var kit = catalog.GetKit(catalogIndex);
+                int catalogIndex = ownedKitIndices[cardIndex];
+                PhotoKitCatalog.PhotoKit kit = catalog.GetKit(catalogIndex);
 
-                kitCards[c].Init(this, catalogIndex);
-                kitCards[c].Setup(catalogIndex, kit.previewSprite);
+                if (kit == null)
+                {
+                    card.Hide();
+                    continue;
+                }
+
+                card.Init(this, catalogIndex);
+                card.Setup(catalogIndex, kit.previewSprite);
             }
             else
             {
-                kitCards[c].Hide();
+                card.Hide();
             }
         }
 
         selectedKitIndex = -1;
     }
 
-    // Llamado por cada card al hacer clic (index es el índice REAL del catálogo)
     public void SelectKit(int catalogIndex)
     {
+        if (catalog == null || catalog.GetKit(catalogIndex) == null)
+            return;
+
         selectedKitIndex = catalogIndex;
 
-        for (int c = 0; c < kitCards.Length; c++)
+        if (kitCards != null)
         {
-            if (kitCards[c] == null) continue;
-            bool isThis = (c < ownedKitIndices.Count && ownedKitIndices[c] == catalogIndex);
-            kitCards[c].SetSelected(isThis);
+            for (int cardIndex = 0; cardIndex < kitCards.Length; cardIndex++)
+            {
+                PhotoKitCardUI card = kitCards[cardIndex];
+
+                if (card == null)
+                    continue;
+
+                bool isSelectedCard =
+                    cardIndex < ownedKitIndices.Count &&
+                    ownedKitIndices[cardIndex] == catalogIndex;
+
+                card.SetSelected(isSelectedCard);
+            }
         }
+
         if (UISoundManager.Instance != null)
             UISoundManager.Instance.PlaySeleccion();
     }
 
     private void UseSelectedKit()
     {
-        if (selectedKitIndex < 0) return;
+        if (selectedKitIndex < 0 || catalog == null)
+            return;
 
-        var kit = catalog.GetKit(selectedKitIndex);
-        if (kit == null) return;
+        PhotoKitCatalog.PhotoKit kit = catalog.GetKit(selectedKitIndex);
+
+        if (kit == null)
+            return;
 
         if (photoSetManager != null)
             photoSetManager.ApplyKit(kit);
-        
+
         if (UISoundManager.Instance != null)
             UISoundManager.Instance.PlayUsarKit();
-        // Guarda la posición previa del avatar la primera vez que entra al set
+
+        // Guarda la posición previa solamente la primera vez
+        // que el personaje entra al set.
         if (!hasSavedPosition && boundCharacter != null)
         {
             savedPosition = boundCharacter.position;
@@ -170,25 +242,20 @@ public class PhotoKitSelectorController : MonoBehaviour
             hasSavedPosition = true;
         }
 
-        // Frena el movimiento residual
-        if (boundMover != null) boundMover.ResetToIdle();
+        // Detiene cualquier movimiento residual.
+        if (boundMover != null)
+            boundMover.ResetToIdle();
 
-        // Coloca al avatar en la posición del set
-        if (boundCharacter != null && avatarPhotoAnchor != null)
-        {
-            CharacterController cc = boundCharacter.GetComponent<CharacterController>();
-            if (cc != null) cc.enabled = false;
+        MoveCharacterToPhotoAnchor();
 
-            boundCharacter.SetPositionAndRotation(avatarPhotoAnchor.position, avatarPhotoAnchor.rotation);
-
-            if (cc != null) cc.enabled = true;
-        }
-
-        // Entra al set: cámara fija, sin control, cursor visible para los botones
         isInSet = true;
         isSelectorOpen = false;
 
-        if (selectorPanel != null) selectorPanel.SetActive(false);
+        if (selectorPanel != null)
+            selectorPanel.SetActive(false);
+
+        if (photoPanel != null)
+            photoPanel.SetActive(false);
 
         SetPlayerControlsEnabled(false);
         ShowCursor(true);
@@ -196,75 +263,171 @@ public class PhotoKitSelectorController : MonoBehaviour
         if (roomCameraManager != null)
             roomCameraManager.ActivateZoneCamera();
 
-        if (exitButton != null) exitButton.SetActive(true);
-        if (changeKitButton != null) changeKitButton.SetActive(true);
+        SetSetButtonsVisible(true);
 
         if (UISoundManager.Instance != null)
             UISoundManager.Instance.PlayMusicaSet();
     }
 
-    // Botón "cambiar kit": reabre el menú sin salir del set
     public void ChangeKit()
     {
+        if (!isInSet)
+            return;
+
         isSelectorOpen = true;
 
-        if (selectorPanel != null) selectorPanel.SetActive(true);
+        if (selectorPanel != null)
+            selectorPanel.SetActive(true);
 
-        RefreshKitCards(); // refresca por si compró más kits
+        if (photoPanel != null)
+            photoPanel.SetActive(false);
 
-        // Oculta los botones del modo "viendo" mientras eliges de nuevo
-        if (exitButton != null) exitButton.SetActive(false);
-        if (changeKitButton != null) changeKitButton.SetActive(false);
+        RefreshKitCards();
+
+        // Mientras el usuario elige otro kit,
+        // oculta las acciones principales del set.
+        SetSetButtonsVisible(false);
+
+        SetPlayerControlsEnabled(false);
+        ShowCursor(true);
+
+        if (UISoundManager.Instance != null)
+            UISoundManager.Instance.PlayAbrirMenu();
     }
 
-    // Botón "salir": limpia el kit, vuelve el avatar a su sitio y devuelve el control
     public void ExitSet()
     {
         isInSet = false;
+        isSelectorOpen = false;
+
+        if (selectorPanel != null)
+            selectorPanel.SetActive(false);
+
+        if (photoPanel != null)
+            photoPanel.SetActive(false);
+
+        SetSetButtonsVisible(false);
 
         if (photoSetManager != null)
             photoSetManager.ClearCurrentKit();
 
-        // Devuelve al avatar a la posición que tenía antes de entrar al set
-        if (hasSavedPosition && boundCharacter != null)
-        {
-            CharacterController cc = boundCharacter.GetComponent<CharacterController>();
-            if (cc != null) cc.enabled = false;
-
-            boundCharacter.SetPositionAndRotation(savedPosition, savedRotation);
-
-            if (cc != null) cc.enabled = true;
-
-            hasSavedPosition = false;
-        }
+        RestoreCharacterPosition();
 
         if (roomCameraManager != null)
             roomCameraManager.ActivateFollowCamera();
 
-        if (exitButton != null) exitButton.SetActive(false);
-        if (changeKitButton != null) changeKitButton.SetActive(false);
         if (UISoundManager.Instance != null)
+        {
             UISoundManager.Instance.PlayCerrarMenu();
-        if (UISoundManager.Instance != null)
-            UISoundManager.Instance.PlayMusicaGeneral();            
+            UISoundManager.Instance.PlayMusicaGeneral();
+        }
+
         SetPlayerControlsEnabled(true);
         ShowCursor(false);
+    }
+
+    private void MoveCharacterToPhotoAnchor()
+    {
+        if (boundCharacter == null || avatarPhotoAnchor == null)
+            return;
+
+        CharacterController characterController =
+            boundCharacter.GetComponent<CharacterController>();
+
+        if (characterController != null)
+            characterController.enabled = false;
+
+        boundCharacter.SetPositionAndRotation(
+            avatarPhotoAnchor.position,
+            avatarPhotoAnchor.rotation
+        );
+
+        if (characterController != null)
+            characterController.enabled = true;
+    }
+
+    private void RestoreCharacterPosition()
+    {
+        if (!hasSavedPosition || boundCharacter == null)
+            return;
+
+        CharacterController characterController =
+            boundCharacter.GetComponent<CharacterController>();
+
+        if (characterController != null)
+            characterController.enabled = false;
+
+        boundCharacter.SetPositionAndRotation(
+            savedPosition,
+            savedRotation
+        );
+
+        if (characterController != null)
+            characterController.enabled = true;
+
+        hasSavedPosition = false;
+    }
+
+    /// <summary>
+    /// Muestra u oculta los tres botones visibles mientras
+    /// el jugador está usando el set de grabación.
+    ///
+    /// El futuro PhotoCaptureController puede utilizar este método
+    /// para ocultarlos antes de capturar la fotografía.
+    /// </summary>
+    public void SetSetButtonsVisible(bool visible)
+    {
+        if (exitButton != null)
+            exitButton.SetActive(visible);
+
+        if (changeKitButton != null)
+            changeKitButton.SetActive(visible);
+
+        if (takePhotoButton != null)
+            takePhotoButton.SetActive(visible);
+    }
+
+    /// <summary>
+    /// Permite cerrar el panel de fotografía desde su botón X.
+    /// Después vuelve a mostrar las acciones del set.
+    /// </summary>
+    public void ClosePhotoPanel()
+    {
+        if (photoPanel != null)
+            photoPanel.SetActive(false);
+
+        if (isInSet && !isSelectorOpen)
+            SetSetButtonsVisible(true);
+
+        ShowCursor(isInSet);
+
+        if (UISoundManager.Instance != null)
+            UISoundManager.Instance.PlayCerrarMenu();
     }
 
     private void ShowCursor(bool show)
     {
         if (cursorLockManager != null)
-            cursorLockManager.SetInterfaceMode(show);
-        else
         {
-            Cursor.visible = show;
-            Cursor.lockState = show ? CursorLockMode.None : CursorLockMode.Locked;
+            cursorLockManager.SetInterfaceMode(show);
+            return;
         }
+
+        Cursor.visible = show;
+        Cursor.lockState = show
+            ? CursorLockMode.None
+            : CursorLockMode.Locked;
     }
 
     private void SetPlayerControlsEnabled(bool enabled)
     {
         if (boundPlayerInput != null)
             boundPlayerInput.enabled = enabled;
+    }
+
+    private void OnDestroy()
+    {
+        if (useKitButton != null)
+            useKitButton.onClick.RemoveListener(UseSelectedKit);
     }
 }
