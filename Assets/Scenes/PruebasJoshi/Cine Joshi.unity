@@ -32208,6 +32208,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d61bce24a1316164aa83ce8d1a936b50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  triviaEventCamera: {fileID: 0}
   triviaCanvasRoot: {fileID: 1339739588}
   worldSpaceCanvas: {fileID: 1339739592}
   panelPreguntas: {fileID: 208586851}
@@ -40657,7 +40658,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!215 &775499613
 ReflectionProbe:
   m_ObjectHideFlags: 0
@@ -48064,10 +48065,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59336a31478a2be44beee3fd3aab999a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movieId: p1
+  movieId: p1plata
   movieTitle: "Dusef salva el d\xEDa"
-  videoClip: {fileID: 32900000, guid: 26aa81960a6f616448056f10d983c5ac, type: 3}
-  videoUrl: 
+  videoClip: {fileID: 0}
+  videoUrl: https://dev-snef2026-sponsorsplatform-assets.s3.mx-central-1.amazonaws.com/sponsors/prueba%40snef.com/contenidos/oro-1/video.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAUOVJUBNU5WWVQO2V%2F20260805%2Fmx-central-1%2Fs3%2Faws4_request&X-Amz-Date=20260805T213728Z&X-Amz-Expires=300&X-Amz-Security-Token=IQoJb3JpZ2luX2VjED8aDG14LWNlbnRyYWwtMSJIMEYCIQCJ7%2Fk0HgaC05BRBqczcCgy10PlI3a7dJBPgaEhr4CqCAIhAOtOPE9ZihGMiDkvP%2BMxGCbEL4Q1O7bUUsFnMZ%2BVokIcKu8CCC8QABoMMzA2MzcyMTUyMTY5IgzYHIAqs9dn0Mm3eXUqzAJqByNof1rWyrYaPpD7173d5OKENWfs7n26aOeMmzyR1VJGZIm60bDYCgSgiV%2Bu5DxsNvopWzipV4W%2BtZwIGyx2AYIgUqbIZDglpMQb%2FWSsGIpBD4UNAK%2BJoeEtqGsRnx0dyw9QGrv1OT4LqG2PtjxJe%2BIwUZB6vbPssBkkk1hRVsE6l5ulIcxmVSz2ZndC2nIGBDgBma%2Bp%2BLzXJA4sv2%2BNSOn9mBVsXQJi15JKO7B8AFV%2FWdg7E%2BF3U%2FXi1GXGZxyXrne27dArjfyJ%2FSPcSbk64GYTGzL%2FdG2mNpS0KTMOIVPB1GJW7rhr%2B3HQ0IQiWh76O0ycUeR1D%2BAhPvn8UvXqCnHZUcVTTPYh7vOXgtbmBlWxXnJLgW7ZueapYZZB3AIybJmtLFvGQzGdfCu3DuJMDJxHmHln1pAvVRpYolbAQ8MRi7ITFgMS5GljGzCvqs7TBjqsArGHorw7tuL09dvsYcO7HYrVxkGhZ7aM9Oo2Ko9WB1d3ZFo%2FVwc%2FDmOvMPTzOT%2BQRFnHOGiqrr%2FEppXUyYTJdY77%2F0ev5gFsKIxJcM6IVSO5NbradyrtdStRKMGFRHJKqnsLcuaERgcv5E%2BCPLzBqlugfAcQsa7ToupmS5Q70Ai35bakmlJ6HS9Tc8togOIE%2F%2BW5FW9R8eiFusouo6DF%2B8pcujt2I4sePmOjgruUXViVwErgZc5nFsbqBYhy1mV5m9rc2lg05RbnrV8Nwo0JLK9%2B9FuSf%2Fw1s98fbwoaoNkHCEpPpnoGaVhwVy1pLNXKTPiAA8svHsvIzJOBwlG0bYSUGLdffY431HhxfJsppY%2FqovZmpJqgRabcmU911azidOznk6s2yojh8RMm1Q%3D%3D&X-Amz-Signature=595c7b9961ae04383a8353a8ffe6b1a5d7158b4e5421d9248ac31851de353fce&X-Amz-SignedHeaders=host&response-content-disposition=inline
   triviaButton: {fileID: 793532305}
   usarDatosDePrueba: 1
   triviaData:
@@ -53443,6 +53444,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d61bce24a1316164aa83ce8d1a936b50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  triviaEventCamera: {fileID: 0}
   triviaCanvasRoot: {fileID: 514808249}
   worldSpaceCanvas: {fileID: 514808252}
   panelPreguntas: {fileID: 470814116}
@@ -68742,6 +68744,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiTaquilla: {fileID: 1870248721}
+  textoBotonPrenda: {fileID: 0}
   panelObjetosPersonaje: {fileID: 788269794}
   panelObjetosSetDeGrabacion: {fileID: 571685795}
   buttonPersonaje: {fileID: 756934051}
