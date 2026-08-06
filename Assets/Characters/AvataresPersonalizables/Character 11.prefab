@@ -3886,6 +3886,10 @@ MonoBehaviour:
   m_MouseX: Mouse X
   m_MouseY: Mouse Y
   m_MouseScroll: Mouse ScrollWheel
+  m_Joystick: {fileID: 0}
+  m_TouchCamera: {fileID: 0}
+  m_ForceTouch: 0
+  m_RunThreshold: 0.8
 --- !u!114 &5263261603586413251
 MonoBehaviour:
   m_ObjectHideFlags: 0

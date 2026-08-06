@@ -24,6 +24,10 @@ public class CustomizationSceneSetup : MonoBehaviour
     [Header("Tienda")]
     [SerializeField] private TiendaObjetosUI tiendaObjetosUI;
 
+    [Header("Controles táctiles (móvil)")]
+    [SerializeField] private VirtualJoystick virtualJoystick;
+    [SerializeField] private TouchCameraArea touchCameraArea;
+
     private void Start()
     {
         string avatarId = PlayerPrefs.GetString("selectedAvatarId", "");
@@ -77,5 +81,8 @@ public class CustomizationSceneSetup : MonoBehaviour
         // Tienda
         if (tiendaObjetosUI != null)
             tiendaObjetosUI.Bind(character, input);
+        // Controles táctiles: le pasa el joystick y la zona de cámara al personaje instanciado
+        if (input != null)
+            input.BindTouchControls(virtualJoystick, touchCameraArea);
     }
 }
