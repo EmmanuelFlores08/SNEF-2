@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.IO;
+using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,13 +22,12 @@ public class PhotoCaptureController : MonoBehaviour
     [SerializeField] private int captureHeight = 1080;
 
     [Header("Interfaz principal")]
-    [Tooltip("Botón Tomar fotografía que aparece dentro del set.")]
     [SerializeField] private Button takePhotoButton;
 
-    [Tooltip("Objeto raíz del menú de previsualización: fondoFotografia.")]
+    [Tooltip("Objeto raíz fondoFotografia.")]
     [SerializeField] private GameObject photoPanel;
 
-    [Tooltip("RawImage donde se mostrará la fotografía capturada.")]
+    [Tooltip("RawImage donde se muestra la fotografía.")]
     [SerializeField] private RawImage photoPreview;
 
     [Header("Botones del menú de fotografía")]
@@ -43,15 +43,60 @@ public class PhotoCaptureController : MonoBehaviour
     [Header("Configuración del archivo")]
     [SerializeField] private string fileNamePrefix = "SNEF2026_Fotografia";
 
+    [Header("Texto para compartir")]
+    [SerializeField]
+    private string shareTitle =
+        "Mi fotografía SNEF 2026";
+
+    [TextArea(2, 4)]
+    [SerializeField]
+    private string shareText =
+        "¡Así viví la experiencia de la SNEF 2026!";
+
     private Texture2D capturedTexture;
     private byte[] capturedPngBytes;
 
     private bool isCapturing;
 
+
+    // =========================================================
+    // JAVASCRIPT WEBGL
+    // =========================================================
+
+#if UNITY_WEBGL && !UNITY_EDITOR
+
+    [DllImport("__Internal")]
+    private static extern void SNEF_DownloadPNG(
+        byte[] data,
+        int dataLength,
+        string fileName
+    );
+
+    [DllImport("__Internal")]
+    private static extern void SNEF_SharePNG(
+        byte[] data,
+        int dataLength,
+        string fileName,
+        string title,
+        string text,
+        string network
+    );
+
+#endif
+
+
     public Texture2D CapturedTexture => capturedTexture;
+
     public byte[] CapturedPngBytes => capturedPngBytes;
-    public bool HasCapturedPhoto => capturedPngBytes != null &&
-                                    capturedPngBytes.Length > 0;
+
+    public bool HasCapturedPhoto =>
+        capturedPngBytes != null &&
+        capturedPngBytes.Length > 0;
+
+
+    // =========================================================
+    // START
+    // =========================================================
 
     private void Start()
     {
@@ -62,6 +107,11 @@ public class PhotoCaptureController : MonoBehaviour
 
         SetPhotoActionButtonsInteractable(false);
     }
+
+
+    // =========================================================
+    // BOTONES
+    // =========================================================
 
     private void ConfigureButtons()
     {
@@ -87,9 +137,11 @@ public class PhotoCaptureController : MonoBehaviour
             linkedInButton.onClick.AddListener(ShareOnLinkedIn);
     }
 
-    /// <summary>
-    /// Método ejecutado por el botón Tomar fotografía.
-    /// </summary>
+
+    // =========================================================
+    // TOMAR FOTOGRAFÍA
+    // =========================================================
+
     public void TakePhoto()
     {
         if (isCapturing)
@@ -98,7 +150,7 @@ public class PhotoCaptureController : MonoBehaviour
         if (photoCamera == null)
         {
             Debug.LogError(
-                "PhotoCaptureController: No se ha asignado la cámara de fotografía."
+                "PhotoCaptureController: No hay cámara asignada."
             );
 
             return;
@@ -107,7 +159,7 @@ public class PhotoCaptureController : MonoBehaviour
         if (photoPanel == null)
         {
             Debug.LogError(
-                "PhotoCaptureController: No se ha asignado el panel fondoFotografia."
+                "PhotoCaptureController: No hay Photo Panel asignado."
             );
 
             return;
@@ -116,16 +168,7 @@ public class PhotoCaptureController : MonoBehaviour
         if (photoPreview == null)
         {
             Debug.LogError(
-                "PhotoCaptureController: No se ha asignado PrevisualizacionFoto."
-            );
-
-            return;
-        }
-
-        if (captureWidth <= 0 || captureHeight <= 0)
-        {
-            Debug.LogError(
-                "PhotoCaptureController: La resolución de captura no es válida."
+                "PhotoCaptureController: No hay RawImage de previsualización."
             );
 
             return;
@@ -134,6 +177,7 @@ public class PhotoCaptureController : MonoBehaviour
         StartCoroutine(CapturePhotoRoutine());
     }
 
+
     private IEnumerator CapturePhotoRoutine()
     {
         isCapturing = true;
@@ -141,21 +185,25 @@ public class PhotoCaptureController : MonoBehaviour
         if (takePhotoButton != null)
             takePhotoButton.interactable = false;
 
-        // Evita que el menú anterior aparezca en la captura.
+
+        // ------------------------------------------------------
+        // OCULTAR INTERFAZ
+        // ------------------------------------------------------
+
         if (photoPanel != null)
             photoPanel.SetActive(false);
 
-        // Oculta Cambiar Kit, Salir y Tomar fotografía.
         if (kitSelectorController != null)
             kitSelectorController.SetSetButtonsVisible(false);
 
-        /*
-         * Esperamos a que Unity actualice la interfaz después de ocultar
-         * los botones. Esto evita que aparezcan durante la captura.
-         */
         Canvas.ForceUpdateCanvases();
 
         yield return new WaitForEndOfFrame();
+
+
+        // ------------------------------------------------------
+        // CREAR RENDER TEXTURE
+        // ------------------------------------------------------
 
         RenderTexture renderTexture = null;
 
@@ -167,6 +215,7 @@ public class PhotoCaptureController : MonoBehaviour
 
         bool captureSucceeded = false;
 
+
         try
         {
             renderTexture = RenderTexture.GetTemporary(
@@ -177,24 +226,32 @@ public class PhotoCaptureController : MonoBehaviour
                 RenderTextureReadWrite.Default
             );
 
-            renderTexture.filterMode = FilterMode.Bilinear;
+            renderTexture.filterMode =
+                FilterMode.Bilinear;
 
-            photoCamera.targetTexture = renderTexture;
 
-            RenderTexture.active = renderTexture;
+            photoCamera.targetTexture =
+                renderTexture;
 
-            /*
-             * Renderiza manualmente la cámara fija del set.
-             * De esta manera capturamos exactamente su encuadre.
-             */
+            RenderTexture.active =
+                renderTexture;
+
+
+            // --------------------------------------------------
+            // RENDERIZAR FOTO
+            // --------------------------------------------------
+
             photoCamera.Render();
 
-            Texture2D newCapturedTexture = new Texture2D(
-                captureWidth,
-                captureHeight,
-                TextureFormat.RGB24,
-                false
-            );
+
+            Texture2D newCapturedTexture =
+                new Texture2D(
+                    captureWidth,
+                    captureHeight,
+                    TextureFormat.RGB24,
+                    false
+                );
+
 
             newCapturedTexture.ReadPixels(
                 new Rect(
@@ -208,14 +265,32 @@ public class PhotoCaptureController : MonoBehaviour
                 false
             );
 
-            newCapturedTexture.Apply(false, false);
 
-            // Elimina la captura anterior para evitar fugas de memoria.
+            newCapturedTexture.Apply(
+                false,
+                false
+            );
+
+
+            // --------------------------------------------------
+            // BORRAR FOTO ANTERIOR
+            // --------------------------------------------------
+
             if (capturedTexture != null)
                 Destroy(capturedTexture);
 
-            capturedTexture = newCapturedTexture;
-            capturedPngBytes = capturedTexture.EncodeToPNG();
+
+            capturedTexture =
+                newCapturedTexture;
+
+
+            // --------------------------------------------------
+            // CONVERTIR A PNG
+            // --------------------------------------------------
+
+            capturedPngBytes =
+                capturedTexture.EncodeToPNG();
+
 
             captureSucceeded =
                 capturedPngBytes != null &&
@@ -224,19 +299,30 @@ public class PhotoCaptureController : MonoBehaviour
         catch (Exception exception)
         {
             Debug.LogError(
-                "PhotoCaptureController: Ocurrió un error al capturar " +
-                "la fotografía.\n" +
+                "Error capturando fotografía:\n" +
                 exception
             );
         }
         finally
         {
-            photoCamera.targetTexture = previousCameraTarget;
-            RenderTexture.active = previousActiveRenderTexture;
+            photoCamera.targetTexture =
+                previousCameraTarget;
+
+            RenderTexture.active =
+                previousActiveRenderTexture;
 
             if (renderTexture != null)
-                RenderTexture.ReleaseTemporary(renderTexture);
+            {
+                RenderTexture.ReleaseTemporary(
+                    renderTexture
+                );
+            }
         }
+
+
+        // ------------------------------------------------------
+        // MOSTRAR RESULTADO
+        // ------------------------------------------------------
 
         if (captureSucceeded)
         {
@@ -244,15 +330,12 @@ public class PhotoCaptureController : MonoBehaviour
         }
         else
         {
-            /*
-             * Si ocurrió un error, devolvemos los botones para que
-             * el usuario pueda volver a intentarlo.
-             */
             if (kitSelectorController != null)
                 kitSelectorController.SetSetButtonsVisible(true);
 
             SetPhotoActionButtonsInteractable(false);
         }
+
 
         if (takePhotoButton != null)
             takePhotoButton.interactable = true;
@@ -260,29 +343,44 @@ public class PhotoCaptureController : MonoBehaviour
         isCapturing = false;
     }
 
+
+    // =========================================================
+    // PREVISUALIZACIÓN
+    // =========================================================
+
     private void ShowCapturedPhoto()
     {
         if (photoPreview != null)
         {
-            photoPreview.texture = capturedTexture;
+            photoPreview.texture =
+                capturedTexture;
 
-            // Configuración normal de orientación.
-            photoPreview.uvRect = new Rect(0f, 0f, 1f, 1f);
+            photoPreview.uvRect =
+                new Rect(
+                    0f,
+                    0f,
+                    1f,
+                    1f
+                );
         }
+
 
         if (photoPanel != null)
             photoPanel.SetActive(true);
 
+
         SetPhotoActionButtonsInteractable(true);
 
-        // Los botones del set permanecen ocultos detrás del menú.
+
         if (kitSelectorController != null)
             kitSelectorController.SetSetButtonsVisible(false);
     }
 
-    /// <summary>
-    /// Cierra el menú de fotografía y vuelve a mostrar los botones del set.
-    /// </summary>
+
+    // =========================================================
+    // CERRAR PREVISUALIZACIÓN
+    // =========================================================
+
     public void ClosePhotoPanel()
     {
         if (kitSelectorController != null)
@@ -295,64 +393,80 @@ public class PhotoCaptureController : MonoBehaviour
             photoPanel.SetActive(false);
     }
 
-    /// <summary>
-    /// Guarda la fotografía en Editor, Windows, macOS o Linux.
-    ///
-    /// En WebGL se requerirá posteriormente un complemento .jslib,
-    /// porque el navegador no permite utilizar File.WriteAllBytes.
-    /// </summary>
+
+    // =========================================================
+    // DESCARGAR
+    // =========================================================
+
     public void DownloadPhoto()
     {
         if (!HasCapturedPhoto)
         {
             Debug.LogWarning(
-                "PhotoCaptureController: Todavía no existe una fotografía para descargar."
+                "No existe una fotografía para descargar."
             );
 
             return;
         }
 
+
+        string fileName =
+            GenerateFileName();
+
+
 #if UNITY_WEBGL && !UNITY_EDITOR
 
-        Debug.LogWarning(
-            "PhotoCaptureController: La descarga dentro de WebGL " +
-            "requiere el puente JavaScript que agregaremos en el siguiente paso."
+        // ------------------------------------------------------
+        // WEBGL
+        // ------------------------------------------------------
+
+        SNEF_DownloadPNG(
+            capturedPngBytes,
+            capturedPngBytes.Length,
+            fileName
         );
 
 #else
 
+        // ------------------------------------------------------
+        // EDITOR / PC
+        // ------------------------------------------------------
+
         try
         {
-            string folderPath = Path.Combine(
-                Application.persistentDataPath,
-                "Fotografias"
-            );
+            string folderPath =
+                Path.Combine(
+                    Application.persistentDataPath,
+                    "Fotografias"
+                );
+
 
             if (!Directory.Exists(folderPath))
                 Directory.CreateDirectory(folderPath);
 
-            string fileName = GenerateFileName();
 
-            string completePath = Path.Combine(
-                folderPath,
-                fileName
-            );
+            string completePath =
+                Path.Combine(
+                    folderPath,
+                    fileName
+                );
+
 
             File.WriteAllBytes(
                 completePath,
                 capturedPngBytes
             );
 
+
             Debug.Log(
-                "Fotografía guardada correctamente en:\n" +
+                "Fotografía guardada en:\n" +
                 completePath
             );
         }
         catch (Exception exception)
         {
             Debug.LogError(
-                "PhotoCaptureController: No fue posible guardar " +
-                "la fotografía.\n" +
+                "No se pudo guardar la fotografía:\n" +
                 exception
             );
         }
@@ -360,122 +474,200 @@ public class PhotoCaptureController : MonoBehaviour
 #endif
     }
 
+
+    // =========================================================
+    // INSTAGRAM
+    // =========================================================
+
     public void ShareOnInstagram()
     {
-        PrepareSocialShare("Instagram");
+        SharePhoto(
+            "Instagram"
+        );
     }
+
+
+    // =========================================================
+    // X
+    // =========================================================
 
     public void ShareOnX()
     {
-        PrepareSocialShare("X");
+        SharePhoto(
+            "X"
+        );
     }
+
+
+    // =========================================================
+    // FACEBOOK
+    // =========================================================
 
     public void ShareOnFacebook()
     {
-        PrepareSocialShare("Facebook");
+        SharePhoto(
+            "Facebook"
+        );
     }
+
+
+    // =========================================================
+    // LINKEDIN
+    // =========================================================
 
     public void ShareOnLinkedIn()
     {
-        PrepareSocialShare("LinkedIn");
+        SharePhoto(
+            "LinkedIn"
+        );
     }
 
-    private void PrepareSocialShare(string socialNetwork)
+
+    // =========================================================
+    // COMPARTIR
+    // =========================================================
+
+    private void SharePhoto(
+        string network
+    )
     {
         if (!HasCapturedPhoto)
         {
             Debug.LogWarning(
-                "PhotoCaptureController: No existe una fotografía para compartir."
+                "No existe una fotografía para compartir."
             );
 
             return;
         }
 
-        /*
-         * Estos métodos quedan preparados para conectar posteriormente
-         * el puente entre Unity WebGL y JavaScript.
-         *
-         * Un navegador no permite adjuntar directamente una imagen local
-         * a Instagram, X, Facebook o LinkedIn solamente mediante una URL.
-         */
-        Debug.Log(
-            "Fotografía preparada para compartir en " +
-            socialNetwork +
-            ". Falta conectar el puente WebGL con JavaScript."
+
+#if UNITY_WEBGL && !UNITY_EDITOR
+
+        string fileName =
+            GenerateFileName();
+
+
+        SNEF_SharePNG(
+            capturedPngBytes,
+            capturedPngBytes.Length,
+            fileName,
+            shareTitle,
+            shareText,
+            network
         );
+
+#else
+
+        Debug.Log(
+            "La función de compartir se ejecuta " +
+            "desde el build WebGL."
+        );
+
+#endif
     }
+
+
+    // =========================================================
+    // NOMBRE DEL ARCHIVO
+    // =========================================================
 
     private string GenerateFileName()
     {
-        string safePrefix = string.IsNullOrWhiteSpace(fileNamePrefix)
-            ? "SNEF2026_Fotografia"
-            : fileNamePrefix.Trim();
+        string safePrefix =
+            string.IsNullOrWhiteSpace(fileNamePrefix)
+                ? "SNEF2026_Fotografia"
+                : fileNamePrefix.Trim();
 
-        string date = DateTime.Now.ToString(
-            "yyyy-MM-dd_HH-mm-ss"
-        );
 
-        return $"{safePrefix}_{date}.png";
+        string date =
+            DateTime.Now.ToString(
+                "yyyy-MM-dd_HH-mm-ss"
+            );
+
+
+        return
+            $"{safePrefix}_{date}.png";
     }
 
-    /// <summary>
-    /// Devuelve la fotografía como texto Base64.
-    /// Este método será utilizado por la integración WebGL.
-    /// </summary>
-    public string GetCapturedPhotoBase64()
-    {
-        if (!HasCapturedPhoto)
-            return string.Empty;
 
-        return Convert.ToBase64String(capturedPngBytes);
-    }
+    // =========================================================
+    // BOTONES DISPONIBLES
+    // =========================================================
 
-    private void SetPhotoActionButtonsInteractable(bool interactable)
+    private void SetPhotoActionButtonsInteractable(
+        bool interactable
+    )
     {
         if (downloadPhotoButton != null)
-            downloadPhotoButton.interactable = interactable;
+            downloadPhotoButton.interactable =
+                interactable;
 
         if (instagramButton != null)
-            instagramButton.interactable = interactable;
+            instagramButton.interactable =
+                interactable;
 
         if (xButton != null)
-            xButton.interactable = interactable;
+            xButton.interactable =
+                interactable;
 
         if (facebookButton != null)
-            facebookButton.interactable = interactable;
+            facebookButton.interactable =
+                interactable;
 
         if (linkedInButton != null)
-            linkedInButton.interactable = interactable;
+            linkedInButton.interactable =
+                interactable;
     }
+
+
+    // =========================================================
+    // CLEANUP
+    // =========================================================
 
     private void OnDestroy()
     {
         if (takePhotoButton != null)
-            takePhotoButton.onClick.RemoveListener(TakePhoto);
+            takePhotoButton.onClick.RemoveListener(
+                TakePhoto
+            );
 
         if (closePhotoButton != null)
-            closePhotoButton.onClick.RemoveListener(ClosePhotoPanel);
+            closePhotoButton.onClick.RemoveListener(
+                ClosePhotoPanel
+            );
 
         if (downloadPhotoButton != null)
-            downloadPhotoButton.onClick.RemoveListener(DownloadPhoto);
+            downloadPhotoButton.onClick.RemoveListener(
+                DownloadPhoto
+            );
 
         if (instagramButton != null)
-            instagramButton.onClick.RemoveListener(ShareOnInstagram);
+            instagramButton.onClick.RemoveListener(
+                ShareOnInstagram
+            );
 
         if (xButton != null)
-            xButton.onClick.RemoveListener(ShareOnX);
+            xButton.onClick.RemoveListener(
+                ShareOnX
+            );
 
         if (facebookButton != null)
-            facebookButton.onClick.RemoveListener(ShareOnFacebook);
+            facebookButton.onClick.RemoveListener(
+                ShareOnFacebook
+            );
 
         if (linkedInButton != null)
-            linkedInButton.onClick.RemoveListener(ShareOnLinkedIn);
+            linkedInButton.onClick.RemoveListener(
+                ShareOnLinkedIn
+            );
+
 
         if (capturedTexture != null)
         {
             Destroy(capturedTexture);
             capturedTexture = null;
         }
+
 
         capturedPngBytes = null;
     }

@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public class AirHockeyGameManager : MonoBehaviour
@@ -7,6 +8,16 @@ public class AirHockeyGameManager : MonoBehaviour
     [Header("Cámaras")]
     [SerializeField] private Camera playerCamera;
     [SerializeField] private Camera hockeyCamera;
+
+    [Header("Interfaz del minijuego")]
+    [Tooltip("Panel o Canvas que contiene el marcador y botón Cerrar.")]
+    [SerializeField] private GameObject gameUI;
+
+    [Tooltip("Texto del marcador del jugador.")]
+    [SerializeField] private TMP_Text playerScoreText;
+
+    [Tooltip("Texto del marcador de la IA.")]
+    [SerializeField] private TMP_Text aiScoreText;
 
     [Header("Scripts del personaje que se desactivan")]
     [SerializeField]
@@ -33,39 +44,32 @@ public class AirHockeyGameManager : MonoBehaviour
     [SerializeField] private Transform aiHome;
 
     [Header("Posiciones del disco")]
-    [Tooltip(
-        "Posición original del disco al comenzar una nueva partida."
-    )]
+    [Tooltip("Posición del disco al iniciar una partida nueva.")]
     [SerializeField] private Transform initialPuckSpawn;
 
-    [Tooltip(
-        "Posición del disco cuando el último punto fue del jugador."
-    )]
+    [Tooltip("Posición del disco después de que anota el jugador.")]
     [SerializeField] private Transform playerPuckSpawn;
 
-    [Tooltip(
-        "Posición del disco cuando el último punto fue de la IA."
-    )]
+    [Tooltip("Posición del disco después de que anota la IA.")]
     [SerializeField] private Transform aiPuckSpawn;
 
     [Header("Configuración")]
     [SerializeField] private KeyCode exitKey =
         KeyCode.Escape;
 
-    [Tooltip(
-        "Tiempo entre el gol y la colocación del nuevo saque."
-    )]
+    [Tooltip("Tiempo entre el gol y el nuevo saque.")]
     [SerializeField] private float goalResetDelay = 0.8f;
 
-    [Tooltip(
-        "Tiempo que espera la IA cuando el disco aparece en su lado."
-    )]
+    [Tooltip("Tiempo que espera la IA cuando el disco aparece en su lado.")]
     [SerializeField] private float aiServeDelay = 2f;
 
     public bool IsPlaying { get; private set; }
 
     public event Action GameStarted;
     public event Action GameStopped;
+
+    private int playerScore;
+    private int aiScore;
 
     private bool[] previousBehaviourStates;
 
@@ -84,8 +88,15 @@ public class AirHockeyGameManager : MonoBehaviour
             hockeyCamera.gameObject.SetActive(false);
         }
 
+        if (gameUI != null)
+        {
+            gameUI.SetActive(false);
+        }
+
         SetPlayerControllerActive(false);
         SetAIControllerActive(false);
+
+        ResetScores();
     }
 
     private void Update()
@@ -98,6 +109,10 @@ public class AirHockeyGameManager : MonoBehaviour
             StopGame();
         }
     }
+
+    // =========================================================
+    // INICIAR PARTIDA
+    // =========================================================
 
     public void StartGame()
     {
@@ -116,8 +131,19 @@ public class AirHockeyGameManager : MonoBehaviour
         Cursor.visible = true;
 
         /*
-         * Toda partida nueva comienza con el disco
-         * en su posición inicial original.
+         * Cada vez que entramos al minijuego
+         * empezamos 0 - 0.
+         */
+        ResetScores();
+
+        if (gameUI != null)
+        {
+            gameUI.SetActive(true);
+        }
+
+        /*
+         * El primer disco aparece en la posición
+         * inicial de la mesa.
          */
         PrepareServe(initialPuckSpawn);
 
@@ -126,6 +152,10 @@ public class AirHockeyGameManager : MonoBehaviour
 
         GameStarted?.Invoke();
     }
+
+    // =========================================================
+    // SALIR DE PARTIDA
+    // =========================================================
 
     public void StopGame()
     {
@@ -140,11 +170,15 @@ public class AirHockeyGameManager : MonoBehaviour
         SetAIControllerActive(false);
 
         /*
-         * Al salir dejamos la mesa preparada para
-         * que la siguiente partida comience desde
-         * la posición inicial.
+         * Dejamos las piezas preparadas para
+         * la siguiente partida.
          */
         PrepareServe(initialPuckSpawn);
+
+        if (gameUI != null)
+        {
+            gameUI.SetActive(false);
+        }
 
         RestorePlayerCamera();
         RestorePlayerBehaviours();
@@ -153,9 +187,22 @@ public class AirHockeyGameManager : MonoBehaviour
         GameStopped?.Invoke();
     }
 
+    /*
+     * Esta función está pensada específicamente
+     * para conectarla al botón Cerrar del Canvas.
+     */
+    public void CloseGameFromUI()
+    {
+        StopGame();
+    }
+
+    // =========================================================
+    // GOLES Y MARCADOR
+    // =========================================================
+
     /// <summary>
-    /// playerScored es true cuando anotó el jugador.
-    /// Es false cuando anotó la IA.
+    /// playerScored = true si anotó el jugador.
+    /// playerScored = false si anotó la IA.
     /// </summary>
     public void RegisterGoal(bool playerScored)
     {
@@ -167,26 +214,64 @@ public class AirHockeyGameManager : MonoBehaviour
 
         if (playerScored)
         {
+            playerScore++;
+
             Debug.Log(
-                "Gol del jugador. El disco aparecerá en el lado del jugador."
+                "Gol del jugador. Marcador: " +
+                playerScore + " - " + aiScore
             );
         }
         else
         {
+            aiScore++;
+
             Debug.Log(
-                "Gol de la IA. El disco aparecerá en el lado de la IA."
+                "Gol de la IA. Marcador: " +
+                playerScore + " - " + aiScore
             );
         }
+
+        UpdateScoreUI();
 
         resetCoroutine = StartCoroutine(
             ResetAfterGoal(playerScored)
         );
     }
 
+    private void ResetScores()
+    {
+        playerScore = 0;
+        aiScore = 0;
+
+        UpdateScoreUI();
+    }
+
+    private void UpdateScoreUI()
+    {
+        if (playerScoreText != null)
+        {
+            playerScoreText.text =
+                playerScore.ToString();
+        }
+
+        if (aiScoreText != null)
+        {
+            aiScoreText.text =
+                aiScore.ToString();
+        }
+    }
+
+    // =========================================================
+    // REINICIO DESPUÉS DE GOL
+    // =========================================================
+
     private IEnumerator ResetAfterGoal(
         bool playerScored
     )
     {
+        /*
+         * Congelamos temporalmente ambos controles.
+         */
         SetPlayerControllerActive(false);
         SetAIControllerActive(false);
 
@@ -200,10 +285,13 @@ public class AirHockeyGameManager : MonoBehaviour
         );
 
         /*
-         * Si anotó el jugador, el disco queda del
-         * lado del jugador.
+         * Como definimos anteriormente:
          *
-         * Si anotó la IA, queda del lado de la IA.
+         * Jugador anotó
+         * → disco aparece en el lado del jugador.
+         *
+         * IA anotó
+         * → disco aparece en el lado de la IA.
          */
         Transform nextSpawn = playerScored
             ? playerPuckSpawn
@@ -220,18 +308,22 @@ public class AirHockeyGameManager : MonoBehaviour
         }
 
         /*
-         * El jugador recupera el control
+         * El jugador recupera siempre el control
          * inmediatamente.
          */
         SetPlayerControllerActive(true);
 
-        bool puckIsOnAISide = !playerScored;
+        bool puckIsOnAISide =
+            !playerScored;
 
         if (puckIsOnAISide)
         {
             /*
-             * La IA anotó y el disco apareció en
-             * su lado. Esperamos dos segundos.
+             * La IA anotó.
+             * El disco está ahora de su lado.
+             *
+             * Esperamos 2 segundos antes de
+             * permitirle comenzar.
              */
             yield return new WaitForSeconds(
                 aiServeDelay
@@ -245,16 +337,21 @@ public class AirHockeyGameManager : MonoBehaviour
         else
         {
             /*
-             * El disco apareció del lado del jugador.
-             * La IA puede estar activa, pero solamente
-             * permanecerá en su mitad hasta que el
-             * disco cruce la línea central.
+             * El disco está del lado del jugador.
+             * La IA puede volver a estar activa,
+             * pero su controlador debería mantenerse
+             * en posición de guardia hasta que el
+             * disco entre a su mitad.
              */
             SetAIControllerActive(true);
         }
 
         resetCoroutine = null;
     }
+
+    // =========================================================
+    // POSICIONES DE PIEZAS
+    // =========================================================
 
     private void PrepareServe(
         Transform selectedPuckSpawn
@@ -270,7 +367,9 @@ public class AirHockeyGameManager : MonoBehaviour
             aiHome
         );
 
-        ResetPuck(selectedPuckSpawn);
+        ResetPuck(
+            selectedPuckSpawn
+        );
 
         Physics.SyncTransforms();
     }
@@ -285,19 +384,17 @@ public class AirHockeyGameManager : MonoBehaviour
         Transform finalSpawn =
             selectedSpawn;
 
-        /*
-         * Si falta accidentalmente un spawn de saque,
-         * utilizamos primero la posición inicial.
-         */
         if (finalSpawn == null)
         {
-            finalSpawn = initialPuckSpawn;
+            finalSpawn =
+                initialPuckSpawn;
         }
 
         if (finalSpawn == null)
         {
             Debug.LogWarning(
-                "AirHockeyGameManager: no hay un spawn asignado para el disco."
+                "AirHockeyGameManager: " +
+                "No hay ningún spawn asignado al disco."
             );
 
             puck.StopPuck();
@@ -314,14 +411,23 @@ public class AirHockeyGameManager : MonoBehaviour
         Transform home
     )
     {
-        if (body == null || home == null)
+        if (body == null ||
+            home == null)
+        {
             return;
+        }
 
-        body.linearVelocity = Vector3.zero;
-        body.angularVelocity = Vector3.zero;
+        body.linearVelocity =
+            Vector3.zero;
 
-        body.position = home.position;
-        body.rotation = home.rotation;
+        body.angularVelocity =
+            Vector3.zero;
+
+        body.position =
+            home.position;
+
+        body.rotation =
+            home.rotation;
 
         body.transform.position =
             home.position;
@@ -330,15 +436,18 @@ public class AirHockeyGameManager : MonoBehaviour
             home.rotation;
     }
 
+    // =========================================================
+    // CONTROLADORES HOCKEY
+    // =========================================================
+
     private void SetPlayerControllerActive(
         bool active
     )
     {
         if (playerMalletController != null)
         {
-            playerMalletController.SetControlEnabled(
-                active
-            );
+            playerMalletController
+                .SetControlEnabled(active);
         }
     }
 
@@ -348,20 +457,30 @@ public class AirHockeyGameManager : MonoBehaviour
     {
         if (aiMalletController != null)
         {
-            aiMalletController.SetControlEnabled(
-                active
-            );
+            aiMalletController
+                .SetControlEnabled(active);
         }
     }
+
+    // =========================================================
+    // COROUTINES
+    // =========================================================
 
     private void StopResetCoroutine()
     {
         if (resetCoroutine == null)
             return;
 
-        StopCoroutine(resetCoroutine);
+        StopCoroutine(
+            resetCoroutine
+        );
+
         resetCoroutine = null;
     }
+
+    // =========================================================
+    // PERSONAJE
+    // =========================================================
 
     private void DisablePlayerBehaviours()
     {
@@ -388,7 +507,8 @@ public class AirHockeyGameManager : MonoBehaviour
             previousBehaviourStates[i] =
                 behaviour.enabled;
 
-            behaviour.enabled = false;
+            behaviour.enabled =
+                false;
         }
     }
 
@@ -417,26 +537,34 @@ public class AirHockeyGameManager : MonoBehaviour
         }
     }
 
+    // =========================================================
+    // CÁMARAS
+    // =========================================================
+
     private void ChangeToHockeyCamera()
     {
         if (playerCamera != null)
         {
             playerCameraWasActive =
-                playerCamera.gameObject.activeSelf;
+                playerCamera
+                    .gameObject
+                    .activeSelf;
 
-            playerCamera.gameObject.SetActive(
-                false
-            );
+            playerCamera
+                .gameObject
+                .SetActive(false);
         }
 
         if (hockeyCamera != null)
         {
             hockeyCameraWasActive =
-                hockeyCamera.gameObject.activeSelf;
+                hockeyCamera
+                    .gameObject
+                    .activeSelf;
 
-            hockeyCamera.gameObject.SetActive(
-                true
-            );
+            hockeyCamera
+                .gameObject
+                .SetActive(true);
         }
     }
 
@@ -444,18 +572,26 @@ public class AirHockeyGameManager : MonoBehaviour
     {
         if (hockeyCamera != null)
         {
-            hockeyCamera.gameObject.SetActive(
-                hockeyCameraWasActive
-            );
+            hockeyCamera
+                .gameObject
+                .SetActive(
+                    hockeyCameraWasActive
+                );
         }
 
         if (playerCamera != null)
         {
-            playerCamera.gameObject.SetActive(
-                playerCameraWasActive
-            );
+            playerCamera
+                .gameObject
+                .SetActive(
+                    playerCameraWasActive
+                );
         }
     }
+
+    // =========================================================
+    // CURSOR
+    // =========================================================
 
     private void SaveCursorState()
     {
@@ -475,6 +611,10 @@ public class AirHockeyGameManager : MonoBehaviour
             previousCursorVisible;
     }
 
+    // =========================================================
+    // UNITY
+    // =========================================================
+
     private void OnDisable()
     {
         if (IsPlaying)
@@ -486,9 +626,15 @@ public class AirHockeyGameManager : MonoBehaviour
     private void OnValidate()
     {
         goalResetDelay =
-            Mathf.Max(0f, goalResetDelay);
+            Mathf.Max(
+                0f,
+                goalResetDelay
+            );
 
         aiServeDelay =
-            Mathf.Max(0f, aiServeDelay);
+            Mathf.Max(
+                0f,
+                aiServeDelay
+            );
     }
 }
