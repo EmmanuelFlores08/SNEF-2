@@ -17,17 +17,14 @@ public class ClothingSlotUI : MonoBehaviour
         if (button == null) button = GetComponent<Button>();
         button.onClick.AddListener(() =>
         {
-            button.onClick.AddListener(() =>
+            if (isLocked)
             {
-                if (isLocked)
-                {
-                    if (UISoundManager.Instance != null)
-                        UISoundManager.Instance.PlayCompraErrada();
-                    return;
-                }
-                onClick?.Invoke(optionIndex);
-            }); 
-                });
+                if (UISoundManager.Instance != null)
+                    UISoundManager.Instance.PlayCompraErrada();
+                return;
+            }
+            onClick?.Invoke(optionIndex);
+        });
     }
 
     public void Setup(int index, Sprite sprite, bool locked, System.Action<int> clickCallback)
