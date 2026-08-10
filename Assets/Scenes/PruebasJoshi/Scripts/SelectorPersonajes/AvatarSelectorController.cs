@@ -40,6 +40,8 @@ public class AvatarSelectorController : MonoBehaviour
 
         if (avatarCards.Length > 0)
             SelectAvatar(avatarCards[0]);
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
     private void InitCards()
@@ -134,6 +136,10 @@ public class AvatarSelectorController : MonoBehaviour
 
         yield return null;
 
-        SceneManager.LoadScene(nextSceneName);
+        // Usa el SceneLoader (pantalla de carga con barra) si existe
+        if (SceneLoader.Instance != null)
+            SceneLoader.Instance.LoadScene(nextSceneName);
+        else
+            SceneManager.LoadScene(nextSceneName); // respaldo si no hay SceneLoader
     }
 }
