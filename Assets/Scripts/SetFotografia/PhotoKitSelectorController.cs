@@ -30,6 +30,12 @@ public class PhotoKitSelectorController : MonoBehaviour
     [Header("Posición del avatar en el set")]
     [SerializeField] private Transform avatarPhotoAnchor;
 
+    [Header("Controles táctiles")]
+[SerializeField] private GameObject controlesTactiles;
+
+private bool controlesTactilesEstabanActivos;
+private bool estadoControlesTactilesGuardado;
+
     [Header("Cursor / Cámara")]
     [SerializeField] private CursorLockManager cursorLockManager;
     [SerializeField] private RoomCameraManager roomCameraManager;
@@ -82,52 +88,62 @@ public class PhotoKitSelectorController : MonoBehaviour
         boundCharacter = playerInput.transform;
     }
 
-    public void OpenSelector()
+public void OpenSelector()
+{
+    OcultarControlesTactiles();
+
+    isSelectorOpen = true;
+
+    if (selectorPanel != null)
+        selectorPanel.SetActive(true);
+
+    if (photoPanel != null)
+        photoPanel.SetActive(false);
+
+    SetSetButtonsVisible(false);
+
+    RefreshKitCards();
+
+    SetPlayerControlsEnabled(false);
+    ShowCursor(true);
+
+    if (UISoundManager.Instance != null)
+        UISoundManager.Instance.PlayAbrirMenu();
+}
+
+public void CloseSelector()
+{
+    isSelectorOpen = false;
+
+    if (selectorPanel != null)
+        selectorPanel.SetActive(false);
+
+    if (isInSet)
     {
-        isSelectorOpen = true;
+        // Seguimos dentro del set.
+        // NO restauramos joystick ni controles táctiles.
 
-        if (selectorPanel != null)
-            selectorPanel.SetActive(true);
-
-        if (photoPanel != null)
-            photoPanel.SetActive(false);
-
-        SetSetButtonsVisible(false);
-
-        RefreshKitCards();
-
+        SetSetButtonsVisible(true);
         SetPlayerControlsEnabled(false);
         ShowCursor(true);
 
-        if (UISoundManager.Instance != null)
-            UISoundManager.Instance.PlayAbrirMenu();
+        OcultarControlesTactiles();
     }
-
-    public void CloseSelector()
+    else
     {
-        isSelectorOpen = false;
+        // Cerramos completamente la interfaz
+        // y regresamos al juego normal.
 
-        if (selectorPanel != null)
-            selectorPanel.SetActive(false);
+        SetSetButtonsVisible(false);
+        SetPlayerControlsEnabled(true);
+        ShowCursor(false);
 
-        if (isInSet)
-        {
-            // Si ya estaba dentro del set y cerró el selector,
-            // vuelve a mostrar las acciones del set.
-            SetSetButtonsVisible(true);
-            SetPlayerControlsEnabled(false);
-            ShowCursor(true);
-        }
-        else
-        {
-            SetSetButtonsVisible(false);
-            SetPlayerControlsEnabled(true);
-            ShowCursor(false);
-        }
-
-        if (UISoundManager.Instance != null)
-            UISoundManager.Instance.PlayCerrarMenu();
+        RestaurarControlesTactiles();
     }
+
+    if (UISoundManager.Instance != null)
+        UISoundManager.Instance.PlayCerrarMenu();
+}
 
     private void RefreshKitCards()
     {
@@ -247,6 +263,8 @@ public class PhotoKitSelectorController : MonoBehaviour
             boundMover.ResetToIdle();
 
         MoveCharacterToPhotoAnchor();
+        
+OcultarControlesTactiles();
 
         isInSet = true;
         isSelectorOpen = false;
@@ -273,7 +291,7 @@ public class PhotoKitSelectorController : MonoBehaviour
     {
         if (!isInSet)
             return;
-
+         OcultarControlesTactiles();
         isSelectorOpen = true;
 
         if (selectorPanel != null)
@@ -324,6 +342,7 @@ public class PhotoKitSelectorController : MonoBehaviour
 
         SetPlayerControlsEnabled(true);
         ShowCursor(false);
+        RestaurarControlesTactiles();
     }
 
     private void MoveCharacterToPhotoAnchor()
@@ -430,4 +449,38 @@ public class PhotoKitSelectorController : MonoBehaviour
         if (useKitButton != null)
             useKitButton.onClick.RemoveListener(UseSelectedKit);
     }
+
+    private void OcultarControlesTactiles()
+{
+    if (controlesTactiles == null)
+        return;
+
+    // Guardamos el estado solamente la primera vez.
+    // Así no lo sobrescribimos cuando cambiamos de kit,
+    // abrimos la foto, etc.
+    if (!estadoControlesTactilesGuardado)
+    {
+        controlesTactilesEstabanActivos =
+            controlesTactiles.activeSelf;
+
+        estadoControlesTactilesGuardado = true;
+    }
+
+    controlesTactiles.SetActive(false);
+}
+
+private void RestaurarControlesTactiles()
+{
+    if (controlesTactiles == null)
+        return;
+
+    if (!estadoControlesTactilesGuardado)
+        return;
+
+    controlesTactiles.SetActive(
+        controlesTactilesEstabanActivos
+    );
+
+    estadoControlesTactilesGuardado = false;
+}
 }

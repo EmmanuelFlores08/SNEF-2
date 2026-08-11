@@ -43,6 +43,11 @@ public class TiendaObjetosUI : MonoBehaviour
     [SerializeField] private KitPreviewPanel kitPreviewPanel;
     [SerializeField] private PhotoKitCatalog kitCatalog;
 
+    [Header("Controles táctiles")]
+[SerializeField] private GameObject controlesTactiles;
+
+private bool controlesTactilesEstabanActivos;
+
     [Header("Cursor")]
     [SerializeField] private CursorLockManager cursorLockManager;
 
@@ -251,90 +256,143 @@ public class TiendaObjetosUI : MonoBehaviour
     }
 
     public void AbrirTienda()
+{
+    if (EstaAbierta) return;
+    if (uiTaquilla == null) return;
+
+    EstaAbierta = true;
+
+    // ==========================================
+    // OCULTAR CONTROLES TÁCTILES
+    // ==========================================
+    if (controlesTactiles != null)
     {
-        if (EstaAbierta) return;
-        if (uiTaquilla == null) return;
+        // Guardamos cómo estaban antes de abrir la interfaz.
+        controlesTactilesEstabanActivos = controlesTactiles.activeSelf;
 
-        EstaAbierta = true;
-        uiTaquilla.SetActive(true);
-
-        if (character != null)
-        {
-            CharacterMover mover = character.GetComponent<CharacterMover>();
-            if (mover != null)
-            {
-                mover.ResetToIdle();
-                mover.enabled = false;
-            }
-        }
-        if (playerInput != null) playerInput.enabled = false;
-
-        GuardarOutfitActual();
-
-        if (character != null && previewAnchor != null)
-        {
-            savedPosition = character.transform.position;
-            savedRotation = character.transform.rotation;
-
-            CharacterController cc = character.GetComponent<CharacterController>();
-            if (cc != null) cc.enabled = false;
-
-            character.transform.SetPositionAndRotation(previewAnchor.position, previewAnchor.rotation);
-
-            if (cc != null) cc.enabled = true;
-        }
-
-        if (previewRotator != null && character != null)
-            previewRotator.SetTarget(character.transform);
-
-        if (previewCamera != null) previewCamera.gameObject.SetActive(true);
-
-        if (PlayerInventory.Instance != null)
-            ActualizarSaldo(PlayerInventory.Instance.Coins);
-
-        RefrescarCategorias();
-        LimpiarSeleccion();
-
-        if (abrirSiempreEnPersonaje) MostrarPanelPersonaje();
-        else MostrarPanelActual();
-
-        if (cursorLockManager != null) cursorLockManager.SetInterfaceMode(true);
+        controlesTactiles.SetActive(false);
     }
 
-    public void CerrarTienda()
+    uiTaquilla.SetActive(true);
+
+    if (character != null)
     {
-        if (!EstaAbierta) return;
-        
-        EstaAbierta = false;
+        CharacterMover mover = character.GetComponent<CharacterMover>();
 
-        RestaurarOutfitOriginal();
-
-        if (uiTaquilla != null) uiTaquilla.SetActive(false);
-        if (previewCamera != null) previewCamera.gameObject.SetActive(false);
-        if (previewRotator != null) previewRotator.SetTarget(null);
-
-        if (character != null && previewAnchor != null)
+        if (mover != null)
         {
-            CharacterController cc = character.GetComponent<CharacterController>();
-            if (cc != null) cc.enabled = false;
-
-            character.transform.SetPositionAndRotation(savedPosition, savedRotation);
-
-            if (cc != null) cc.enabled = true;
+            mover.ResetToIdle();
+            mover.enabled = false;
         }
-
-        if (character != null)
-        {
-            CharacterMover mover = character.GetComponent<CharacterMover>();
-            if (mover != null) mover.enabled = true;
-        }
-        if (playerInput != null) playerInput.enabled = true;
-
-        if (cursorLockManager != null) cursorLockManager.SetInterfaceMode(false);
-        
-        if (UISoundManager.Instance != null)
-            UISoundManager.Instance.PlayCerrarMenu();
     }
+
+    if (playerInput != null)
+        playerInput.enabled = false;
+
+    GuardarOutfitActual();
+
+    if (character != null && previewAnchor != null)
+    {
+        savedPosition = character.transform.position;
+        savedRotation = character.transform.rotation;
+
+        CharacterController cc =
+            character.GetComponent<CharacterController>();
+
+        if (cc != null)
+            cc.enabled = false;
+
+        character.transform.SetPositionAndRotation(
+            previewAnchor.position,
+            previewAnchor.rotation
+        );
+
+        if (cc != null)
+            cc.enabled = true;
+    }
+
+    if (previewRotator != null && character != null)
+        previewRotator.SetTarget(character.transform);
+
+    if (previewCamera != null)
+        previewCamera.gameObject.SetActive(true);
+
+    if (PlayerInventory.Instance != null)
+        ActualizarSaldo(PlayerInventory.Instance.Coins);
+
+    RefrescarCategorias();
+    LimpiarSeleccion();
+
+    if (abrirSiempreEnPersonaje)
+        MostrarPanelPersonaje();
+    else
+        MostrarPanelActual();
+
+    if (cursorLockManager != null)
+        cursorLockManager.SetInterfaceMode(true);
+}
+   public void CerrarTienda()
+{
+    if (!EstaAbierta) return;
+
+    EstaAbierta = false;
+
+    RestaurarOutfitOriginal();
+
+    if (uiTaquilla != null)
+        uiTaquilla.SetActive(false);
+
+    if (previewCamera != null)
+        previewCamera.gameObject.SetActive(false);
+
+    if (previewRotator != null)
+        previewRotator.SetTarget(null);
+
+    if (character != null && previewAnchor != null)
+    {
+        CharacterController cc =
+            character.GetComponent<CharacterController>();
+
+        if (cc != null)
+            cc.enabled = false;
+
+        character.transform.SetPositionAndRotation(
+            savedPosition,
+            savedRotation
+        );
+
+        if (cc != null)
+            cc.enabled = true;
+    }
+
+    if (character != null)
+    {
+        CharacterMover mover =
+            character.GetComponent<CharacterMover>();
+
+        if (mover != null)
+            mover.enabled = true;
+    }
+
+    if (playerInput != null)
+        playerInput.enabled = true;
+
+    if (cursorLockManager != null)
+        cursorLockManager.SetInterfaceMode(false);
+
+    // ==========================================
+    // RESTAURAR CONTROLES TÁCTILES
+    // ==========================================
+    if (controlesTactiles != null)
+    {
+        controlesTactiles.SetActive(
+            controlesTactilesEstabanActivos
+        );
+    }
+
+    if (UISoundManager.Instance != null)
+        UISoundManager.Instance.PlayCerrarMenu();
+}
 
     private void GuardarOutfitActual()
     {

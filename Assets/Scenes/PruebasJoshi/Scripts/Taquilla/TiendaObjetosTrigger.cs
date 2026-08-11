@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TiendaObjetosTrigger : MonoBehaviour
 {
@@ -8,6 +9,9 @@ public class TiendaObjetosTrigger : MonoBehaviour
 
     [Tooltip("La imagen completa que muestra E + Comprar objetos.")]
     [SerializeField] private GameObject promptPresionarE;
+
+    [Tooltip("Botón del mismo prompt. En móvil servirá para abrir la tienda tocándolo.")]
+    [SerializeField] private Button botonPrompt;
 
     [Header("Configuración")]
     [SerializeField] private string tagJugador = "Player";
@@ -20,6 +24,22 @@ public class TiendaObjetosTrigger : MonoBehaviour
 
     private bool JugadorDentro => collidersJugador.Count > 0;
 
+    private void Awake()
+    {
+        // Si no se asignó manualmente, intentamos encontrar
+        // el Button automáticamente dentro del prompt.
+        if (botonPrompt == null && promptPresionarE != null)
+        {
+            botonPrompt = promptPresionarE.GetComponent<Button>();
+
+            if (botonPrompt == null)
+                botonPrompt = promptPresionarE.GetComponentInChildren<Button>(true);
+        }
+
+        if (botonPrompt != null)
+            botonPrompt.onClick.AddListener(AbrirDesdePrompt);
+    }
+
     private void Start()
     {
         ActualizarPrompt();
@@ -29,20 +49,53 @@ public class TiendaObjetosTrigger : MonoBehaviour
     {
         ActualizarPrompt();
 
-        if (!JugadorDentro)
+        if (!PuedeAbrir())
             return;
 
+        // PC / teclado
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            AbrirInterfaz();
+        }
+    }
+
+    /// <summary>
+    /// Se ejecuta al tocar/presionar el prompt.
+    /// Ideal para celular y tablet.
+    /// </summary>
+    public void AbrirDesdePrompt()
+    {
+        if (!PuedeAbrir())
+            return;
+
+        AbrirInterfaz();
+    }
+
+    /// <summary>
+    /// Tanto E como el botón terminan llegando aquí.
+    /// </summary>
+    private void AbrirInterfaz()
+    {
         if (tiendaObjetosUI == null)
             return;
 
-        if (tiendaObjetosUI.EstaAbierta)
-            return;
+        tiendaObjetosUI.AbrirTienda();
 
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            tiendaObjetosUI.AbrirTienda();
-            ActualizarPrompt();
-        }
+        ActualizarPrompt();
+    }
+
+    private bool PuedeAbrir()
+    {
+        if (!JugadorDentro)
+            return false;
+
+        if (tiendaObjetosUI == null)
+            return false;
+
+        if (tiendaObjetosUI.EstaAbierta)
+            return false;
+
+        return true;
     }
 
     private void OnTriggerEnter(Collider other)
@@ -51,6 +104,7 @@ public class TiendaObjetosTrigger : MonoBehaviour
             return;
 
         collidersJugador.Add(other);
+
         ActualizarPrompt();
     }
 
@@ -97,6 +151,9 @@ public class TiendaObjetosTrigger : MonoBehaviour
 
         if (promptPresionarE.activeSelf != debeMostrarse)
             promptPresionarE.SetActive(debeMostrarse);
+
+        if (botonPrompt != null)
+            botonPrompt.interactable = debeMostrarse;
     }
 
     private void OnDisable()
@@ -105,5 +162,11 @@ public class TiendaObjetosTrigger : MonoBehaviour
 
         if (promptPresionarE != null)
             promptPresionarE.SetActive(false);
+    }
+
+    private void OnDestroy()
+    {
+        if (botonPrompt != null)
+            botonPrompt.onClick.RemoveListener(AbrirDesdePrompt);
     }
 }
