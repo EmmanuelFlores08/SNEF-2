@@ -1,5 +1,10 @@
 mergeInto(LibraryManager.library, {
 
+    // =========================================================
+    // DESCARGAR PNG
+    // Solo se ejecuta al presionar "Descargar fotografía"
+    // =========================================================
+
     SNEF_DownloadPNG: function(dataPtr, dataLength, fileNamePtr) {
 
         var fileName = UTF8ToString(fileNamePtr);
@@ -34,6 +39,12 @@ mergeInto(LibraryManager.library, {
     },
 
 
+    // =========================================================
+    // COMPARTIR PNG
+    // NO descarga la imagen.
+    // Intenta compartir exactamente el PNG generado por Unity.
+    // =========================================================
+
     SNEF_SharePNG: function(
         dataPtr,
         dataLength,
@@ -48,10 +59,21 @@ mergeInto(LibraryManager.library, {
         var text = UTF8ToString(textPtr);
         var network = UTF8ToString(networkPtr);
 
+        console.log(
+            "SNEF: intentando compartir fotografía en " +
+            network
+        );
+
+
+        // -----------------------------------------------------
+        // CONVERTIR LOS BYTES DE UNITY EN UN ARCHIVO PNG REAL
+        // -----------------------------------------------------
+
         var bytes = HEAPU8.slice(
             dataPtr,
             dataPtr + dataLength
         );
+
 
         var file = new File(
             [bytes],
@@ -62,138 +84,117 @@ mergeInto(LibraryManager.library, {
             }
         );
 
-        var shareData = {
-            title: title,
-            text: text,
-            files: [file]
-        };
 
+        // -----------------------------------------------------
+        // COMPROBAR WEB SHARE
+        // -----------------------------------------------------
 
-        // ---------------------------------------------------
-        // WEB SHARE API
-        // ---------------------------------------------------
+        if (!navigator.share) {
 
-        if (
-            navigator.share &&
-            navigator.canShare &&
-            navigator.canShare({ files: [file] })
-        ) {
+            console.warn(
+                "SNEF: Este navegador no soporta navigator.share()."
+            );
 
-            navigator.share(shareData)
-                .then(function () {
-
-                    console.log(
-                        "Fotografía compartida correctamente."
-                    );
-
-                })
-                .catch(function (error) {
-
-                    /*
-                     * AbortError significa normalmente que
-                     * el usuario cerró el menú de compartir.
-                     */
-
-                    if (error.name !== "AbortError") {
-
-                        console.warn(
-                            "No se pudo compartir la fotografía:",
-                            error
-                        );
-                    }
-
-                });
+            alert(
+                "Tu navegador no permite compartir la fotografía directamente. " +
+                "Puedes usar el botón Descargar fotografía."
+            );
 
             return;
         }
 
 
-        // ---------------------------------------------------
-        // FALLBACK
-        // ---------------------------------------------------
+        // -----------------------------------------------------
+        // COMPROBAR SI PUEDE COMPARTIR ARCHIVOS
+        // -----------------------------------------------------
 
-        console.warn(
-            "Este navegador no permite compartir archivos directamente. " +
-            "Se descargará la fotografía."
-        );
+        if (navigator.canShare) {
 
-        var fallbackBlob = new Blob(
-            [bytes],
-            { type: "image/png" }
-        );
+            var canShareFile = false;
 
-        var fallbackUrl =
-            URL.createObjectURL(fallbackBlob);
+            try {
 
-        var fallbackLink =
-            document.createElement("a");
+                canShareFile = navigator.canShare({
+                    files: [file]
+                });
 
-        fallbackLink.href = fallbackUrl;
-        fallbackLink.download = fileName;
-        fallbackLink.style.display = "none";
+            }
+            catch (error) {
 
-        document.body.appendChild(fallbackLink);
-
-        fallbackLink.click();
-
-        document.body.removeChild(fallbackLink);
-
-
-        setTimeout(function () {
-
-            URL.revokeObjectURL(fallbackUrl);
-
-        }, 1000);
-
-
-        // Abrimos además la red seleccionada.
-
-        setTimeout(function () {
-
-            switch (network) {
-
-                case "Instagram":
-
-                    window.open(
-                        "https://www.instagram.com/",
-                        "_blank"
-                    );
-
-                    break;
-
-
-                case "X":
-
-                    window.open(
-                        "https://x.com/compose/post?text=" +
-                        encodeURIComponent(text),
-                        "_blank"
-                    );
-
-                    break;
-
-
-                case "Facebook":
-
-                    window.open(
-                        "https://www.facebook.com/",
-                        "_blank"
-                    );
-
-                    break;
-
-
-                case "LinkedIn":
-
-                    window.open(
-                        "https://www.linkedin.com/feed/",
-                        "_blank"
-                    );
-
-                    break;
+                console.warn(
+                    "SNEF: Error comprobando canShare:",
+                    error
+                );
             }
 
-        }, 250);
+
+            if (!canShareFile) {
+
+                console.warn(
+                    "SNEF: El navegador soporta compartir, " +
+                    "pero no archivos PNG."
+                );
+
+                alert(
+                    "Tu navegador permite compartir contenido, " +
+                    "pero no permite adjuntar esta fotografía. " +
+                    "Puedes descargarla manualmente."
+                );
+
+                return;
+            }
+        }
+
+
+        // -----------------------------------------------------
+        // COMPARTIR LA FOTO REAL
+        // -----------------------------------------------------
+
+        var shareData = {
+            files: [file],
+            title: title,
+            text: text
+        };
+
+
+        navigator.share(shareData)
+
+            .then(function () {
+
+                console.log(
+                    "SNEF: fotografía enviada al menú de compartir."
+                );
+
+            })
+
+            .catch(function (error) {
+
+                // El usuario simplemente cerró el menú.
+                if (error.name === "AbortError") {
+
+                    console.log(
+                        "SNEF: el usuario canceló compartir."
+                    );
+
+                    return;
+                }
+
+
+                console.error(
+                    "SNEF: error compartiendo fotografía:",
+                    error
+                );
+
+
+                if (error.name === "NotAllowedError") {
+
+                    console.warn(
+                        "SNEF: navigator.share fue bloqueado. " +
+                        "Comprueba HTTPS y permisos del iframe."
+                    );
+
+                }
+            });
     }
 
 });
