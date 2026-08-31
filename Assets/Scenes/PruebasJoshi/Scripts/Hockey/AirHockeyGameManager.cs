@@ -63,6 +63,13 @@ public class AirHockeyGameManager : MonoBehaviour
     [Tooltip("Tiempo que espera la IA cuando el disco aparece en su lado.")]
     [SerializeField] private float aiServeDelay = 2f;
 
+    [Header("Controles móviles")]
+[Tooltip("Objeto raíz que contiene joystick y controles táctiles del jugador.")]
+[SerializeField] private GameObject controlesTactiles;
+
+private bool controlesTactilesEstabanActivos;
+private bool estadoControlesTactilesGuardado;
+
     public bool IsPlaying { get; private set; }
 
     public event Action GameStarted;
@@ -114,78 +121,70 @@ public class AirHockeyGameManager : MonoBehaviour
     // INICIAR PARTIDA
     // =========================================================
 
-    public void StartGame()
+public void StartGame()
+{
+    if (IsPlaying)
+        return;
+
+    IsPlaying = true;
+
+    OcultarControlesTactiles();
+
+    StopResetCoroutine();
+
+    SaveCursorState();
+    DisablePlayerBehaviours();
+    ChangeToHockeyCamera();
+
+    Cursor.lockState = CursorLockMode.None;
+    Cursor.visible = true;
+
+    ResetScores();
+
+    if (gameUI != null)
     {
-        if (IsPlaying)
-            return;
-
-        IsPlaying = true;
-
-        StopResetCoroutine();
-
-        SaveCursorState();
-        DisablePlayerBehaviours();
-        ChangeToHockeyCamera();
-
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-
-        /*
-         * Cada vez que entramos al minijuego
-         * empezamos 0 - 0.
-         */
-        ResetScores();
-
-        if (gameUI != null)
-        {
-            gameUI.SetActive(true);
-        }
-
-        /*
-         * El primer disco aparece en la posición
-         * inicial de la mesa.
-         */
-        PrepareServe(initialPuckSpawn);
-
-        SetPlayerControllerActive(true);
-        SetAIControllerActive(true);
-
-        GameStarted?.Invoke();
+        gameUI.SetActive(true);
     }
+
+    PrepareServe(initialPuckSpawn);
+
+    SetPlayerControllerActive(true);
+    SetAIControllerActive(true);
+
+    GameStarted?.Invoke();
+}
 
     // =========================================================
     // SALIR DE PARTIDA
     // =========================================================
 
-    public void StopGame()
+public void StopGame()
+{
+    if (!IsPlaying)
+        return;
+
+    IsPlaying = false;
+
+    StopResetCoroutine();
+
+    SetPlayerControllerActive(false);
+    SetAIControllerActive(false);
+
+    PrepareServe(initialPuckSpawn);
+
+    if (gameUI != null)
     {
-        if (!IsPlaying)
-            return;
-
-        IsPlaying = false;
-
-        StopResetCoroutine();
-
-        SetPlayerControllerActive(false);
-        SetAIControllerActive(false);
-
-        /*
-         * Dejamos las piezas preparadas para
-         * la siguiente partida.
-         */
-        PrepareServe(initialPuckSpawn);
-
-        if (gameUI != null)
-        {
-            gameUI.SetActive(false);
-        }
-
-        RestorePlayerCamera();
-        RestorePlayerBehaviours();
-        RestoreCursorState();
-
-        GameStopped?.Invoke();
+        gameUI.SetActive(false);
     }
+
+    RestorePlayerCamera();
+    RestorePlayerBehaviours();
+    RestoreCursorState();
+
+    RestaurarControlesTactiles();
+
+    GameStopped?.Invoke();
+}
 
     /*
      * Esta función está pensada específicamente
@@ -637,4 +636,40 @@ public class AirHockeyGameManager : MonoBehaviour
                 aiServeDelay
             );
     }
+    // =========================================================
+// CONTROLES MÓVILES
+// =========================================================
+
+private void OcultarControlesTactiles()
+{
+    if (controlesTactiles == null)
+        return;
+
+    // Guardamos su estado antes de entrar al hockey.
+    // Esto evita activarlos accidentalmente en PC.
+    if (!estadoControlesTactilesGuardado)
+    {
+        controlesTactilesEstabanActivos =
+            controlesTactiles.activeSelf;
+
+        estadoControlesTactilesGuardado = true;
+    }
+
+    controlesTactiles.SetActive(false);
+}
+
+private void RestaurarControlesTactiles()
+{
+    if (controlesTactiles == null)
+        return;
+
+    if (!estadoControlesTactilesGuardado)
+        return;
+
+    controlesTactiles.SetActive(
+        controlesTactilesEstabanActivos
+    );
+
+    estadoControlesTactilesGuardado = false;
+}
 }

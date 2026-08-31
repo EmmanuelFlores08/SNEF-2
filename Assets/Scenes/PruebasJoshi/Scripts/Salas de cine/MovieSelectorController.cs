@@ -26,6 +26,10 @@ public class MovieSelectorController : MonoBehaviour
     [SerializeField] private MonoBehaviour[] componentsToDisableWhileOpen;
     [SerializeField] private Rigidbody playerRigidbody;
 
+    [Header("Controles móviles")]
+    [Tooltip("Objeto raíz que contiene joystick y controles táctiles del jugador.")]
+    [SerializeField] private GameObject controlesTactiles;
+
     [Header("Opciones")]
     [SerializeField] private bool closeWithEscape = true;
 
@@ -35,25 +39,44 @@ public class MovieSelectorController : MonoBehaviour
     [Header("Cámara cine / trivia")]
     [SerializeField] private CinemaMainCameraMover cinemaCameraMover;
 
+
     private MovieCardUI selectedMovie;
 
-  private bool isSelectorOpen;
-private bool isWatching;
-private bool isTriviaOpen;
+    private bool isSelectorOpen;
+    private bool isWatching;
+    private bool isTriviaOpen;
 
-public bool IsCinemaInteractionBusy => isSelectorOpen || isWatching || isTriviaOpen;
+    public bool IsCinemaInteractionBusy =>
+        isSelectorOpen ||
+        isWatching ||
+        isTriviaOpen;
 
-private MonoBehaviour boundPlayerInput;
-private CharacterMover boundMover;
+
+    private MonoBehaviour boundPlayerInput;
+    private CharacterMover boundMover;
+    private Behaviour boundCameraComponent;
 
     private Button stopWatchingButtonComponent;
+
+
+    // =========================================================
+    // CONTROLES TÁCTILES
+    // =========================================================
+
+    private bool controlesTactilesEstabanActivos;
+    private bool estadoControlesTactilesGuardado;
+
+
+    // =========================================================
+    // START
+    // =========================================================
 
     private void Start()
     {
         InitCards();
         InitButtons();
 
-        if (movieCards.Length > 0)
+        if (movieCards != null && movieCards.Length > 0)
             SelectMovie(movieCards[0]);
 
         if (selectorPanel != null)
@@ -69,14 +92,32 @@ private CharacterMover boundMover;
             movieScreenPlayer.ClearScreen();
     }
 
+
+    // =========================================================
+    // UPDATE
+    // =========================================================
+
     private void Update()
     {
-        if (isSelectorOpen && closeWithEscape && Input.GetKeyDown(KeyCode.Escape))
+        if (isSelectorOpen &&
+            closeWithEscape &&
+            Input.GetKeyDown(KeyCode.Escape))
+        {
             CloseSelector();
+        }
 
-        if ((isWatching || isTriviaOpen) && closeWithEscape && Input.GetKeyDown(KeyCode.Escape))
+        if ((isWatching || isTriviaOpen) &&
+            closeWithEscape &&
+            Input.GetKeyDown(KeyCode.Escape))
+        {
             StopWatching();
+        }
     }
+
+
+    // =========================================================
+    // BOTONES
+    // =========================================================
 
     private void InitButtons()
     {
@@ -88,29 +129,52 @@ private CharacterMover boundMover;
 
         if (stopWatchingButton != null)
         {
-            stopWatchingButtonComponent = stopWatchingButton.GetComponent<Button>();
+            stopWatchingButtonComponent =
+                stopWatchingButton.GetComponent<Button>();
 
             if (stopWatchingButtonComponent == null)
-                stopWatchingButtonComponent = stopWatchingButton.GetComponentInChildren<Button>(true);
+            {
+                stopWatchingButtonComponent =
+                    stopWatchingButton.GetComponentInChildren<Button>(true);
+            }
 
             if (stopWatchingButtonComponent != null)
             {
-                stopWatchingButtonComponent.onClick.RemoveListener(StopWatching);
-                stopWatchingButtonComponent.onClick.AddListener(StopWatching);
+                stopWatchingButtonComponent.onClick.RemoveListener(
+                    StopWatching
+                );
+
+                stopWatchingButtonComponent.onClick.AddListener(
+                    StopWatching
+                );
             }
             else
             {
-                Debug.LogWarning("MovieSelectorController: El objeto asignado en Stop Watching Button no tiene componente Button.");
+                Debug.LogWarning(
+                    "MovieSelectorController: El objeto asignado " +
+                    "en Stop Watching Button no tiene componente Button."
+                );
             }
         }
         else
         {
-            Debug.LogWarning("MovieSelectorController: No se asignó Stop Watching Button en el inspector.");
+            Debug.LogWarning(
+                "MovieSelectorController: No se asignó " +
+                "Stop Watching Button en el inspector."
+            );
         }
     }
 
+
+    // =========================================================
+    // CARDS
+    // =========================================================
+
     private void InitCards()
     {
+        if (movieCards == null)
+            return;
+
         foreach (MovieCardUI card in movieCards)
         {
             if (card == null)
@@ -121,7 +185,10 @@ private CharacterMover boundMover;
         }
     }
 
-    private Behaviour boundCameraComponent;
+
+    // =========================================================
+    // JUGADOR
+    // =========================================================
 
     public void BindPlayerInput(MonoBehaviour playerInput)
     {
@@ -129,20 +196,35 @@ private CharacterMover boundMover;
 
         if (playerInput != null)
         {
-            boundMover = playerInput.GetComponent<CharacterMover>();
+            boundMover =
+                playerInput.GetComponent<CharacterMover>();
 
-            MovePlayerInput mpi = playerInput as MovePlayerInput;
+            MovePlayerInput mpi =
+                playerInput as MovePlayerInput;
+
             if (mpi != null && mpi.Camera != null)
                 boundCameraComponent = mpi.Camera;
 
-            Debug.Log($"BindPlayerInput: mpi={(mpi != null ? "OK" : "NULL")} | camara={(boundCameraComponent != null ? boundCameraComponent.name : "NULL")}");
+            Debug.Log(
+                $"BindPlayerInput: " +
+                $"mpi={(mpi != null ? "OK" : "NULL")} | " +
+                $"camara={(boundCameraComponent != null ? boundCameraComponent.name : "NULL")}"
+            );
         }
     }
+
+
+    // =========================================================
+    // ABRIR SELECTOR
+    // =========================================================
 
     public void OpenSelector()
     {
         if (isTriviaOpen)
             return;
+
+        // Ocultamos joystick y controles móviles.
+        OcultarControlesTactiles();
 
         isSelectorOpen = true;
 
@@ -158,9 +240,17 @@ private CharacterMover boundMover;
         SetPlayerControlsEnabled(false);
         ShowCursor(true);
 
-        Debug.Log($"OpenSelector llamado. boundPlayerInput={(boundPlayerInput != null ? "OK" : "NULL")} | components={componentsToDisableWhileOpen.Length}");
-        // ... resto
+        Debug.Log(
+            $"OpenSelector llamado. " +
+            $"boundPlayerInput={(boundPlayerInput != null ? "OK" : "NULL")} | " +
+            $"components={(componentsToDisableWhileOpen != null ? componentsToDisableWhileOpen.Length : 0)}"
+        );
     }
+
+
+    // =========================================================
+    // CERRAR SELECTOR
+    // =========================================================
 
     public void CloseSelector()
     {
@@ -173,11 +263,19 @@ private CharacterMover boundMover;
         {
             SetPlayerControlsEnabled(true);
             ShowCursor(false);
+
+            // Ya regresamos completamente al juego.
+            RestaurarControlesTactiles();
         }
 
         if (UISoundManager.Instance != null)
             UISoundManager.Instance.PlayCerrarMenu();
     }
+
+
+    // =========================================================
+    // SELECCIONAR PELÍCULA
+    // =========================================================
 
     public void SelectMovie(MovieCardUI movieCard)
     {
@@ -191,17 +289,30 @@ private CharacterMover boundMover;
             UISoundManager.Instance.PlaySeleccion();
 
         selectedMovie = movieCard;
+
         selectedMovie.SetSelected(true);
         selectedMovie.PlaySelectionAnimation();
     }
+
+
+    // =========================================================
+    // VER PELÍCULA
+    // =========================================================
 
     private void WatchSelectedMovie()
     {
         if (selectedMovie == null)
         {
-            Debug.LogWarning("MovieSelectorController: No hay película seleccionada.");
+            Debug.LogWarning(
+                "MovieSelectorController: No hay película seleccionada."
+            );
+
             return;
         }
+
+        // Nos aseguramos de que los controles móviles
+        // permanezcan ocultos durante la película.
+        OcultarControlesTactiles();
 
         if (movieScreenPlayer != null)
             movieScreenPlayer.PlayMovie(selectedMovie);
@@ -237,6 +348,11 @@ private CharacterMover boundMover;
             UISoundManager.Instance.PausarMusica();
     }
 
+
+    // =========================================================
+    // ABRIR TRIVIA
+    // =========================================================
+
     public void OpenTriviaForMovie(MovieCardUI movieCard)
     {
         if (movieCard == null)
@@ -244,15 +360,27 @@ private CharacterMover boundMover;
 
         if (movieTriviaController == null)
         {
-            Debug.LogWarning("MovieSelectorController: Falta asignar MovieTriviaController.");
+            Debug.LogWarning(
+                "MovieSelectorController: Falta asignar MovieTriviaController."
+            );
+
             return;
         }
 
-        if (movieCard.TriviaData == null || movieCard.TriviaData.questions == null || movieCard.TriviaData.questions.Count == 0)
+        if (movieCard.TriviaData == null ||
+            movieCard.TriviaData.questions == null ||
+            movieCard.TriviaData.questions.Count == 0)
         {
-            Debug.LogWarning($"MovieSelectorController: La película {movieCard.MovieId} no tiene trivia configurada.");
+            Debug.LogWarning(
+                $"MovieSelectorController: La película " +
+                $"{movieCard.MovieId} no tiene trivia configurada."
+            );
+
             return;
         }
+
+        // La trivia también cuenta como interfaz.
+        OcultarControlesTactiles();
 
         SelectMovie(movieCard);
 
@@ -285,9 +413,20 @@ private CharacterMover boundMover;
         );
     }
 
-    private void HandleTriviaFinished(int correctAnswers, int totalQuestions)
+
+    // =========================================================
+    // TERMINAR TRIVIA
+    // =========================================================
+
+    private void HandleTriviaFinished(
+        int correctAnswers,
+        int totalQuestions
+    )
     {
-        Debug.Log($"MovieSelectorController: Trivia terminada. Resultado: {correctAnswers}/{totalQuestions}");
+        Debug.Log(
+            $"MovieSelectorController: Trivia terminada. " +
+            $"Resultado: {correctAnswers}/{totalQuestions}"
+        );
 
         isTriviaOpen = false;
         isWatching = false;
@@ -308,6 +447,9 @@ private CharacterMover boundMover;
         SetPlayerControlsEnabled(true);
         ShowCursor(false);
 
+        // Regresamos al juego normal.
+        RestaurarControlesTactiles();
+
         if (UISoundManager.Instance != null)
             UISoundManager.Instance.ReanudarMusica();
 
@@ -318,9 +460,16 @@ private CharacterMover boundMover;
         // - Registrar evento de métricas
     }
 
+
+    // =========================================================
+    // DEJAR DE VER / SALIR
+    // =========================================================
+
     public void StopWatching()
     {
-        Debug.Log("MovieSelectorController: StopWatching ejecutado.");
+        Debug.Log(
+            "MovieSelectorController: StopWatching ejecutado."
+        );
 
         isWatching = false;
         isTriviaOpen = false;
@@ -345,14 +494,67 @@ private CharacterMover boundMover;
             stopWatchingButton.SetActive(false);
 
         if (UISoundManager.Instance != null)
+        {
             UISoundManager.Instance.PlayCerrarMenu();
-
-        if (UISoundManager.Instance != null)
             UISoundManager.Instance.ReanudarMusica();
+        }
 
         SetPlayerControlsEnabled(true);
         ShowCursor(false);
+
+        // Ya terminó completamente la interacción del cine.
+        RestaurarControlesTactiles();
     }
+
+
+    // =========================================================
+    // CONTROLES TÁCTILES
+    // =========================================================
+
+    private void OcultarControlesTactiles()
+    {
+        if (controlesTactiles == null)
+            return;
+
+        /*
+         * Guardamos el estado solamente la primera vez.
+         *
+         * Esto es importante porque podemos pasar:
+         * selector → película → trivia
+         *
+         * sin sobrescribir el estado original.
+         */
+        if (!estadoControlesTactilesGuardado)
+        {
+            controlesTactilesEstabanActivos =
+                controlesTactiles.activeSelf;
+
+            estadoControlesTactilesGuardado = true;
+        }
+
+        controlesTactiles.SetActive(false);
+    }
+
+
+    private void RestaurarControlesTactiles()
+    {
+        if (controlesTactiles == null)
+            return;
+
+        if (!estadoControlesTactilesGuardado)
+            return;
+
+        controlesTactiles.SetActive(
+            controlesTactilesEstabanActivos
+        );
+
+        estadoControlesTactilesGuardado = false;
+    }
+
+
+    // =========================================================
+    // CURSOR
+    // =========================================================
 
     private void ShowCursor(bool show)
     {
@@ -363,34 +565,54 @@ private CharacterMover boundMover;
         else
         {
             Cursor.visible = show;
-            Cursor.lockState = show ? CursorLockMode.None : CursorLockMode.Locked;
+
+            Cursor.lockState = show
+                ? CursorLockMode.None
+                : CursorLockMode.Locked;
         }
     }
 
-private void SetPlayerControlsEnabled(bool enabled)
-{
-    foreach (MonoBehaviour component in componentsToDisableWhileOpen)
+
+    // =========================================================
+    // CONTROLES DEL JUGADOR
+    // =========================================================
+
+    private void SetPlayerControlsEnabled(bool enabled)
     {
-        if (component != null)
-            component.enabled = enabled;
-    }
+        if (componentsToDisableWhileOpen != null)
+        {
+            foreach (
+                MonoBehaviour component
+                in componentsToDisableWhileOpen
+            )
+            {
+                if (component != null)
+                    component.enabled = enabled;
+            }
+        }
 
-    if (boundPlayerInput != null)
-        boundPlayerInput.enabled = enabled;
+        if (boundPlayerInput != null)
+            boundPlayerInput.enabled = enabled;
 
-    if (boundCameraComponent != null)
-        boundCameraComponent.enabled = enabled;
+        if (boundCameraComponent != null)
+            boundCameraComponent.enabled = enabled;
 
-    Debug.Log($"SetPlayerControlsEnabled({enabled}): input={(boundPlayerInput != null ? "OK" : "NULL")} | camara={(boundCameraComponent != null ? "OK" : "NULL")}");
+        Debug.Log(
+            $"SetPlayerControlsEnabled({enabled}): " +
+            $"input={(boundPlayerInput != null ? "OK" : "NULL")} | " +
+            $"camara={(boundCameraComponent != null ? "OK" : "NULL")}"
+        );
 
-    if (playerRigidbody != null && !enabled)
-    {
+        if (playerRigidbody != null && !enabled)
+        {
 #if UNITY_6000_0_OR_NEWER
-        playerRigidbody.linearVelocity = Vector3.zero;
+            playerRigidbody.linearVelocity = Vector3.zero;
 #else
-        playerRigidbody.velocity = Vector3.zero;
+            playerRigidbody.velocity = Vector3.zero;
 #endif
-        playerRigidbody.angularVelocity = Vector3.zero;
+
+            playerRigidbody.angularVelocity =
+                Vector3.zero;
+        }
     }
-}
 }
