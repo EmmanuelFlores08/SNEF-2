@@ -9,7 +9,11 @@ public class AvatarSelectorController : MonoBehaviour
     [SerializeField] private AvatarCardUI[] avatarCards;
 
     [Header("Preview principal")]
+    [Tooltip("Preview 3D en vivo (como la taquilla). Si se asigna, muestra el modelo real del avatar.")]
+    [SerializeField] private Avatar3DPreview preview3D;
+    [Tooltip("Sprite estático opcional. Puede dejarse vacío si usas el preview 3D.")]
     [SerializeField] private Image avatarPreviewImage;
+    [Tooltip("RectTransform que recibe la animación de bounce (el RawImage del RenderTexture, o la Image).")]
     [SerializeField] private RectTransform avatarPreviewTransform;
 
     [Header("Animación preview")]
@@ -67,11 +71,16 @@ public class AvatarSelectorController : MonoBehaviour
 
     private void UpdatePreview(AvatarCardUI avatarCard)
     {
-        if (avatarPreviewImage == null)
-            return;
+        // Preview 3D en vivo (mismo enfoque que la taquilla de Cine).
+        if (preview3D != null)
+            preview3D.Show(avatarCard.AvatarId);
 
-        avatarPreviewImage.sprite = avatarCard.PreviewSprite;
-        avatarPreviewImage.preserveAspect = true;
+        // Sprite estático opcional (si todavía se usa una imagen).
+        if (avatarPreviewImage != null)
+        {
+            avatarPreviewImage.sprite = avatarCard.PreviewSprite;
+            avatarPreviewImage.preserveAspect = true;
+        }
 
         PlayPreviewBounceAnimation();
     }
@@ -79,7 +88,14 @@ public class AvatarSelectorController : MonoBehaviour
     private void PlayPreviewBounceAnimation()
     {
         if (avatarPreviewTransform == null)
+        {
+            Debug.LogWarning(
+                "AvatarSelectorController: 'Avatar Preview Transform' está vacío, " +
+                "por eso no hay animación. Asígnalo al RectTransform del RawImage " +
+                "que muestra el RenderTexture del avatar."
+            );
             return;
+        }
 
         if (previewAnimationRoutine != null)
             StopCoroutine(previewAnimationRoutine);

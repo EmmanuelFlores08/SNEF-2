@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using Controller;
+using System.Collections;
 using System.Collections.Generic;
 
 public class TiendaObjetosUI : MonoBehaviour
@@ -42,6 +43,17 @@ public class TiendaObjetosUI : MonoBehaviour
     [Header("Preview de kit (set de grabación)")]
     [SerializeField] private KitPreviewPanel kitPreviewPanel;
     [SerializeField] private PhotoKitCatalog kitCatalog;
+
+    [Header("Animación de preview (bounce al seleccionar prenda)")]
+    [Tooltip("RectTransform del RawImage que muestra CharacterPreviewRT.")]
+    [SerializeField] private RectTransform previewBounceTarget;
+    [SerializeField] private float previewStartScale = 0.82f;
+    [SerializeField] private float previewOvershootScale = 1.08f;
+    [SerializeField] private float previewNormalScale = 1f;
+    [SerializeField] private float previewInDuration = 0.12f;
+    [SerializeField] private float previewBounceDuration = 0.16f;
+
+    private Coroutine previewBounceRoutine;
 
     [Header("Controles táctiles")]
 [SerializeField] private GameObject controlesTactiles;
@@ -143,9 +155,12 @@ private bool controlesTactilesEstabanActivos;
         selectedCategory = categoria;
         selectedIndex = index;
 
-        if (categoria.Tipo == ShopCategoryUI.TipoCategoria.Prenda && character != null)
+        if (categoria.Tipo == ShopCategoryUI.TipoCategoria.Prenda)
         {
-            character.SetBodyPart(categoria.BodyPartType, index);
+            if (character != null)
+                character.SetBodyPart(categoria.BodyPartType, index);
+
+            PlayPreviewBounce();
         }
         else if (categoria.Tipo == ShopCategoryUI.TipoCategoria.Kit)
         {
@@ -157,6 +172,50 @@ private bool controlesTactilesEstabanActivos;
         }
 
         ActualizarBotonComprar();
+    }
+
+    // Reproduce el mismo "bounce" de escala que el preview del SelectorAvatar,
+    // esta vez sobre el RawImage que muestra CharacterPreviewRT.
+    private void PlayPreviewBounce()
+    {
+        if (previewBounceTarget == null) return;
+
+        if (previewBounceRoutine != null)
+            StopCoroutine(previewBounceRoutine);
+
+        previewBounceRoutine = StartCoroutine(PreviewBounceRoutine());
+    }
+
+    private IEnumerator PreviewBounceRoutine()
+    {
+        previewBounceTarget.localScale = Vector3.one * previewStartScale;
+
+        yield return ScalePreviewRoutine(previewOvershootScale, previewInDuration);
+        yield return ScalePreviewRoutine(previewNormalScale, previewBounceDuration);
+
+        previewBounceRoutine = null;
+    }
+
+    private IEnumerator ScalePreviewRoutine(float targetScale, float duration)
+    {
+        Vector3 startScale = previewBounceTarget.localScale;
+        Vector3 endScale = Vector3.one * targetScale;
+
+        float elapsed = 0f;
+
+        while (elapsed < duration)
+        {
+            elapsed += Time.unscaledDeltaTime;
+            float t = elapsed / duration;
+
+            t = Mathf.SmoothStep(0f, 1f, t);
+
+            previewBounceTarget.localScale = Vector3.Lerp(startScale, endScale, t);
+
+            yield return null;
+        }
+
+        previewBounceTarget.localScale = endScale;
     }
 
     private void ActualizarBotonComprar()
