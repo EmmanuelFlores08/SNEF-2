@@ -9,6 +9,13 @@ public class MovieScreenPlayer : MonoBehaviour
     [Header("Render Texture de la pantalla")]
     [SerializeField] private RenderTexture screenRenderTexture;
 
+    [Header("Forzar VideoClip (override / respaldo)")]
+    [Tooltip("Si está activo, SIEMPRE reproduce el VideoClip de abajo e ignora la URL. Déjalo DESACTIVADO para usar los URL de cada card.")]
+    [SerializeField] private bool forzarVideoClip = false;
+
+    [Tooltip("Clip que se usa si 'Forzar Video Clip' está activo, o como respaldo cuando una card no tiene URL ni VideoClip. Puedes asignar CondusefVideo03.")]
+    [SerializeField] private VideoClip videoClipForzado;
+
     public bool IsPlaying => videoPlayer != null && videoPlayer.isPlaying;
 
     private void Awake()
@@ -63,23 +70,55 @@ public class MovieScreenPlayer : MonoBehaviour
 
         videoPlayer.Stop();
 
-        if (movie.VideoClip != null)
+        // Override global opcional: reproducir siempre el clip forzado.
+        if (forzarVideoClip)
         {
-            videoPlayer.source = VideoSource.VideoClip;
-            videoPlayer.clip = movie.VideoClip;
+            if (videoClipForzado == null)
+            {
+                Debug.LogError(
+                    "MovieScreenPlayer: 'Forzar VideoClip' está activo pero no se " +
+                    "asignó 'Video Clip Forzado'. Desactívalo para usar los URL, " +
+                    "o arrastra un clip (ej. CondusefVideo03)."
+                );
+                return;
+            }
 
-            Debug.Log($"MovieScreenPlayer: VideoClip asignado para {movie.MovieId}");
+            videoPlayer.source = VideoSource.VideoClip;
+            videoPlayer.url = string.Empty;
+            videoPlayer.clip = videoClipForzado;
+
+            Debug.Log($"MovieScreenPlayer: VideoClip forzado: {videoClipForzado.name}");
         }
+        // Prioridad normal: el URL de la card.
         else if (!string.IsNullOrEmpty(movie.VideoUrl))
         {
             videoPlayer.source = VideoSource.Url;
+            videoPlayer.clip = null;                  // evita que un clip viejo tenga prioridad
             videoPlayer.url = movie.VideoUrl;
 
-            Debug.Log($"MovieScreenPlayer: VideoUrl asignada para {movie.MovieId}: {movie.VideoUrl}");
+            Debug.Log($"MovieScreenPlayer: Reproduciendo URL de {movie.MovieId}: {movie.VideoUrl}");
+        }
+        // Si no hay URL, usa el VideoClip de la card.
+        else if (movie.VideoClip != null)
+        {
+            videoPlayer.source = VideoSource.VideoClip;
+            videoPlayer.url = string.Empty;
+            videoPlayer.clip = movie.VideoClip;
+
+            Debug.Log($"MovieScreenPlayer: VideoClip de la card {movie.MovieId}");
+        }
+        // Último respaldo: el clip forzado (si se asignó).
+        else if (videoClipForzado != null)
+        {
+            videoPlayer.source = VideoSource.VideoClip;
+            videoPlayer.url = string.Empty;
+            videoPlayer.clip = videoClipForzado;
+
+            Debug.Log($"MovieScreenPlayer: Sin URL ni clip en la card; se usa respaldo {videoClipForzado.name}");
         }
         else
         {
-            Debug.LogWarning($"MovieScreenPlayer: La película {movie.MovieId} no tiene VideoClip ni VideoUrl.");
+            Debug.LogWarning($"MovieScreenPlayer: La película {movie.MovieId} no tiene URL ni VideoClip.");
             return;
         }
 
