@@ -6,6 +6,9 @@ public class KitPreviewPanel : MonoBehaviour
     [Header("Imagen del fondo grande")]
     [SerializeField] private Image backgroundImage;
 
+    [Header("Logo del kit")]
+    [SerializeField] private Image logoImage;
+
     [Header("Imágenes de los objetos del kit")]
     [SerializeField] private Image[] objectImages; // 2 imágenes (o las que tenga el kit)
 
@@ -19,6 +22,14 @@ public class KitPreviewPanel : MonoBehaviour
             backgroundImage.sprite = kit.backgroundSprite;
             backgroundImage.enabled = (kit.backgroundSprite != null);
             backgroundImage.preserveAspect = true;
+        }
+
+        // Logo
+        if (logoImage != null)
+        {
+            logoImage.sprite = kit.logoSprite;
+            logoImage.enabled = (kit.logoSprite != null);
+            logoImage.preserveAspect = true;
         }
 
         // Objetos
@@ -42,6 +53,8 @@ public class KitPreviewPanel : MonoBehaviour
     public void Clear()
     {
         if (backgroundImage != null) backgroundImage.enabled = false;
+
+        if (logoImage != null) logoImage.enabled = false;
 
         foreach (var img in objectImages)
             if (img != null) img.enabled = false;

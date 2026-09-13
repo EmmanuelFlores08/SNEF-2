@@ -18,6 +18,9 @@ public class PhotoKitSelectorController : MonoBehaviour
     [Header("Botón usar kit")]
     [SerializeField] private Button useKitButton;
 
+    [Header("Botón cerrar ventana")]
+    [SerializeField] private Button closeButton;
+
     [Header("Botones del set")]
     [SerializeField] private GameObject exitButton;
     [SerializeField] private GameObject changeKitButton;
@@ -63,6 +66,9 @@ private bool estadoControlesTactilesGuardado;
     {
         if (useKitButton != null)
             useKitButton.onClick.AddListener(UseSelectedKit);
+
+        if (closeButton != null)
+            closeButton.onClick.AddListener(CloseSelector);
 
         if (selectorPanel != null)
             selectorPanel.SetActive(false);
@@ -448,6 +454,9 @@ OcultarControlesTactiles();
     {
         if (useKitButton != null)
             useKitButton.onClick.RemoveListener(UseSelectedKit);
+
+        if (closeButton != null)
+            closeButton.onClick.RemoveListener(CloseSelector);
     }
 
     private void OcultarControlesTactiles()

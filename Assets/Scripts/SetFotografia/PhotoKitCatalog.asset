@@ -13,21 +13,7 @@ MonoBehaviour:
   m_Name: PhotoKitCatalog
   m_EditorClassIdentifier: 
   kits:
-  - kitId: Kit 1
-    previewSprite: {fileID: 21300000, guid: afeda2c3436ce5f41b0ee8a2296c3f20, type: 3}
-    backgroundSprite: {fileID: 21300000, guid: 5148918e3ddf4d340848afe87f6a7d80, type: 3}
-    objects:
-    - prefab: {fileID: 919132149155446097, guid: 02b504fc19ff80844b155ffd0e712a50, type: 3}
-      localPosition: {x: 1, y: 0, z: 0}
-      localEulerAngles: {x: 0, y: 0, z: 0}
-      previewSprite: {fileID: 21300000, guid: 78910bc71e7e5ce42862dd9dc68fe2fe, type: 3}
-    - prefab: {fileID: 919132149155446097, guid: 6ed5960c492fd554eb706b13af97566b, type: 3}
-      localPosition: {x: -1, y: 0, z: 0}
-      localEulerAngles: {x: 0, y: 0, z: 0}
-      previewSprite: {fileID: 21300000, guid: 078f913ce4ecce749b15501ee6d5807a, type: 3}
-    precio: 0
-    gratuito: 1
-  - kitId: Kit 2
+  - kitId: Kit1
     previewSprite: {fileID: 21300000, guid: 5a1d0cfaed963ff409644cbbcfa2cb03, type: 3}
     backgroundSprite: {fileID: 21300000, guid: f99ed66b1a388bb4ea8b5f9216421e4f, type: 3}
     objects:
@@ -39,47 +25,87 @@ MonoBehaviour:
       localPosition: {x: -1, y: 0, z: 0}
       localEulerAngles: {x: 0, y: 0, z: 0}
       previewSprite: {fileID: 21300000, guid: ba48e934361fe3c4184479554a9b9110, type: 3}
-    precio: 200
-    gratuito: 0
-  - kitId: Kit 3
-    previewSprite: {fileID: 21300000, guid: 879f01813c4fb6947bd1d047179d3058, type: 3}
-    backgroundSprite: {fileID: 21300000, guid: f99ed66b1a388bb4ea8b5f9216421e4f, type: 3}
+    objectsMaterial: {fileID: 0}
+    logoSprite: {fileID: 0}
+    precio: 0
+    gratuito: 1
+  - kitId: STP_Kit
+    previewSprite: {fileID: 21300000, guid: 942d5f9a60707dc499f53f498277dff8, type: 3}
+    backgroundSprite: {fileID: 21300000, guid: a065581949edbb840a85fc0cbf665901, type: 3}
     objects:
-    - prefab: {fileID: 2083870381738153140, guid: d04850c4271b7654abb44813eee8a58a, type: 3}
-      localPosition: {x: 1, y: 0, z: 0}
-      localEulerAngles: {x: 0, y: 0, z: 0}
-      previewSprite: {fileID: 21300000, guid: 97fbf8f588fe98e4ebde6902ac49725e, type: 3}
     - prefab: {fileID: 919132149155446097, guid: 6f61e92a586820f49bc51e88cf42813b, type: 3}
-      localPosition: {x: -1, y: 0, z: 0}
+      localPosition: {x: 1, y: 0, z: 0}
       localEulerAngles: {x: 0, y: 0, z: 0}
       previewSprite: {fileID: 21300000, guid: 3f5c234ec6371214481a608705b415b4, type: 3}
+    - prefab: {fileID: 919132149155446097, guid: b60206b7245c00c4b978c07aaad9110c, type: 3}
+      localPosition: {x: -1, y: 0, z: 0}
+      localEulerAngles: {x: 0, y: 0, z: 0}
+      previewSprite: {fileID: 21300000, guid: d9da4e90d1664b24e982fa0b3c0dde93, type: 3}
+    objectsMaterial: {fileID: 2100000, guid: 38862352a724daf458bf0db4b0babc04, type: 2}
+    logoSprite: {fileID: 21300000, guid: 2bf6eb31abe19654daedc2985a9df599, type: 3}
     precio: 200
     gratuito: 0
-  - kitId: Kit 4
-    previewSprite: {fileID: 21300000, guid: df141c1169523b84ca0045fbc5653bd4, type: 3}
-    backgroundSprite: {fileID: 21300000, guid: f99ed66b1a388bb4ea8b5f9216421e4f, type: 3}
+  - kitId: AMAFORE_Kit
+    previewSprite: {fileID: 21300000, guid: 5b8d13c711863a249a8849e15f4feb22, type: 3}
+    backgroundSprite: {fileID: 21300000, guid: 2588c3dd65e10db449af44cb210a85a9, type: 3}
     objects:
-    - prefab: {fileID: 919132149155446097, guid: 28f7d8ecc31c69e4caa920b9987dfa23, type: 3}
-      localPosition: {x: 1, y: 0, z: 0}
-      localEulerAngles: {x: 0, y: 0, z: 0}
-      previewSprite: {fileID: 21300000, guid: 29b6e0aaf246840408110903422fcc56, type: 3}
+    - prefab: {fileID: 919132149155446097, guid: 00a008e9988516e44831a99a2f96b4aa, type: 3}
+      localPosition: {x: 1.3, y: 0, z: 0}
+      localEulerAngles: {x: 0, y: -60, z: 0}
+      previewSprite: {fileID: 21300000, guid: ba48e934361fe3c4184479554a9b9110, type: 3}
     - prefab: {fileID: 919132149155446097, guid: fb98bc8455e142144968dbba4e20f40e, type: 3}
-      localPosition: {x: -1, y: 0, z: 0}
+      localPosition: {x: -1, y: 0.1, z: 0}
       localEulerAngles: {x: 0, y: 0, z: 0}
       previewSprite: {fileID: 21300000, guid: 1405de9bb09a2904fa9cf30271f6f66a, type: 3}
+    objectsMaterial: {fileID: 2100000, guid: 6f2e65b8cdfd9a74182e92430b87d34e, type: 2}
+    logoSprite: {fileID: 21300000, guid: 0d4e59bd6ba5c834787b0cd737f832df, type: 3}
     precio: 200
     gratuito: 0
-  - kitId: Kit 5
-    previewSprite: {fileID: 21300000, guid: 5dbc449142501d54695da4c1c224e483, type: 3}
-    backgroundSprite: {fileID: 21300000, guid: f99ed66b1a388bb4ea8b5f9216421e4f, type: 3}
+  - kitId: AforeCoppel
+    previewSprite: {fileID: 21300000, guid: 0424d1dd14c5fd9458b67f53db43f87f, type: 3}
+    backgroundSprite: {fileID: 21300000, guid: 91e929a195161fc47b230f82645246b9, type: 3}
     objects:
-    - prefab: {fileID: 919132149155446097, guid: c6aee0a6158891c489cda20ebb1c5e44, type: 3}
+    - prefab: {fileID: 919132149155446097, guid: 6f61e92a586820f49bc51e88cf42813b, type: 3}
       localPosition: {x: 1, y: 0, z: 0}
       localEulerAngles: {x: 0, y: 0, z: 0}
-      previewSprite: {fileID: 21300000, guid: 83708a1618c68fe45bb1ca4f2f0f1f85, type: 3}
-    - prefab: {fileID: 919132149155446097, guid: ca5437f692bdc144f896374cf91d67db, type: 3}
+      previewSprite: {fileID: 21300000, guid: 3f5c234ec6371214481a608705b415b4, type: 3}
+    - prefab: {fileID: 919132149155446097, guid: 00a008e9988516e44831a99a2f96b4aa, type: 3}
       localPosition: {x: -1, y: 0, z: 0}
       localEulerAngles: {x: 0, y: 0, z: 0}
-      previewSprite: {fileID: 21300000, guid: 17193f5835251014199751a6edb6967b, type: 3}
+      previewSprite: {fileID: 21300000, guid: ba48e934361fe3c4184479554a9b9110, type: 3}
+    objectsMaterial: {fileID: 2100000, guid: 4fb28da5f668f8c42af28fb87e646d8b, type: 2}
+    logoSprite: {fileID: 21300000, guid: f2ff987be4bd8ee4e9a65c058430a83d, type: 3}
+    precio: 200
+    gratuito: 0
+  - kitId: Banxico_Kit
+    previewSprite: {fileID: 21300000, guid: dcbf394b857e2ca4a83a85e2db57510f, type: 3}
+    backgroundSprite: {fileID: 21300000, guid: 52a8983df5821ae4990402d294f923f5, type: 3}
+    objects:
+    - prefab: {fileID: 919132149155446097, guid: b60206b7245c00c4b978c07aaad9110c, type: 3}
+      localPosition: {x: 1.4, y: 0, z: 0}
+      localEulerAngles: {x: 0, y: -60, z: 0}
+      previewSprite: {fileID: 21300000, guid: d9da4e90d1664b24e982fa0b3c0dde93, type: 3}
+    - prefab: {fileID: 919132149155446097, guid: 00a008e9988516e44831a99a2f96b4aa, type: 3}
+      localPosition: {x: -1.36, y: 0, z: 0}
+      localEulerAngles: {x: 0, y: 60, z: 0}
+      previewSprite: {fileID: 21300000, guid: ba48e934361fe3c4184479554a9b9110, type: 3}
+    objectsMaterial: {fileID: 2100000, guid: 192dce785a4a4fd43a278d470bab67f1, type: 2}
+    logoSprite: {fileID: 21300000, guid: e408603ca21360f42bda1351e38e43d6, type: 3}
+    precio: 200
+    gratuito: 0
+  - kitId: Finsus_Kit
+    previewSprite: {fileID: 21300000, guid: 465131432b991a349a19126c2471610d, type: 3}
+    backgroundSprite: {fileID: 21300000, guid: 66dc7edcede75f6499887cf6892ecd2f, type: 3}
+    objects:
+    - prefab: {fileID: 919132149155446097, guid: fb98bc8455e142144968dbba4e20f40e, type: 3}
+      localPosition: {x: 1.4, y: 0.1, z: 0}
+      localEulerAngles: {x: 0, y: -60, z: 0}
+      previewSprite: {fileID: 21300000, guid: 1405de9bb09a2904fa9cf30271f6f66a, type: 3}
+    - prefab: {fileID: 919132149155446097, guid: 6f61e92a586820f49bc51e88cf42813b, type: 3}
+      localPosition: {x: -1.36, y: 0, z: 0}
+      localEulerAngles: {x: 0, y: 60, z: 0}
+      previewSprite: {fileID: 21300000, guid: 3f5c234ec6371214481a608705b415b4, type: 3}
+    objectsMaterial: {fileID: 2100000, guid: c8e765ecfea9e1c438b907babf5310bc, type: 2}
+    logoSprite: {fileID: 21300000, guid: cb0ebb76277380446ba32652ff01e69b, type: 3}
     precio: 200
     gratuito: 0

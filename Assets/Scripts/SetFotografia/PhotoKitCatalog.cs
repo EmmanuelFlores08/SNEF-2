@@ -22,6 +22,13 @@ public class PhotoKitCatalog : ScriptableObject
         public Sprite backgroundSprite;
         public KitObject[] objects;
 
+        [Header("Personalización del set")]
+        [Tooltip("Material que se aplica a TODOS los objetos del kit al colocarlos en el set.")]
+        public Material objectsMaterial;
+
+        [Tooltip("Logo del kit (se muestra al seleccionar/usar el kit).")]
+        public Sprite logoSprite;
+
         [Header("Tienda")]
         public int precio = 0;
         public bool gratuito = false;
