@@ -18,7 +18,13 @@ public class PhotoKitCatalog : ScriptableObject
     public class PhotoKit
     {
         public string kitId;
+
+        [Tooltip("Imagen para la tienda/taquilla.")]
         public Sprite previewSprite;
+
+        [Tooltip("Imagen para el selector de kit del set de fotografía.")]
+        public Sprite selectorSprite;
+
         public Sprite backgroundSprite;
         public KitObject[] objects;
 

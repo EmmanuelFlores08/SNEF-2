@@ -11,7 +11,10 @@ public class TiendaObjetosUI : MonoBehaviour
     [SerializeField] private GameObject uiTaquilla;
 
     [Header("Texto del botón comprar/usar prenda")]
-    [SerializeField] private TextMeshProUGUI textoBotonPrenda;  
+    [SerializeField] private TextMeshProUGUI textoBotonPrenda;
+
+    [Header("Texto del botón comprar kit (set de grabación)")]
+    [SerializeField] private TextMeshProUGUI textoBotonKit;
 
     [Header("Paneles de contenido")]
     [SerializeField] private GameObject panelObjetosPersonaje;
@@ -80,6 +83,10 @@ private bool controlesTactilesEstabanActivos;
 
     private ShopCategoryUI selectedCategory;
     private int selectedIndex = -1;
+
+    // Prenda que se está probando en el preview (para dejar solo UNA a la vez).
+    private bool prendaEnPreview;
+    private CustomizationCatalog.BodyPartType tipoPrendaEnPreview;
 
     private enum TipoPanel { Personaje, SetDeGrabacion }
     private TipoPanel panelActual = TipoPanel.Personaje;
@@ -152,18 +159,38 @@ private bool controlesTactilesEstabanActivos;
 
     private void OnItemSelected(ShopCategoryUI categoria, int index)
     {
+        // Selección exclusiva: al elegir un objeto, se limpia la selección
+        // de todas las demás categorías (solo uno seleccionado a la vez).
+        if (categoriasTienda != null)
+        {
+            foreach (var cat in categoriasTienda)
+                if (cat != null && cat != categoria)
+                    cat.ClearSelection();
+        }
+
         selectedCategory = categoria;
         selectedIndex = index;
 
         if (categoria.Tipo == ShopCategoryUI.TipoCategoria.Prenda)
         {
+            // Solo se previsualiza una prenda a la vez: si la anterior era de
+            // otra parte del cuerpo, se revierte antes de probar la nueva.
+            if (prendaEnPreview && tipoPrendaEnPreview != categoria.BodyPartType)
+                RevertirPrendaEnPreview();
+
             if (character != null)
                 character.SetBodyPart(categoria.BodyPartType, index);
+
+            prendaEnPreview = true;
+            tipoPrendaEnPreview = categoria.BodyPartType;
 
             PlayPreviewBounce();
         }
         else if (categoria.Tipo == ShopCategoryUI.TipoCategoria.Kit)
         {
+            // Al pasar a un kit, quita la prenda que se estaba probando.
+            RevertirPrendaEnPreview();
+
             if (kitPreviewPanel != null && kitCatalog != null)
             {
                 var kit = kitCatalog.GetKit(index);
@@ -172,6 +199,20 @@ private bool controlesTactilesEstabanActivos;
         }
 
         ActualizarBotonComprar();
+    }
+
+    // Regresa la parte del cuerpo que se estaba previsualizando a su valor original.
+    private void RevertirPrendaEnPreview()
+    {
+        if (!prendaEnPreview) return;
+
+        if (character != null &&
+            originalOutfit.TryGetValue(tipoPrendaEnPreview, out int originalIndex))
+        {
+            character.SetBodyPart(tipoPrendaEnPreview, originalIndex);
+        }
+
+        prendaEnPreview = false;
     }
 
     // Reproduce el mismo "bounce" de escala que el preview del SelectorAvatar,
@@ -249,6 +290,10 @@ private bool controlesTactilesEstabanActivos;
         }
         else if (selectedCategory.Tipo == ShopCategoryUI.TipoCategoria.Kit)
         {
+            // Cambia el texto del botón según si ya lo tiene.
+            if (textoBotonKit != null)
+                textoBotonKit.text = owned ? "Comprado" : "Comprar";
+
             if (buttonComprarKit != null)
                 buttonComprarKit.interactable = comprable;
         }
@@ -489,6 +534,9 @@ private bool controlesTactilesEstabanActivos;
 
     private void LimpiarSeleccion()
     {
+        // Quita la prenda que se estaba probando (deja el avatar como estaba).
+        RevertirPrendaEnPreview();
+
         selectedCategory = null;
         selectedIndex = -1;
 

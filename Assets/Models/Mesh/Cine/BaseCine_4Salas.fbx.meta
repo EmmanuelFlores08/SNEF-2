@@ -3,7 +3,52 @@ guid: 4c135ca1d710b9e48bea83d3777e6c6d
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: FranjaAzul
+    second: {fileID: 2100000, guid: 3b70faf035c2d7348852ac7e419586db, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: FranjaNaranja
+    second: {fileID: 2100000, guid: 8cb82c640f7f2f948952e802920de2fd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: FranjaRosa
+    second: {fileID: 2100000, guid: 6ddfa27b9bf677e4c89043412288c800, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: FranjaVerde
+    second: {fileID: 2100000, guid: ca8961e9c0de59043982bdb0b380020f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Luces
+    second: {fileID: 2100000, guid: 76199d85d3946154da5ba9b7eddde24f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Muebles
+    second: {fileID: 2100000, guid: 57c4d66c1b855a444a90cb30bcea736d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: ParedesCine
+    second: {fileID: 2100000, guid: 055dedd4799bd6d49a008cc4c217af7e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Suelo
+    second: {fileID: 2100000, guid: a4c51f1d364b64a41b0e523a9f9a86cd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Tapete
+    second: {fileID: 2100000, guid: 606139d7ea12e0f419b5a21748437577, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

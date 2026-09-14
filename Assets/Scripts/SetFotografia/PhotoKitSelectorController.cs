@@ -200,7 +200,10 @@ public void CloseSelector()
                 }
 
                 card.Init(this, catalogIndex);
-                card.Setup(catalogIndex, kit.previewSprite);
+
+                // Usa la imagen específica del selector; si no hay, cae al previewSprite de la tienda.
+                Sprite sprite = kit.selectorSprite != null ? kit.selectorSprite : kit.previewSprite;
+                card.Setup(catalogIndex, sprite);
             }
             else
             {
