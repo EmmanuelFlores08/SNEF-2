@@ -3,6 +3,8 @@ using Controller;
 
 public class CustomizationSceneSetup : MonoBehaviour
 {
+    private static int cineEnterSceneHandle = -1;
+
     [SerializeField] private CharacterDatabase characterDatabase;
     [SerializeField] private Transform anchor;
 
@@ -48,6 +50,8 @@ public class CustomizationSceneSetup : MonoBehaviour
         character.transform.localPosition = Vector3.zero;
         character.transform.localRotation = Quaternion.identity;
 
+        SendCineEnterMetricOnce();
+
         MovePlayerInput input = character.GetComponent<MovePlayerInput>();
 
         // Cámara de seguimiento / sistema de cámaras de sala
@@ -84,5 +88,15 @@ public class CustomizationSceneSetup : MonoBehaviour
         // Controles táctiles: le pasa el joystick y la zona de cámara al personaje instanciado
         if (input != null)
             input.BindTouchControls(virtualJoystick, touchCameraArea);
+    }
+
+    private void SendCineEnterMetricOnce()
+    {
+        int currentSceneHandle = gameObject.scene.handle;
+        if (cineEnterSceneHandle == currentSceneHandle)
+            return;
+
+        cineEnterSceneHandle = currentSceneHandle;
+        SnefMetrics.Send("cine_enter", "app");
     }
 }
