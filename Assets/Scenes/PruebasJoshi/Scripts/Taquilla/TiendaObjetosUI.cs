@@ -432,8 +432,7 @@ private bool controlesTactilesEstabanActivos;
     else
         MostrarPanelActual();
 
-    if (cursorLockManager != null)
-        cursorLockManager.SetInterfaceMode(true);
+    MostrarCursorInterfaz(true);
 }
    public void CerrarTienda()
 {
@@ -481,8 +480,7 @@ private bool controlesTactilesEstabanActivos;
     if (playerInput != null)
         playerInput.enabled = true;
 
-    if (cursorLockManager != null)
-        cursorLockManager.SetInterfaceMode(false);
+    MostrarCursorInterfaz(false);
 
     // ==========================================
     // RESTAURAR CONTROLES TÁCTILES
@@ -517,6 +515,21 @@ private bool controlesTactilesEstabanActivos;
 
         foreach (var kvp in originalOutfit)
             character.SetBodyPart(kvp.Key, kvp.Value);
+    }
+
+    // Muestra u oculta el cursor para la interfaz. Usa el CursorLockManager si está
+    // asignado; si no, controla el cursor directamente (igual que el selector de kit
+    // y las salas de cine), para que funcione aunque no haya CursorLockManager.
+    private void MostrarCursorInterfaz(bool mostrar)
+    {
+        if (cursorLockManager != null)
+        {
+            cursorLockManager.SetInterfaceMode(mostrar);
+            return;
+        }
+
+        Cursor.visible = mostrar;
+        Cursor.lockState = mostrar ? CursorLockMode.None : CursorLockMode.Locked;
     }
 
     private void ActualizarSaldo(int monedas)
