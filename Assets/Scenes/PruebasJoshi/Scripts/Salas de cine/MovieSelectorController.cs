@@ -409,6 +409,7 @@ public class MovieSelectorController : MonoBehaviour
         movieTriviaController.OpenTrivia(
             movieCard.TriviaData,
             movieCard.MovieTitle,
+            movieCard.MovieId,
             HandleTriviaFinished
         );
     }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -21,7 +22,14 @@ public class CinemaRoomTrigger : MonoBehaviour
     [Header("Jugador")]
     [SerializeField] private string playerTag = "Player";
 
+    [Header("Metricas")]
+    [SerializeField] private string sponsorId;
+
     private bool playerInside;
+    private readonly HashSet<Transform> playerRootsInside = new HashSet<Transform>();
+    private float salaEnterTime;
+    private bool salaMetricActive;
+    private bool missingSponsorWarningShown;
 
 
     // =========================================================
@@ -124,6 +132,13 @@ public class CinemaRoomTrigger : MonoBehaviour
         if (!EsJugador(other))
             return;
 
+        Transform playerRoot = GetPlayerRoot(other);
+        if (playerRoot != null && !playerRootsInside.Add(playerRoot))
+            return;
+
+        if (!playerInside)
+            SendSalaEnterMetric();
+
         playerInside = true;
 
         UpdatePromptVisibility();
@@ -133,6 +148,17 @@ public class CinemaRoomTrigger : MonoBehaviour
     {
         if (!EsJugador(other))
             return;
+
+        Transform playerRoot = GetPlayerRoot(other);
+        if (playerRoot != null)
+        {
+            playerRootsInside.Remove(playerRoot);
+
+            if (playerRootsInside.Count > 0)
+                return;
+        }
+
+        SendSalaExitMetric();
 
         playerInside = false;
 
@@ -170,6 +196,69 @@ public class CinemaRoomTrigger : MonoBehaviour
 
         return raiz != null &&
                raiz.CompareTag(playerTag);
+    }
+
+    private Transform GetPlayerRoot(Collider other)
+    {
+        if (other == null)
+            return null;
+
+        Transform raiz = other.transform.root;
+
+        if (raiz != null && raiz.CompareTag(playerTag))
+            return raiz;
+
+        return other.CompareTag(playerTag)
+            ? other.transform
+            : null;
+    }
+
+    private void SendSalaEnterMetric()
+    {
+        if (!HasValidSponsorId("sala_enter"))
+            return;
+
+        salaEnterTime = Time.realtimeSinceStartup;
+        salaMetricActive = true;
+        SnefMetrics.Send("sala_enter", sponsorId);
+    }
+
+    private void SendSalaExitMetric()
+    {
+        if (!salaMetricActive)
+            return;
+
+        int seconds = Mathf.Max(
+            0,
+            Mathf.FloorToInt(Time.realtimeSinceStartup - salaEnterTime)
+        );
+
+        salaMetricActive = false;
+        SnefMetrics.Send("sala_exit", $"{sponsorId}~{seconds}");
+    }
+
+    private bool HasValidSponsorId(string metricName)
+    {
+        if (!string.IsNullOrWhiteSpace(sponsorId))
+            return true;
+
+        WarnMissingSponsorId(metricName);
+        return false;
+    }
+
+    private void WarnMissingSponsorId(string metricName)
+    {
+        if (missingSponsorWarningShown)
+            return;
+
+        missingSponsorWarningShown = true;
+
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+        Debug.LogWarning(
+            $"{name}: No se envio {metricName}; falta configurar sponsorId en CinemaRoomTrigger.",
+            this
+        );
+#endif
     }
 
 
@@ -254,6 +343,9 @@ public class CinemaRoomTrigger : MonoBehaviour
 
     private void OnDestroy()
     {
+        SendSalaExitMetric();
+        playerRootsInside.Clear();
+
         if (interactionButton != null)
         {
             interactionButton.onClick.RemoveListener(

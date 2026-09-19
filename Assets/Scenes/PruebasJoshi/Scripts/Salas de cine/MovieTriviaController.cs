@@ -61,6 +61,10 @@ public class MovieTriviaController : MonoBehaviour
     private bool initialized;
     private bool isResolvingAnswer;
     private bool waitingAfterWrongAnswer;
+    private string activeContentId;
+    private bool quizStartMetricSent;
+    private bool quizCompleteMetricSent;
+    private bool missingContentIdWarningShown;
 
     private readonly Dictionary<RectTransform, Vector3> originalScales = new Dictionary<RectTransform, Vector3>();
 
@@ -112,7 +116,7 @@ public class MovieTriviaController : MonoBehaviour
             buttonTerminar.onClick.AddListener(FinishTrivia);
     }
 
-    public void OpenTrivia(MovieTriviaData triviaData, string movieTitle, Action<int, int> finishCallback)
+    public void OpenTrivia(MovieTriviaData triviaData, string movieTitle, string contentId, Action<int, int> finishCallback)
     {
         EnsureInitialized();
         if (worldSpaceCanvas != null && worldSpaceCanvas.renderMode == RenderMode.WorldSpace)
@@ -122,7 +126,11 @@ public class MovieTriviaController : MonoBehaviour
             worldSpaceCanvas.worldCamera = cam;
         }
         activeTrivia = triviaData;
+        activeContentId = contentId;
         onTriviaFinished = finishCallback;
+        quizStartMetricSent = false;
+        quizCompleteMetricSent = false;
+        missingContentIdWarningShown = false;
 
         currentQuestionIndex = 0;
         correctAnswers = 0;
@@ -155,6 +163,7 @@ public class MovieTriviaController : MonoBehaviour
 
         ResetStars();
         ShowQuestion(currentQuestionIndex);
+        SendQuizStartMetric();
     }
 
     public void CloseInstant()
@@ -175,6 +184,10 @@ public class MovieTriviaController : MonoBehaviour
 
         if (triviaCanvasRoot != null)
             triviaCanvasRoot.SetActive(false);
+
+        activeContentId = null;
+        quizStartMetricSent = false;
+        quizCompleteMetricSent = false;
     }
 
     private void ShowQuestion(int questionIndex)
@@ -358,10 +371,60 @@ public class MovieTriviaController : MonoBehaviour
         int finalCorrectAnswers = correctAnswers;
         int finalTotalQuestions = totalQuestions;
 
+        SendQuizCompleteMetric();
+
         CloseInstant();
 
         onTriviaFinished?.Invoke(finalCorrectAnswers, finalTotalQuestions);
         onTriviaFinished = null;
+    }
+
+    private void SendQuizStartMetric()
+    {
+        if (quizStartMetricSent)
+            return;
+
+        if (!HasActiveContentId("sala_quiz_start"))
+            return;
+
+        quizStartMetricSent = true;
+        SnefMetrics.Send("sala_quiz_start", activeContentId);
+    }
+
+    private void SendQuizCompleteMetric()
+    {
+        if (quizCompleteMetricSent)
+            return;
+
+        if (!HasActiveContentId("sala_quiz_complete"))
+            return;
+
+        quizCompleteMetricSent = true;
+        SnefMetrics.Send("sala_quiz_complete", activeContentId);
+    }
+
+    private bool HasActiveContentId(string metricName)
+    {
+        if (!string.IsNullOrWhiteSpace(activeContentId))
+            return true;
+
+        WarnMissingContentId(metricName);
+        return false;
+    }
+
+    private void WarnMissingContentId(string metricName)
+    {
+        if (missingContentIdWarningShown)
+            return;
+
+        missingContentIdWarningShown = true;
+
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+        Debug.LogWarning(
+            $"MovieTriviaController: No se envio {metricName}; la trivia activa no tiene MovieId.",
+            this
+        );
+#endif
     }
 
     private void UpdateStars()

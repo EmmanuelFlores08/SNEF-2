@@ -247,6 +247,8 @@ public void CloseSelector()
         if (selectedKitIndex < 0 || catalog == null)
             return;
 
+        bool wasAlreadyInSet = isInSet;
+
         PhotoKitCatalog.PhotoKit kit = catalog.GetKit(selectedKitIndex);
 
         if (kit == null)
@@ -277,6 +279,9 @@ OcultarControlesTactiles();
 
         isInSet = true;
         isSelectorOpen = false;
+
+        if (!wasAlreadyInSet)
+            SnefMetrics.Send("set_enter", "app");
 
         if (selectorPanel != null)
             selectorPanel.SetActive(false);

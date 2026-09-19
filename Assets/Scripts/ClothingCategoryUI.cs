@@ -65,9 +65,47 @@ public class ClothingCategoryUI : MonoBehaviour
         if (character == null) return;
         if (UISoundManager.Instance != null)
             UISoundManager.Instance.PlaySeleccion();
+        bool wasAlreadySelected = selectedIndex == optionIndex;
         selectedIndex = optionIndex;
         character.SetBodyPart(bodyPartType, optionIndex);
+        if (!wasAlreadySelected)
+            SendPrendaUseMetric(optionIndex);
         UpdateSelectionHighlight();
+    }
+
+    private void SendPrendaUseMetric(int optionIndex)
+    {
+        string optionId = GetOptionId(optionIndex);
+        if (string.IsNullOrWhiteSpace(optionId))
+        {
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+            Debug.LogWarning(
+                $"{name}: No se envio prenda_use; falta optionId para {bodyPartType} indice {optionIndex}.",
+                this
+            );
+#endif
+            return;
+        }
+
+        SnefMetrics.Send("prenda_use", optionId);
+    }
+
+    private string GetOptionId(int optionIndex)
+    {
+        if (catalog == null)
+            return null;
+
+        var cat = catalog.GetCatalog(bodyPartType);
+        if (cat == null ||
+            cat.optionArray == null ||
+            optionIndex < 0 ||
+            optionIndex >= cat.optionArray.Length ||
+            cat.optionArray[optionIndex] == null)
+        {
+            return null;
+        }
+
+        return cat.optionArray[optionIndex].optionId;
     }
 
     public void Refresh()

@@ -4,6 +4,9 @@ using Controller;
 public class CustomizationSceneSetup : MonoBehaviour
 {
     private static int cineEnterSceneHandle = -1;
+    private static int cineSessionSceneHandle = -1;
+    private static float cineSessionStartTime;
+    private static bool cineSessionActive;
 
     [SerializeField] private CharacterDatabase characterDatabase;
     [SerializeField] private Transform anchor;
@@ -98,5 +101,45 @@ public class CustomizationSceneSetup : MonoBehaviour
 
         cineEnterSceneHandle = currentSceneHandle;
         SnefMetrics.Send("cine_enter", "app");
+        StartCineSession(currentSceneHandle);
+    }
+
+    private void StartCineSession(int currentSceneHandle)
+    {
+        if (cineSessionActive && cineSessionSceneHandle == currentSceneHandle)
+            return;
+
+        cineSessionSceneHandle = currentSceneHandle;
+        cineSessionStartTime = Time.realtimeSinceStartup;
+        cineSessionActive = true;
+
+        SnefMetrics.Send("cine_session", "app");
+    }
+
+    private void EndCineSession()
+    {
+        int currentSceneHandle = gameObject.scene.handle;
+        if (!cineSessionActive || cineSessionSceneHandle != currentSceneHandle)
+            return;
+
+        int seconds = Mathf.Max(
+            0,
+            Mathf.FloorToInt(Time.realtimeSinceStartup - cineSessionStartTime)
+        );
+
+        cineSessionActive = false;
+        cineSessionSceneHandle = -1;
+
+        SnefMetrics.Send("cine_session_end", seconds.ToString());
+    }
+
+    private void OnDestroy()
+    {
+        EndCineSession();
+    }
+
+    private void OnApplicationQuit()
+    {
+        EndCineSession();
     }
 }

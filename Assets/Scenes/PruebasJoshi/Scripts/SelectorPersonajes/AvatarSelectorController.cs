@@ -149,6 +149,7 @@ public class AvatarSelectorController : MonoBehaviour
         PlayerPrefs.Save();
 
         Debug.Log($"Avatar seleccionado: {avatarId}");
+        SendAvatarSelectMetric(avatarId);
 
         yield return null;
 
@@ -157,5 +158,43 @@ public class AvatarSelectorController : MonoBehaviour
             SceneLoader.Instance.LoadScene(nextSceneName);
         else
             SceneManager.LoadScene(nextSceneName); // respaldo si no hay SceneLoader
+    }
+
+    private void SendAvatarSelectMetric(string avatarId)
+    {
+        if (!IsValidAvatarId(avatarId))
+        {
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+            Debug.LogWarning(
+                $"AvatarSelectorController: No se envio avatar_select; avatarId invalido: '{avatarId}'.",
+                this
+            );
+#endif
+            return;
+        }
+
+        SnefMetrics.Send("avatar_select", avatarId);
+    }
+
+    private bool IsValidAvatarId(string avatarId)
+    {
+        switch (avatarId)
+        {
+            case "avatar_01":
+            case "avatar_02":
+            case "avatar_03":
+            case "avatar_04":
+            case "avatar_05":
+            case "avatar_06":
+            case "avatar_07":
+            case "avatar_08":
+            case "avatar_09":
+            case "avatar_10":
+            case "avatar_11":
+            case "avatar_12":
+                return true;
+            default:
+                return false;
+        }
     }
 }

@@ -18,6 +18,11 @@ public class MovieScreenPlayer : MonoBehaviour
 
     public bool IsPlaying => videoPlayer != null && videoPlayer.isPlaying;
 
+    private string activeContentId;
+    private bool videoStartMetricSent;
+    private bool videoEndMetricSent;
+    private bool missingContentIdWarningShown;
+
     private void Awake()
     {
         if (videoPlayer == null)
@@ -38,9 +43,13 @@ public class MovieScreenPlayer : MonoBehaviour
 
         videoPlayer.prepareCompleted -= OnVideoPrepared;
         videoPlayer.errorReceived -= OnVideoError;
+        videoPlayer.started -= OnVideoStarted;
+        videoPlayer.loopPointReached -= OnVideoLoopPointReached;
 
         videoPlayer.prepareCompleted += OnVideoPrepared;
         videoPlayer.errorReceived += OnVideoError;
+        videoPlayer.started += OnVideoStarted;
+        videoPlayer.loopPointReached += OnVideoLoopPointReached;
 
         videoPlayer.Stop();
 
@@ -68,7 +77,7 @@ public class MovieScreenPlayer : MonoBehaviour
             Debug.LogWarning("MovieScreenPlayer: No se asignó RenderTexture. Se usará la del VideoPlayer si existe.");
         }
 
-        videoPlayer.Stop();
+        Stop();
 
         // Override global opcional: reproducir siempre el clip forzado.
         if (forzarVideoClip)
@@ -122,6 +131,8 @@ public class MovieScreenPlayer : MonoBehaviour
             return;
         }
 
+        SetActiveContentId(movie.MovieId);
+
         if (screenRenderTexture != null)
             videoPlayer.targetTexture = screenRenderTexture;
 
@@ -149,14 +160,15 @@ public class MovieScreenPlayer : MonoBehaviour
 
     public void Stop()
     {
+        ClearActiveVideoMetric();
+
         if (videoPlayer != null)
             videoPlayer.Stop();
     }
 
     public void ClearScreen()
     {
-        if (videoPlayer != null)
-            videoPlayer.Stop();
+        Stop();
 
         if (screenRenderTexture != null)
         {
@@ -173,8 +185,86 @@ public class MovieScreenPlayer : MonoBehaviour
         preparedVideoPlayer.Play();
     }
 
+    private void OnVideoStarted(VideoPlayer source)
+    {
+        if (videoStartMetricSent)
+            return;
+
+        if (!HasActiveContentId("sala_video_start"))
+            return;
+
+        videoStartMetricSent = true;
+        SnefMetrics.Send("sala_video_start", activeContentId);
+    }
+
+    private void OnVideoLoopPointReached(VideoPlayer source)
+    {
+        if (videoEndMetricSent || !videoStartMetricSent)
+            return;
+
+        if (!HasActiveContentId("sala_video_end"))
+            return;
+
+        videoEndMetricSent = true;
+        SnefMetrics.Send("sala_video_end", activeContentId);
+        ClearActiveVideoMetric();
+    }
+
     private void OnVideoError(VideoPlayer source, string message)
     {
         Debug.LogError($"MovieScreenPlayer: Error al reproducir video: {message}");
+        ClearActiveVideoMetric();
+    }
+
+    private void SetActiveContentId(string contentId)
+    {
+        activeContentId = contentId;
+        videoStartMetricSent = false;
+        videoEndMetricSent = false;
+        missingContentIdWarningShown = false;
+
+        HasActiveContentId("sala_video_start");
+    }
+
+    private void ClearActiveVideoMetric()
+    {
+        activeContentId = null;
+        videoStartMetricSent = false;
+        videoEndMetricSent = false;
+    }
+
+    private bool HasActiveContentId(string metricName)
+    {
+        if (!string.IsNullOrWhiteSpace(activeContentId))
+            return true;
+
+        WarnMissingContentId(metricName);
+        return false;
+    }
+
+    private void WarnMissingContentId(string metricName)
+    {
+        if (missingContentIdWarningShown)
+            return;
+
+        missingContentIdWarningShown = true;
+
+#if UNITY_EDITOR || DEVELOPMENT_BUILD
+        Debug.LogWarning(
+            $"MovieScreenPlayer: No se envio {metricName}; la pelicula activa no tiene MovieId.",
+            this
+        );
+#endif
+    }
+
+    private void OnDestroy()
+    {
+        if (videoPlayer == null)
+            return;
+
+        videoPlayer.prepareCompleted -= OnVideoPrepared;
+        videoPlayer.errorReceived -= OnVideoError;
+        videoPlayer.started -= OnVideoStarted;
+        videoPlayer.loopPointReached -= OnVideoLoopPointReached;
     }
 }

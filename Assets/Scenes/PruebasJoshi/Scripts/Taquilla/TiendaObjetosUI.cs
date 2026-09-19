@@ -312,11 +312,28 @@ private bool controlesTactilesEstabanActivos;
         if (owned)
         {
             // Ya lo tiene: USAR (dejar la prenda puesta definitivamente)
+            bool wasAlreadyEquipped =
+                originalOutfit.TryGetValue(
+                    selectedCategory.BodyPartType,
+                    out int originalIndex
+                ) &&
+                originalIndex == selectedIndex;
+
             if (character != null)
             {
                 character.SetBodyPart(selectedCategory.BodyPartType, selectedIndex);
                 originalOutfit[selectedCategory.BodyPartType] = selectedIndex;
             }
+
+            if (!wasAlreadyEquipped)
+            {
+                SendPrendaUseIfEquipped(
+                    selectedCategory.BodyPartType,
+                    selectedIndex,
+                    id
+                );
+            }
+
             if (UISoundManager.Instance != null)
                 UISoundManager.Instance.PlaySeleccion();
         }
@@ -347,7 +364,14 @@ private bool controlesTactilesEstabanActivos;
                 UISoundManager.Instance.PlayCompra();   // ← sonido de compra
             
             if (selectedCategory.Tipo == ShopCategoryUI.TipoCategoria.Prenda)
+            {
                 originalOutfit[selectedCategory.BodyPartType] = selectedIndex;
+                SendPrendaUseIfEquipped(
+                    selectedCategory.BodyPartType,
+                    selectedIndex,
+                    id
+                );
+            }
 
             RefrescarCategorias();
             ActualizarBotonComprar();
@@ -357,6 +381,22 @@ private bool controlesTactilesEstabanActivos;
             if (UISoundManager.Instance != null)
                 UISoundManager.Instance.PlayCompraErrada();
         }
+    }
+
+    private void SendPrendaUseIfEquipped(
+        CustomizationCatalog.BodyPartType bodyPartType,
+        int optionIndex,
+        string optionId
+    )
+    {
+        if (character == null ||
+            character.GetCurrentIndex(bodyPartType) != optionIndex ||
+            string.IsNullOrWhiteSpace(optionId))
+        {
+            return;
+        }
+
+        SnefMetrics.Send("prenda_use", optionId);
     }
 
     public void AbrirTienda()

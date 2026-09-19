@@ -917,6 +917,7 @@ public class PhotoCaptureController : MonoBehaviour
         {
 
             ShowCapturedPhoto();
+            SnefMetrics.Send("foto_taken", "app");
 
         }
 
@@ -1185,6 +1186,7 @@ public class PhotoCaptureController : MonoBehaviour
             "image/png"
 
         );
+        SnefMetrics.Send("foto_download", "app");
 
 
 
@@ -1225,6 +1227,7 @@ public class PhotoCaptureController : MonoBehaviour
                 capturedPngBytes
 
             );
+            SnefMetrics.Send("foto_download", "app");
 
 
 

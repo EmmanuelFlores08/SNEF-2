@@ -16033,7 +16033,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_AnchorMin.x
@@ -16041,15 +16041,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 180.17
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 165
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_LocalPosition.x
@@ -16081,11 +16081,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 510.425
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -82.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -16454,7 +16454,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59336a31478a2be44beee3fd3aab999a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movieId: p3
+  movieId: stp-cine-3
   movieTitle: "El futuro que est\xE1s escribiendo hoy"
   videoClip: {fileID: 0}
   videoUrl: https://d22w9izyelikw7.cloudfront.net/content/stp-cine-3/v1/video.mp4
@@ -18489,7 +18489,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_AnchorMin.x
@@ -18497,15 +18497,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 180.17
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 165
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_LocalPosition.x
@@ -18537,11 +18537,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 720.59503
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -82.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -22104,7 +22104,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_AnchorMin.x
@@ -22112,15 +22112,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 180.17
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 165
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_LocalPosition.x
@@ -22152,11 +22152,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 90.085
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -82.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -34181,7 +34181,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59336a31478a2be44beee3fd3aab999a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movieId: p5
+  movieId: stp-cine-5
   movieTitle: "La B\xFAsqueda del Pago Digital Perfecto"
   videoClip: {fileID: 0}
   videoUrl: https://d22w9izyelikw7.cloudfront.net/content/stp-cine-5/v1/video.mp4
@@ -35968,7 +35968,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_AnchorMin.x
@@ -35976,15 +35976,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 180.17
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 165
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_LocalPosition.x
@@ -36016,11 +36016,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 300.255
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -82.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -40067,7 +40067,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_AnchorMin.x
@@ -40075,15 +40075,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 180.17
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 165
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_LocalPosition.x
@@ -40115,11 +40115,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 720.59503
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -82.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -62816,7 +62816,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_AnchorMin.x
@@ -62824,15 +62824,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 180.17
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 165
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_LocalPosition.x
@@ -62864,11 +62864,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 720.59503
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -82.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -63079,7 +63079,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59336a31478a2be44beee3fd3aab999a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movieId: p2
+  movieId: stp-cine-2
   movieTitle: La ruta digital hacia tu futuro
   videoClip: {fileID: 0}
   videoUrl: https://d22w9izyelikw7.cloudfront.net/content/stp-cine-2/v1/video.mp4
@@ -73929,7 +73929,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_AnchorMin.x
@@ -73937,15 +73937,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 180.17
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 165
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_LocalPosition.x
@@ -73977,11 +73977,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 300.255
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -82.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -91229,7 +91229,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_AnchorMin.x
@@ -91237,15 +91237,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 180.17
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 165
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_LocalPosition.x
@@ -91277,11 +91277,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 90.085
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -82.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -91717,7 +91717,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59336a31478a2be44beee3fd3aab999a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movieId: p1
+  movieId: stp-cine-1
   movieTitle: "Misi\xF3n: Salva a tu yo del futuro"
   videoClip: {fileID: 0}
   videoUrl: https://d22w9izyelikw7.cloudfront.net/content/stp-cine-1/v1/video.mp4
@@ -98706,7 +98706,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_AnchorMin.x
@@ -98714,15 +98714,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 180.17
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 165
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_LocalScale.x
@@ -98766,11 +98766,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 90.085
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -82.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -102764,7 +102764,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_AnchorMin.x
@@ -102772,15 +102772,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 180.17
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 165
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_LocalPosition.x
@@ -102812,11 +102812,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 510.425
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -82.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -103074,6 +103074,7 @@ MonoBehaviour:
   autoFindControllerInParents: 1
   interactionKey: 101
   playerTag: Player
+  sponsorId: stp
 --- !u!65 &1693324444
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -109025,7 +109026,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59336a31478a2be44beee3fd3aab999a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movieId: p4
+  movieId: stp-cine-4
   movieTitle: "Misi\xF3n: Transferencia segura "
   videoClip: {fileID: 0}
   videoUrl: https://d22w9izyelikw7.cloudfront.net/content/stp-cine-4/v1/video.mp4
@@ -110947,7 +110948,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_AnchorMin.x
@@ -110955,15 +110956,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 180.17
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 165
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_LocalPosition.x
@@ -110995,11 +110996,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 300.255
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -82.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -117083,7 +117084,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_AnchorMin.x
@@ -117091,15 +117092,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 180.17
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 165
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_LocalPosition.x
@@ -117131,11 +117132,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 510.425
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -82.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9064745566533544320, guid: 0bd50ae886cb6064584b4e8e5e34f556, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -117565,7 +117566,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 500151079}
   m_HandleRect: {fileID: 500151078}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0.9999997
   m_Size: 0.6163169
   m_NumberOfSteps: 0
   m_OnValueChanged:
