@@ -87,7 +87,7 @@ public class CinemaRoomTrigger : MonoBehaviour
         if (autoFindControllerInParents)
             RefreshLocalController();
 
-        UpdatePromptVisibility();
+        HidePrompt();
     }
 
 
@@ -162,7 +162,9 @@ public class CinemaRoomTrigger : MonoBehaviour
 
         playerInside = false;
 
-        UpdatePromptVisibility();
+        // Al salir, ocultamos el letrero explícitamente (aunque otra sala
+        // comparta el mismo objeto, quien esté dentro lo volverá a mostrar).
+        HidePrompt();
     }
 
 
@@ -317,23 +319,31 @@ public class CinemaRoomTrigger : MonoBehaviour
         if (interactionPrompt == null)
             return;
 
-        bool playerIsFree = true;
+        // Solo gestionamos el letrero cuando el jugador está en NUESTRA área.
+        // Si dos salas comparten el mismo objeto de letrero, la sala en la que
+        // NO estás no debe apagarlo (antes se peleaban y no aparecía).
+        if (!playerInside)
+            return;
 
-        if (movieSelectorController != null)
-        {
-            playerIsFree =
-                !movieSelectorController.IsCinemaInteractionBusy;
-        }
+        bool playerIsFree =
+            movieSelectorController == null ||
+            !movieSelectorController.IsCinemaInteractionBusy;
 
-        bool debeMostrarse =
-            playerInside &&
-            playerIsFree;
-
-        if (interactionPrompt.activeSelf != debeMostrarse)
-            interactionPrompt.SetActive(debeMostrarse);
+        if (interactionPrompt.activeSelf != playerIsFree)
+            interactionPrompt.SetActive(playerIsFree);
 
         if (interactionButton != null)
-            interactionButton.interactable = debeMostrarse;
+            interactionButton.interactable = playerIsFree;
+    }
+
+    // Oculta el letrero (al salir del área o al iniciar).
+    private void HidePrompt()
+    {
+        if (interactionPrompt != null && interactionPrompt.activeSelf)
+            interactionPrompt.SetActive(false);
+
+        if (interactionButton != null)
+            interactionButton.interactable = false;
     }
 
 
