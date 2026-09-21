@@ -64,11 +64,6 @@ namespace Controller
                 Vector2 joystickInput = (m_Joystick != null) ? m_Joystick.Input : Vector2.zero;
                 m_Axis = joystickInput;
 
-                // La magnitud del joystick decide caminar o correr:
-                // cerca del centro = camina, al fondo = corre
-                float magnitud = joystickInput.magnitude;
-                m_IsRun = magnitud > m_RunThreshold;
-
                 // Cámara por arrastre en zona derecha
                 m_MouseDelta = (m_TouchCamera != null) ? m_TouchCamera.ConsumeDelta() : Vector2.zero;
                 m_Scroll = 0f;
@@ -77,11 +72,14 @@ namespace Controller
             {
                 // Teclado y mouse (PC)
                 m_Axis = new Vector2(Input.GetAxis(m_HorizontalAxis), Input.GetAxis(m_VerticalAxis));
-                m_IsRun = Input.GetKey(m_RunKey);
 
                 m_MouseDelta = new Vector2(Input.GetAxis(m_MouseX), Input.GetAxis(m_MouseY));
                 m_Scroll = Input.GetAxis(m_MouseScroll);
             }
+
+            // El personaje SIEMPRE corre cuando hay input de movimiento (sin necesidad
+            // de Shift). Funciona igual en PC (teclas) y en móvil (joystick).
+            m_IsRun = m_Axis.sqrMagnitude > 0.01f;
 
             m_IsJump = false; // salto desactivado siempre
 
