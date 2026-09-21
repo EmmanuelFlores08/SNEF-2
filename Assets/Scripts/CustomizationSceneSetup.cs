@@ -35,7 +35,7 @@ public class CustomizationSceneSetup : MonoBehaviour
 
     private void Start()
     {
-        string avatarId = PlayerPrefs.GetString("selectedAvatarId", "");
+        string avatarId = GetSelectedAvatarId();
         if (string.IsNullOrEmpty(avatarId))
         {
             Debug.LogError("No hay avatar seleccionado en PlayerPrefs.");
@@ -91,6 +91,18 @@ public class CustomizationSceneSetup : MonoBehaviour
         // Controles táctiles: le pasa el joystick y la zona de cámara al personaje instanciado
         if (input != null)
             input.BindTouchControls(virtualJoystick, touchCameraArea);
+    }
+
+    private string GetSelectedAvatarId()
+    {
+        if (SnefBridge.Instance != null &&
+            SnefBridge.Instance.HasServerState &&
+            !string.IsNullOrWhiteSpace(SnefBridge.Instance.AvatarId))
+        {
+            return SnefBridge.Instance.AvatarId;
+        }
+
+        return PlayerPrefs.GetString("selectedAvatarId", "");
     }
 
     private void SendCineEnterMetricOnce()

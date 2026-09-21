@@ -3,6 +3,8 @@ using UnityEngine.UI;
 
 public class PhotoKitCardUI : MonoBehaviour
 {
+    private static readonly Vector2 PreviewPadding = new Vector2(18f, 14f);
+
     [SerializeField] private Image previewImage;
     [SerializeField] private GameObject selectedBorder;
     [SerializeField] private Button button;
@@ -33,6 +35,7 @@ public class PhotoKitCardUI : MonoBehaviour
             previewImage.sprite = sprite;
             previewImage.enabled = (sprite != null);
             previewImage.preserveAspect = true;
+            FitPreviewImageToCard();
         }
 
         gameObject.SetActive(true);
@@ -47,5 +50,18 @@ public class PhotoKitCardUI : MonoBehaviour
     public void Hide()
     {
         gameObject.SetActive(false);
+    }
+
+    private void FitPreviewImageToCard()
+    {
+        RectTransform previewRect = previewImage.rectTransform;
+
+        previewRect.anchorMin = Vector2.zero;
+        previewRect.anchorMax = Vector2.one;
+        previewRect.offsetMin = PreviewPadding;
+        previewRect.offsetMax = -PreviewPadding;
+        previewRect.pivot = new Vector2(0.5f, 0.5f);
+        previewRect.anchoredPosition = Vector2.zero;
+        previewRect.localScale = Vector3.one;
     }
 }

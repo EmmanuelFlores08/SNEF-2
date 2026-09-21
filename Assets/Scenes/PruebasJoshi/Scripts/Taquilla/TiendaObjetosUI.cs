@@ -34,6 +34,14 @@ public class TiendaObjetosUI : MonoBehaviour
     [Header("Saldo del jugador")]
     [SerializeField] private TextMeshProUGUI textoSaldo;
 
+    [Header("Aviso invitado")]
+    [SerializeField] private GameObject avisoInvitadoPanel;
+    [SerializeField] private TextMeshProUGUI avisoInvitadoTexto;
+    [SerializeField] private Button avisoInvitadoEntendidoButton;
+    [TextArea(2, 4)]
+    [SerializeField] private string avisoInvitadoMensaje =
+        "Estas navegando como invitado.\nTu progreso y tus compras no se guardaran.\nInicia sesion o crea una cuenta para usar Ditas y conservar tu progreso.";
+
     [Header("Categorías de tienda")]
     [SerializeField] private ShopCategoryUI[] categoriasTienda;
 
@@ -110,6 +118,8 @@ private bool controlesTactilesEstabanActivos;
         if (buttonComprarKit != null)
             buttonComprarKit.onClick.AddListener(ComprarKitSeleccionado);
 
+        ConfigurarAvisoInvitado();
+
         if (categoriasTienda != null)
         {
             foreach (var cat in categoriasTienda)
@@ -133,6 +143,7 @@ private bool controlesTactilesEstabanActivos;
         if (PlayerInventory.Instance != null)
         {
             PlayerInventory.Instance.OnCoinsChanged += ActualizarSaldo;
+            PlayerInventory.Instance.OnInventoryChanged += HandleInventoryChanged;
             ActualizarSaldo(PlayerInventory.Instance.Coins);
         }
     }
@@ -140,7 +151,10 @@ private bool controlesTactilesEstabanActivos;
     private void OnDisable()
     {
         if (PlayerInventory.Instance != null)
+        {
             PlayerInventory.Instance.OnCoinsChanged -= ActualizarSaldo;
+            PlayerInventory.Instance.OnInventoryChanged -= HandleInventoryChanged;
+        }
     }
 
     private void Update()
@@ -275,14 +289,26 @@ private bool controlesTactilesEstabanActivos;
         bool canAfford = PlayerInventory.Instance != null &&
             PlayerInventory.Instance.CanAfford(price);
 
-        bool comprable = !owned && canAfford;
+        bool hasServerState = SnefBridge.Instance != null &&
+            SnefBridge.Instance.HasServerState;
+        bool isGuest = hasServerState && SnefBridge.Instance.IsGuest;
+        bool waitingForServerState = IsWaitingForServerState();
+        bool purchasePending = SnefBridge.Instance != null &&
+            SnefBridge.Instance.IsPurchasePending(id);
+        bool comprable = !waitingForServerState &&
+            !owned &&
+            (canAfford || isGuest) &&
+            !purchasePending;
 
         // Activa solo el botón que corresponde al tipo seleccionado
         if (selectedCategory.Tipo == ShopCategoryUI.TipoCategoria.Prenda)
         {
             // Cambia el texto del botón según si ya lo tiene
             if (textoBotonPrenda != null)
-                textoBotonPrenda.text = owned ? "Usar" : "Comprar";
+                textoBotonPrenda.text = owned
+                    ? "Usar"
+                    : waitingForServerState ? "Cargando"
+                    : purchasePending ? "Procesando" : "Comprar";
 
             // Se puede presionar si: puede comprar (no lo tiene y le alcanza), O ya lo tiene (para usar)
             if (buttonComprarPrenda != null)
@@ -292,7 +318,10 @@ private bool controlesTactilesEstabanActivos;
         {
             // Cambia el texto del botón según si ya lo tiene.
             if (textoBotonKit != null)
-                textoBotonKit.text = owned ? "Comprado" : "Comprar";
+                textoBotonKit.text = owned
+                    ? "Comprado"
+                    : waitingForServerState ? "Cargando"
+                    : purchasePending ? "Procesando" : "Comprar";
 
             if (buttonComprarKit != null)
                 buttonComprarKit.interactable = comprable;
@@ -358,6 +387,23 @@ private bool controlesTactilesEstabanActivos;
 
         selectedCategory.GetItem(selectedIndex, out string id, out _, out int price, out _);
 
+        if (IsWaitingForServerState())
+        {
+            Debug.LogWarning("[SNEF Compra] Compra bloqueada: esperando SnefEstado.");
+
+            if (UISoundManager.Instance != null)
+                UISoundManager.Instance.PlayCompraErrada();
+
+            ActualizarBotonComprar();
+            return;
+        }
+
+        if (SnefBridge.Instance != null && SnefBridge.Instance.HasServerState)
+        {
+            ComprarSeleccionadoConServidor(tipoEsperado, id);
+            return;
+        }
+
         if (PlayerInventory.Instance.TryPurchase(id, price))
         {
             if (UISoundManager.Instance != null)
@@ -383,6 +429,105 @@ private bool controlesTactilesEstabanActivos;
         }
     }
 
+    private void ComprarSeleccionadoConServidor(
+        ShopCategoryUI.TipoCategoria tipoEsperado,
+        string id
+    )
+    {
+        if (SnefBridge.Instance == null || string.IsNullOrWhiteSpace(id))
+            return;
+
+        if (SnefBridge.Instance.IsGuest)
+        {
+            MostrarAvisoInvitado();
+
+            if (UISoundManager.Instance != null)
+                UISoundManager.Instance.PlayCompraErrada();
+
+            return;
+        }
+
+        CustomizationCatalog.BodyPartType bodyPartType =
+            selectedCategory.BodyPartType;
+        int optionIndex = selectedIndex;
+
+        bool requested = SnefBridge.Instance.RequestPurchase(
+            id,
+            result => HandleResultadoCompraServidor(
+                result,
+                tipoEsperado,
+                bodyPartType,
+                optionIndex,
+                id
+            )
+        );
+
+        if (!requested)
+        {
+            if (UISoundManager.Instance != null)
+                UISoundManager.Instance.PlayCompraErrada();
+            return;
+        }
+
+        ActualizarBotonComprar();
+    }
+
+    private void HandleResultadoCompraServidor(
+        SnefBridge.CompraResult result,
+        ShopCategoryUI.TipoCategoria tipoEsperado,
+        CustomizationCatalog.BodyPartType bodyPartType,
+        int optionIndex,
+        string expectedItemId
+    )
+    {
+        if (result == null)
+            return;
+
+        if (!result.Ok)
+        {
+            Debug.LogWarning(
+                $"[SNEF Compra] Compra rechazada para '{expectedItemId}': {result.Motivo}"
+            );
+
+            if (UISoundManager.Instance != null)
+                UISoundManager.Instance.PlayCompraErrada();
+
+            RefrescarCategorias();
+            ActualizarBotonComprar();
+            return;
+        }
+
+        if (!string.IsNullOrEmpty(result.ItemId) &&
+            result.ItemId != expectedItemId)
+        {
+            Debug.LogWarning(
+                $"[SNEF Compra] Resultado de compra no coincide. Esperado='{expectedItemId}', recibido='{result.ItemId}'."
+            );
+            return;
+        }
+
+        if (UISoundManager.Instance != null)
+            UISoundManager.Instance.PlayCompra();
+
+        if (tipoEsperado == ShopCategoryUI.TipoCategoria.Prenda)
+        {
+            if (character != null)
+            {
+                character.SetBodyPart(bodyPartType, optionIndex);
+                originalOutfit[bodyPartType] = optionIndex;
+            }
+
+            SendPrendaUseIfEquipped(
+                bodyPartType,
+                optionIndex,
+                expectedItemId
+            );
+        }
+
+        RefrescarCategorias();
+        ActualizarBotonComprar();
+    }
+
     private void SendPrendaUseIfEquipped(
         CustomizationCatalog.BodyPartType bodyPartType,
         int optionIndex,
@@ -397,6 +542,50 @@ private bool controlesTactilesEstabanActivos;
         }
 
         SnefMetrics.Send("prenda_use", optionId);
+    }
+
+    private void MostrarAvisoInvitado()
+    {
+        if (avisoInvitadoPanel != null)
+        {
+            avisoInvitadoPanel.SetActive(true);
+            return;
+        }
+
+        Debug.LogWarning("[SNEF Invitado] " + avisoInvitadoMensaje);
+    }
+
+    public void CerrarAvisoInvitado()
+    {
+        if (avisoInvitadoPanel != null)
+            avisoInvitadoPanel.SetActive(false);
+    }
+
+    private void ConfigurarAvisoInvitado()
+    {
+        CerrarAvisoInvitado();
+
+        if (avisoInvitadoTexto != null &&
+            string.IsNullOrWhiteSpace(avisoInvitadoTexto.text) &&
+            !string.IsNullOrWhiteSpace(avisoInvitadoMensaje))
+        {
+            avisoInvitadoTexto.text = avisoInvitadoMensaje;
+        }
+
+        if (avisoInvitadoEntendidoButton == null)
+            return;
+
+        avisoInvitadoEntendidoButton.onClick.RemoveListener(CerrarAvisoInvitado);
+        avisoInvitadoEntendidoButton.onClick.AddListener(CerrarAvisoInvitado);
+    }
+
+    private bool IsWaitingForServerState()
+    {
+#if UNITY_WEBGL && !UNITY_EDITOR
+        return SnefBridge.Instance == null || !SnefBridge.Instance.HasServerState;
+#else
+        return false;
+#endif
     }
 
     public void AbrirTienda()
@@ -577,6 +766,12 @@ private bool controlesTactilesEstabanActivos;
         if (textoSaldo != null) textoSaldo.text = monedas.ToString();
     }
 
+    private void HandleInventoryChanged()
+    {
+        RefrescarCategorias();
+        ActualizarBotonComprar();
+    }
+
     private void RefrescarCategorias()
     {
         if (categoriasTienda == null) return;
@@ -684,5 +879,6 @@ private bool controlesTactilesEstabanActivos;
         if (buttonCerrar != null) buttonCerrar.onClick.RemoveListener(CerrarTienda);
         if (buttonComprarPrenda != null) buttonComprarPrenda.onClick.RemoveListener(ComprarPrendaSeleccionada);
         if (buttonComprarKit != null) buttonComprarKit.onClick.RemoveListener(ComprarKitSeleccionado);
+        if (avisoInvitadoEntendidoButton != null) avisoInvitadoEntendidoButton.onClick.RemoveListener(CerrarAvisoInvitado);
     }
 }

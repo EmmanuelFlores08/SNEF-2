@@ -19,6 +19,18 @@ public class ClothingCategoryUI : MonoBehaviour
 
     private int PageSize => slots.Length;
 
+    private void OnEnable()
+    {
+        if (PlayerInventory.Instance != null)
+            PlayerInventory.Instance.OnInventoryChanged += Refresh;
+    }
+
+    private void OnDisable()
+    {
+        if (PlayerInventory.Instance != null)
+            PlayerInventory.Instance.OnInventoryChanged -= Refresh;
+    }
+
     private void Awake()
     {
         if (prevPageButton != null) prevPageButton.onClick.AddListener(PrevPage);

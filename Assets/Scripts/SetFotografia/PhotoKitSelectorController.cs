@@ -79,6 +79,18 @@ private bool estadoControlesTactilesGuardado;
         SetSetButtonsVisible(false);
     }
 
+    private void OnEnable()
+    {
+        if (PlayerInventory.Instance != null)
+            PlayerInventory.Instance.OnInventoryChanged += HandleInventoryChanged;
+    }
+
+    private void OnDisable()
+    {
+        if (PlayerInventory.Instance != null)
+            PlayerInventory.Instance.OnInventoryChanged -= HandleInventoryChanged;
+    }
+
     public void BindPlayerInput(MonoBehaviour playerInput)
     {
         boundPlayerInput = playerInput;
@@ -212,6 +224,12 @@ public void CloseSelector()
         }
 
         selectedKitIndex = -1;
+    }
+
+    private void HandleInventoryChanged()
+    {
+        if (isSelectorOpen)
+            RefreshKitCards();
     }
 
     public void SelectKit(int catalogIndex)

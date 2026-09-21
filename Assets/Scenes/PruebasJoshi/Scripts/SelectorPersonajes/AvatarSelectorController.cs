@@ -32,6 +32,18 @@ public class AvatarSelectorController : MonoBehaviour
     private AvatarCardUI selectedAvatar;
     private Coroutine previewAnimationRoutine;
 
+    private void OnEnable()
+    {
+        if (SnefBridge.Instance != null)
+            SnefBridge.Instance.OnStateChanged += HandleBridgeStateChanged;
+    }
+
+    private void OnDisable()
+    {
+        if (SnefBridge.Instance != null)
+            SnefBridge.Instance.OnStateChanged -= HandleBridgeStateChanged;
+    }
+
     private void Start()
     {
         if (avatarPreviewTransform == null && avatarPreviewImage != null)
@@ -42,8 +54,9 @@ public class AvatarSelectorController : MonoBehaviour
         if (useButton != null)
             useButton.onClick.AddListener(UseSelectedAvatar);
 
-        if (avatarCards.Length > 0)
+        if (!ApplyServerAvatarSelection() && avatarCards.Length > 0)
             SelectAvatar(avatarCards[0]);
+
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }
@@ -150,6 +163,7 @@ public class AvatarSelectorController : MonoBehaviour
 
         Debug.Log($"Avatar seleccionado: {avatarId}");
         SendAvatarSelectMetric(avatarId);
+        SendAvatarPersistence(avatarId);
 
         yield return null;
 
@@ -174,6 +188,55 @@ public class AvatarSelectorController : MonoBehaviour
         }
 
         SnefMetrics.Send("avatar_select", avatarId);
+    }
+
+    private void SendAvatarPersistence(string avatarId)
+    {
+        if (!IsValidAvatarId(avatarId))
+            return;
+
+        if (SnefBridge.Instance == null)
+        {
+            return;
+        }
+
+        SnefBridge.Instance.RequestAvatarSave(avatarId);
+    }
+
+    private bool ApplyServerAvatarSelection()
+    {
+        if (SnefBridge.Instance == null ||
+            !SnefBridge.Instance.HasServerState ||
+            string.IsNullOrWhiteSpace(SnefBridge.Instance.AvatarId))
+        {
+            return false;
+        }
+
+        AvatarCardUI card = FindAvatarCard(SnefBridge.Instance.AvatarId);
+        if (card == null)
+            return false;
+
+        SelectAvatar(card);
+        return true;
+    }
+
+    private void HandleBridgeStateChanged()
+    {
+        ApplyServerAvatarSelection();
+    }
+
+    private AvatarCardUI FindAvatarCard(string avatarId)
+    {
+        if (avatarCards == null)
+            return null;
+
+        foreach (AvatarCardUI card in avatarCards)
+        {
+            if (card != null && card.AvatarId == avatarId)
+                return card;
+        }
+
+        return null;
     }
 
     private bool IsValidAvatarId(string avatarId)
