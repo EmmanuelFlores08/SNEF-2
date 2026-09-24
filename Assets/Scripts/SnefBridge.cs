@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 #if UNITY_WEBGL && !UNITY_EDITOR
 using System.Runtime.InteropServices;
 #endif
@@ -12,6 +15,8 @@ public class SnefBridge : MonoBehaviour
     public static SnefBridge Instance { get; private set; }
 
     public bool HasServerState { get; private set; }
+    public bool InitialServerStateReceived { get; private set; }
+    public bool InitialServerAvatarWasNull { get; private set; }
     public bool IsGuest { get; private set; } = true;
     public int Ditas { get; private set; }
     public string AvatarId { get; private set; }
@@ -157,6 +162,13 @@ public class SnefBridge : MonoBehaviour
                 return;
             }
 
+            if (!InitialServerStateReceived)
+            {
+                InitialServerStateReceived = true;
+                InitialServerAvatarWasNull =
+                    string.IsNullOrWhiteSpace(payload.avatar);
+            }
+
             HasServerState = true;
             IsGuest = payload.invitado;
             Ditas = Mathf.Max(0, payload.ditas);
@@ -192,6 +204,156 @@ public class SnefBridge : MonoBehaviour
             Debug.LogWarning($"[SNEF Bridge] Error procesando SnefEstado: {exception.Message}");
         }
     }
+
+#if UNITY_EDITOR
+    [ContextMenu("SNEF/Test SnefEstado invitado")]
+    private void TestSnefEstadoInvitado()
+    {
+        const string json =
+            "{\"invitado\":true,\"ditas\":250,\"avatar\":null,\"comprados\":[]}";
+
+        SnefEstado(json);
+    }
+
+    [ContextMenu("SNEF/Test SnefEstado registrado nuevo")]
+    private void TestSnefEstadoRegistradoNuevo()
+    {
+        const string json =
+            "{\"invitado\":false,\"ditas\":250,\"avatar\":null,\"comprados\":[]}";
+
+        SnefEstado(json);
+    }
+
+    [ContextMenu("SNEF/Test SnefEstado registrado recurrente")]
+    private void TestSnefEstadoRegistradoRecurrente()
+    {
+        const string json =
+            "{\"invitado\":false,\"ditas\":250,\"avatar\":\"avatar_03\",\"comprados\":[]}";
+
+        SnefEstado(json);
+    }
+
+    [ContextMenu("SNEF/Test ResultadoCompra OK")]
+    private void TestResultadoCompraOk()
+    {
+        if (pendingPurchasesByTxId.Count == 0)
+        {
+            Debug.LogWarning("[SNEF Bridge] No hay compras pendientes para completar.");
+            return;
+        }
+
+        if (pendingPurchasesByTxId.Count > 1)
+        {
+            Debug.LogWarning(
+                $"[SNEF Bridge] Hay {pendingPurchasesByTxId.Count} compras pendientes; el tester requiere exactamente una."
+            );
+            return;
+        }
+
+        string txId = null;
+        foreach (string pendingTxId in pendingPurchasesByTxId.Keys)
+        {
+            txId = pendingTxId;
+            break;
+        }
+
+        if (string.IsNullOrEmpty(txId) ||
+            !pendingItemsByTxId.TryGetValue(txId, out string itemId) ||
+            string.IsNullOrWhiteSpace(itemId))
+        {
+            Debug.LogWarning("[SNEF Bridge] No se pudo resolver txId/itemId de la compra pendiente.");
+            return;
+        }
+
+        if (!TryFindEditorItemPrice(itemId, out int price))
+        {
+            Debug.LogWarning($"[SNEF Bridge] No se encontro precio de Editor para '{itemId}'.");
+            return;
+        }
+
+        List<string> updatedComprados = new List<string>(comprados);
+        if (!updatedComprados.Contains(itemId))
+            updatedComprados.Add(itemId);
+
+        CompraPayload payload = new CompraPayload
+        {
+            txId = txId,
+            ok = true,
+            itemId = itemId,
+            ditas = Mathf.Max(0, Ditas - price),
+            comprados = updatedComprados.ToArray(),
+            motivo = null
+        };
+
+        ResultadoCompra(JsonUtility.ToJson(payload));
+    }
+
+    private bool TryFindEditorItemPrice(string itemId, out int price)
+    {
+        return TryFindCustomizationItemPrice(itemId, out price) ||
+               TryFindPhotoKitPrice(itemId, out price);
+    }
+
+    private bool TryFindCustomizationItemPrice(string itemId, out int price)
+    {
+        price = 0;
+
+        string[] guids = AssetDatabase.FindAssets("t:CustomizationCatalog");
+        foreach (string guid in guids)
+        {
+            string path = AssetDatabase.GUIDToAssetPath(guid);
+            CustomizationCatalog catalog =
+                AssetDatabase.LoadAssetAtPath<CustomizationCatalog>(path);
+
+            if (catalog == null || catalog.bodyPartCatalogArray == null)
+                continue;
+
+            foreach (CustomizationCatalog.BodyPartCatalog bodyPart in catalog.bodyPartCatalogArray)
+            {
+                if (bodyPart == null || bodyPart.optionArray == null)
+                    continue;
+
+                foreach (CustomizationCatalog.BodyPartOption option in bodyPart.optionArray)
+                {
+                    if (option != null && option.optionId == itemId)
+                    {
+                        price = option.precio;
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
+    private bool TryFindPhotoKitPrice(string itemId, out int price)
+    {
+        price = 0;
+
+        string[] guids = AssetDatabase.FindAssets("t:PhotoKitCatalog");
+        foreach (string guid in guids)
+        {
+            string path = AssetDatabase.GUIDToAssetPath(guid);
+            PhotoKitCatalog catalog =
+                AssetDatabase.LoadAssetAtPath<PhotoKitCatalog>(path);
+
+            if (catalog == null || catalog.kits == null)
+                continue;
+
+            foreach (PhotoKitCatalog.PhotoKit kit in catalog.kits)
+            {
+                if (kit != null && kit.kitId == itemId)
+                {
+                    price = kit.precio;
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+#endif
 
     public void ResultadoCompra(string json)
     {
