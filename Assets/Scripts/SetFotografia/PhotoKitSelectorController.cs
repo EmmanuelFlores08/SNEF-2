@@ -275,6 +275,9 @@ public void CloseSelector()
         if (photoSetManager != null)
             photoSetManager.ApplyKit(kit);
 
+        if (!string.IsNullOrWhiteSpace(kit.kitId))
+            SnefMetrics.Send("set_object", kit.kitId);
+
         if (UISoundManager.Instance != null)
             UISoundManager.Instance.PlayUsarKit();
 

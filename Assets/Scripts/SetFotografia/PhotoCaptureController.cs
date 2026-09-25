@@ -1353,6 +1353,8 @@ public class PhotoCaptureController : MonoBehaviour
 
         );
 
+        SnefMetrics.Send("foto_share", "compartir");
+
 
 
 #else

@@ -607,6 +607,7 @@ private bool controlesTactilesEstabanActivos;
     }
 
     uiTaquilla.SetActive(true);
+    SnefMetrics.Send("taquilla_enter", "app");
 
     if (character != null)
     {

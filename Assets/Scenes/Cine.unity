@@ -1196,10 +1196,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59336a31478a2be44beee3fd3aab999a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movieId: BancoAzteca-cine-1
+  movieId: banco-azteca-cine-1
   movieTitle: El dinero perdido de Regi
   videoClip: {fileID: 0}
-  videoUrl: https://d22w9izyelikw7.cloudfront.net/content/stp-cine-1/v1/video.mp4
+  videoUrl: https://d22w9izyelikw7.cloudfront.net/content/banco-azteca-cine-1/v1/video.mp4
   triviaButton: {fileID: 946645718}
   usarDatosDePrueba: 0
   triviaData:
@@ -28789,10 +28789,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59336a31478a2be44beee3fd3aab999a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movieId: BancoAzteca-cine-2
+  movieId: banco-azteca-cine-2
   movieTitle: El presupuesto de Chiwa
   videoClip: {fileID: 0}
-  videoUrl: https://d22w9izyelikw7.cloudfront.net/content/stp-cine-2/v1/video.mp4
+  videoUrl: https://d22w9izyelikw7.cloudfront.net/content/banco-azteca-cine-2/v1/video.mp4
   triviaButton: {fileID: 162159107}
   usarDatosDePrueba: 0
   triviaData:
@@ -54029,6 +54029,8 @@ GameObject:
   - component: {fileID: 588433207}
   - component: {fileID: 588433206}
   - component: {fileID: 588433205}
+  - component: {fileID: 588433209}
+  - component: {fileID: 588433208}
   m_Layer: 5
   m_Name: promptPresionarE-CambiarAvatar
   m_TagString: Untagged
@@ -54091,8 +54093,68 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
   m_AnchoredPosition: {x: 0, y: 91}
-  m_SizeDelta: {x: 325.6174, y: 100}
+  m_SizeDelta: {x: 539.79, y: 165.7728}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &588433208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 588433204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e8e32b716088c3744a85bd8d41f21efb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteEscritorio: {fileID: 21300000, guid: 6308f5c48112a8544a5b7828673b98c1, type: 3}
+  spriteMovil: {fileID: 21300000, guid: c9853f06956fb6747acae0c62e9a2ae7, type: 3}
+  imagenUI: {fileID: 588433205}
+  forzarMovilEnEditor: 0
+--- !u!114 &588433209
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 588433204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 588433205}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &592345414
 GameObject:
   m_ObjectHideFlags: 0
@@ -77735,10 +77797,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59336a31478a2be44beee3fd3aab999a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movieId: BancoAzteca-cine-4
+  movieId: banco-azteca-cine-4
   movieTitle: Las 5 reglas de ciberseguridad de SABI
   videoClip: {fileID: 0}
-  videoUrl: https://d22w9izyelikw7.cloudfront.net/content/stp-cine-4/v1/video.mp4
+  videoUrl: https://d22w9izyelikw7.cloudfront.net/content/banco-azteca-cine-4/v1/video.mp4
   triviaButton: {fileID: 932057045}
   usarDatosDePrueba: 0
   triviaData:
@@ -90595,10 +90657,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59336a31478a2be44beee3fd3aab999a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movieId: BancoAzteca-cine-5
+  movieId: banco-azteca-cine-5
   movieTitle: El primer emprendimiento de Nico
   videoClip: {fileID: 0}
-  videoUrl: https://d22w9izyelikw7.cloudfront.net/content/stp-cine-5/v1/video.mp4
+  videoUrl: https://d22w9izyelikw7.cloudfront.net/content/banco-azteca-cine-5/v1/video.mp4
   triviaButton: {fileID: 404303834}
   usarDatosDePrueba: 0
   triviaData:
@@ -124476,10 +124538,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59336a31478a2be44beee3fd3aab999a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movieId: BancoAzteca-cine-3
+  movieId: banco-azteca-cine-3
   movieTitle: Todo lo que puedes hacer con tu dinero
   videoClip: {fileID: 0}
-  videoUrl: https://d22w9izyelikw7.cloudfront.net/content/stp-cine-3/v1/video.mp4
+  videoUrl: https://d22w9izyelikw7.cloudfront.net/content/banco-azteca-cine-3/v1/video.mp4
   triviaButton: {fileID: 1538533182}
   usarDatosDePrueba: 0
   triviaData:
@@ -155206,7 +155268,7 @@ MonoBehaviour:
   autoFindControllerInParents: 1
   interactionKey: 101
   playerTag: Player
-  sponsorId: stp
+  sponsorId: banco-azteca
 --- !u!65 &1949044337
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -155954,8 +156016,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 500151079}
   m_HandleRect: {fileID: 500151078}
   m_Direction: 2
-  m_Value: 1.0000004
-  m_Size: 0.616317
+  m_Value: 1
+  m_Size: 0.6163169
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -168044,6 +168106,69 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: fb1b460ef3aa7624c8816dd9f97902bc, type: 3}
+--- !u!1 &2139000000
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2139000001}
+  - component: {fileID: 2139000002}
+  m_Layer: 0
+  m_Name: InstructionsTutorialController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2139000001
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2139000000}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2139000002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2139000000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a7e60473cc04e1489b8a912ee77a6ef, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  instructionsRoot: {fileID: 2127202155}
+  slideImage: {fileID: 1988413740}
+  skipButton: {fileID: 1928231850}
+  startTutorialButton: {fileID: 1293784421}
+  previousButton: {fileID: 1732687681}
+  nextButton: {fileID: 1371187871}
+  understoodButton: {fileID: 181838677}
+  welcomeSlide: {fileID: 21300000, guid: b7ee64dda69afc14481f81ca93de1c63, type: 3}
+  controlsPcSlide: {fileID: 21300000, guid: a503bc4c46034704a9f961dc24b6b2cf, type: 3}
+  controlsMobileSlide: {fileID: 21300000, guid: 15ffe0826e41bd84b8b84d7af4471ce1, type: 3}
+  cinemaRoomsSlide: {fileID: 21300000, guid: c0c93190f34d9904b8cb91e6a9cf46be, type: 3}
+  shopSlide: {fileID: 21300000, guid: 077bb2ba5b07f2548a91462e9c90475a, type: 3}
+  photoSetSlide: {fileID: 21300000, guid: bcd182828d4c3834ca09617d2fb42f20, type: 3}
+  openKey: 113
+  touchControlsRoot: {fileID: 557614114}
+  cursorLockManager: {fileID: 0}
+  extraComponentsToDisableWhileOpen: []
+  playerRigidbody: {fileID: 0}
+  forceMobileInEditor: 0
 --- !u!1 &2141059564
 GameObject:
   m_ObjectHideFlags: 0
@@ -168799,7 +168924,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2147100011}
   m_HandleRect: {fileID: 2147100009}
   m_Direction: 0
-  m_Value: -0.000000049040278
+  m_Value: 0
   m_Size: 0.35312244
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -169017,69 +169142,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 457c5122d3dfa6b49abd86454217769c, type: 3}
---- !u!1 &2139000000
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2139000001}
-  - component: {fileID: 2139000002}
-  m_Layer: 0
-  m_Name: InstructionsTutorialController
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2139000001
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2139000000}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2139000002
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2139000000}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a7e60473cc04e1489b8a912ee77a6ef, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  instructionsRoot: {fileID: 2127202155}
-  slideImage: {fileID: 1988413740}
-  skipButton: {fileID: 1928231850}
-  startTutorialButton: {fileID: 1293784421}
-  previousButton: {fileID: 1732687681}
-  nextButton: {fileID: 1371187871}
-  understoodButton: {fileID: 181838677}
-  welcomeSlide: {fileID: 21300000, guid: b7ee64dda69afc14481f81ca93de1c63, type: 3}
-  controlsPcSlide: {fileID: 21300000, guid: a503bc4c46034704a9f961dc24b6b2cf, type: 3}
-  controlsMobileSlide: {fileID: 21300000, guid: 15ffe0826e41bd84b8b84d7af4471ce1, type: 3}
-  cinemaRoomsSlide: {fileID: 21300000, guid: c0c93190f34d9904b8cb91e6a9cf46be, type: 3}
-  shopSlide: {fileID: 21300000, guid: 077bb2ba5b07f2548a91462e9c90475a, type: 3}
-  photoSetSlide: {fileID: 21300000, guid: bcd182828d4c3834ca09617d2fb42f20, type: 3}
-  openKey: 113
-  touchControlsRoot: {fileID: 557614114}
-  cursorLockManager: {fileID: 0}
-  extraComponentsToDisableWhileOpen: []
-  playerRigidbody: {fileID: 0}
-  forceMobileInEditor: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

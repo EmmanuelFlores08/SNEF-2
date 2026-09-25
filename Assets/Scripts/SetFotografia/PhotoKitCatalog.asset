@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PhotoKitCatalog
   m_EditorClassIdentifier: 
   kits:
-  - kitId: Condusef_Kit
+  - kitId: kit_00
     previewSprite: {fileID: 21300000, guid: b0e92d767de47ea42be4442c380fb052, type: 3}
     selectorSprite: {fileID: 21300000, guid: 98de95765c16df348924ff2675e53843, type: 3}
     backgroundSprite: {fileID: 21300000, guid: f99ed66b1a388bb4ea8b5f9216421e4f, type: 3}
@@ -30,7 +30,7 @@ MonoBehaviour:
     logoSprite: {fileID: 21300000, guid: f7337bab787eef347844baf6248f6ba6, type: 3}
     precio: 0
     gratuito: 1
-  - kitId: STP_Kit
+  - kitId: kit_02
     previewSprite: {fileID: 21300000, guid: 709606336a8198649b8db8041d570c3b, type: 3}
     selectorSprite: {fileID: 21300000, guid: afd19acde020c0e4196df57141a478a7, type: 3}
     backgroundSprite: {fileID: 21300000, guid: a065581949edbb840a85fc0cbf665901, type: 3}
@@ -47,7 +47,7 @@ MonoBehaviour:
     logoSprite: {fileID: 21300000, guid: 2bf6eb31abe19654daedc2985a9df599, type: 3}
     precio: 200
     gratuito: 0
-  - kitId: AMAFORE_Kit
+  - kitId: kit_03
     previewSprite: {fileID: 21300000, guid: a7623d4cd591f27478914263ae2f3985, type: 3}
     selectorSprite: {fileID: 21300000, guid: 3f7c2335b68d5f34099dfd00fe7c6928, type: 3}
     backgroundSprite: {fileID: 21300000, guid: 2588c3dd65e10db449af44cb210a85a9, type: 3}
@@ -64,7 +64,7 @@ MonoBehaviour:
     logoSprite: {fileID: 21300000, guid: 0d4e59bd6ba5c834787b0cd737f832df, type: 3}
     precio: 200
     gratuito: 0
-  - kitId: AforeCoppel
+  - kitId: kit_04
     previewSprite: {fileID: 21300000, guid: 3aa59d5ce72c3f3449c7b883b59a7ae1, type: 3}
     selectorSprite: {fileID: 21300000, guid: 6b959f66d32a4dc469f62b5675285694, type: 3}
     backgroundSprite: {fileID: 21300000, guid: 91e929a195161fc47b230f82645246b9, type: 3}
@@ -81,7 +81,7 @@ MonoBehaviour:
     logoSprite: {fileID: 21300000, guid: f2ff987be4bd8ee4e9a65c058430a83d, type: 3}
     precio: 200
     gratuito: 0
-  - kitId: Banxico_Kit
+  - kitId: kit_09
     previewSprite: {fileID: 21300000, guid: 80ce394be3cd9ae4e9eb30a9a6af87e9, type: 3}
     selectorSprite: {fileID: 21300000, guid: 56ecd71f6dd3da749b3e397070f74096, type: 3}
     backgroundSprite: {fileID: 21300000, guid: 52a8983df5821ae4990402d294f923f5, type: 3}
@@ -98,7 +98,7 @@ MonoBehaviour:
     logoSprite: {fileID: 21300000, guid: e408603ca21360f42bda1351e38e43d6, type: 3}
     precio: 200
     gratuito: 0
-  - kitId: Finsus_Kit
+  - kitId: kit_01
     previewSprite: {fileID: 21300000, guid: 7a214a4a4924e0348b9c18a56090ec82, type: 3}
     selectorSprite: {fileID: 21300000, guid: 4c368002956ab804fb7a97c9e1315135, type: 3}
     backgroundSprite: {fileID: 21300000, guid: 66dc7edcede75f6499887cf6892ecd2f, type: 3}
@@ -115,24 +115,7 @@ MonoBehaviour:
     logoSprite: {fileID: 21300000, guid: cb0ebb76277380446ba32652ff01e69b, type: 3}
     precio: 200
     gratuito: 0
-  - kitId: Clip_Kit
-    previewSprite: {fileID: 21300000, guid: 681367f903dffaf4396a7d6eb8e593d4, type: 3}
-    selectorSprite: {fileID: 21300000, guid: 2ba6a694bdc91b44b898250f33121324, type: 3}
-    backgroundSprite: {fileID: 21300000, guid: 0770b1a731195ef4bb781359930d3db4, type: 3}
-    objects:
-    - prefab: {fileID: 919132149155446097, guid: b60206b7245c00c4b978c07aaad9110c, type: 3}
-      localPosition: {x: 1, y: 0, z: 0}
-      localEulerAngles: {x: 0, y: -60, z: 0}
-      previewSprite: {fileID: 21300000, guid: 3f5c234ec6371214481a608705b415b4, type: 3}
-    - prefab: {fileID: 919132149155446097, guid: 6f61e92a586820f49bc51e88cf42813b, type: 3}
-      localPosition: {x: -1, y: 0, z: 0}
-      localEulerAngles: {x: 0, y: 60, z: 0}
-      previewSprite: {fileID: 21300000, guid: d9da4e90d1664b24e982fa0b3c0dde93, type: 3}
-    objectsMaterial: {fileID: 2100000, guid: 6ac1da026a4edfd40be1de01bc827349, type: 2}
-    logoSprite: {fileID: 21300000, guid: 7a59905e56e934546b65705ff5fd6775, type: 3}
-    precio: 200
-    gratuito: 0
-  - kitId: BancoAzteca_Kit
+  - kitId: kit_08
     previewSprite: {fileID: 21300000, guid: e2ad6783f5ece2f479084bf20b1d1c60, type: 3}
     selectorSprite: {fileID: 21300000, guid: d95551948eeb46b418649af39a766136, type: 3}
     backgroundSprite: {fileID: 21300000, guid: 73462c179bc512348a21751c28d18962, type: 3}
@@ -149,7 +132,7 @@ MonoBehaviour:
     logoSprite: {fileID: 21300000, guid: 05fa20f232228544884d8b96cf9b6b5f, type: 3}
     precio: 200
     gratuito: 0
-  - kitId: Bienestar_Kit
+  - kitId: kit_05
     previewSprite: {fileID: 21300000, guid: 00b271fc7afd8814b8f2a9003d67b61a, type: 3}
     selectorSprite: {fileID: 21300000, guid: e991ab06a5cfb334db829d3808a2138e, type: 3}
     backgroundSprite: {fileID: 21300000, guid: 09e49b2ac9df68d4c8f8e18939c9d5f8, type: 3}
@@ -166,7 +149,7 @@ MonoBehaviour:
     logoSprite: {fileID: 21300000, guid: a1766e4f44c3d4249a08b5626fcbe796, type: 3}
     precio: 200
     gratuito: 0
-  - kitId: Bankaool_Kit
+  - kitId: kit_07
     previewSprite: {fileID: 21300000, guid: 4b93fc43d9c185047a2e754a271259e4, type: 3}
     selectorSprite: {fileID: 21300000, guid: 990c0c76f5889cd499ad218f9acc8841, type: 3}
     backgroundSprite: {fileID: 21300000, guid: d14daec6c78138449b440db0440172ed, type: 3}
@@ -183,24 +166,7 @@ MonoBehaviour:
     logoSprite: {fileID: 21300000, guid: 624b0db7c2dc7284fb52e7d48614e021, type: 3}
     precio: 200
     gratuito: 0
-  - kitId: SEP_Kit
-    previewSprite: {fileID: 21300000, guid: 4b93fc43d9c185047a2e754a271259e4, type: 3}
-    selectorSprite: {fileID: 21300000, guid: 990c0c76f5889cd499ad218f9acc8841, type: 3}
-    backgroundSprite: {fileID: 21300000, guid: d14daec6c78138449b440db0440172ed, type: 3}
-    objects:
-    - prefab: {fileID: 919132149155446097, guid: fb98bc8455e142144968dbba4e20f40e, type: 3}
-      localPosition: {x: 1, y: 0.1, z: 0}
-      localEulerAngles: {x: 0, y: -60, z: 0}
-      previewSprite: {fileID: 21300000, guid: 1405de9bb09a2904fa9cf30271f6f66a, type: 3}
-    - prefab: {fileID: 919132149155446097, guid: 28f7d8ecc31c69e4caa920b9987dfa23, type: 3}
-      localPosition: {x: -1, y: 0.1, z: 0}
-      localEulerAngles: {x: 0, y: 60, z: 0}
-      previewSprite: {fileID: 21300000, guid: 29b6e0aaf246840408110903422fcc56, type: 3}
-    objectsMaterial: {fileID: 2100000, guid: a12319e233a9203488fb5b4414832d87, type: 2}
-    logoSprite: {fileID: 21300000, guid: 624b0db7c2dc7284fb52e7d48614e021, type: 3}
-    precio: 200
-    gratuito: 0
-  - kitId: Nu_Kit
+  - kitId: kit_06
     previewSprite: {fileID: 21300000, guid: 42a220fee76f48c469d5f3dda403158d, type: 3}
     selectorSprite: {fileID: 21300000, guid: d9ecc40599a60a54f8f57cefb3b4b12e, type: 3}
     backgroundSprite: {fileID: 21300000, guid: ca238be0942f57642b01da8447ec22aa, type: 3}
