@@ -38,11 +38,11 @@ MonoBehaviour:
     - prefab: {fileID: 2083870381738153140, guid: d04850c4271b7654abb44813eee8a58a, type: 3}
       localPosition: {x: 1.3, y: 0, z: 0}
       localEulerAngles: {x: 0, y: -60, z: 0}
-      previewSprite: {fileID: 21300000, guid: 97fbf8f588fe98e4ebde6902ac49725e, type: 3}
+      previewSprite: {fileID: 21300000, guid: 20ca124cff12e864c900df367718f89b, type: 3}
     - prefab: {fileID: 919132149155446097, guid: 6ed5960c492fd554eb706b13af97566b, type: 3}
       localPosition: {x: -1.3, y: 0, z: 0}
       localEulerAngles: {x: 0, y: 0, z: 0}
-      previewSprite: {fileID: 21300000, guid: 078f913ce4ecce749b15501ee6d5807a, type: 3}
+      previewSprite: {fileID: 21300000, guid: 1492263ab78edbe47849d82b483fa6fa, type: 3}
     objectsMaterial: {fileID: 2100000, guid: 38862352a724daf458bf0db4b0babc04, type: 2}
     logoSprite: {fileID: 21300000, guid: 2bf6eb31abe19654daedc2985a9df599, type: 3}
     precio: 200
@@ -55,11 +55,11 @@ MonoBehaviour:
     - prefab: {fileID: 919132149155446097, guid: b60206b7245c00c4b978c07aaad9110c, type: 3}
       localPosition: {x: 1.3, y: 0, z: 0}
       localEulerAngles: {x: 0, y: -60, z: 0}
-      previewSprite: {fileID: 21300000, guid: d9da4e90d1664b24e982fa0b3c0dde93, type: 3}
+      previewSprite: {fileID: 21300000, guid: 1294aac245915b742ba115fe9e8c8aec, type: 3}
     - prefab: {fileID: 919132149155446097, guid: c6aee0a6158891c489cda20ebb1c5e44, type: 3}
       localPosition: {x: -1, y: 0, z: 0}
       localEulerAngles: {x: 0, y: 0, z: 0}
-      previewSprite: {fileID: 21300000, guid: 83708a1618c68fe45bb1ca4f2f0f1f85, type: 3}
+      previewSprite: {fileID: 21300000, guid: 38d51a0410c0d0641bf691add41919d5, type: 3}
     objectsMaterial: {fileID: 2100000, guid: 6f2e65b8cdfd9a74182e92430b87d34e, type: 2}
     logoSprite: {fileID: 21300000, guid: 0d4e59bd6ba5c834787b0cd737f832df, type: 3}
     precio: 200
@@ -72,11 +72,11 @@ MonoBehaviour:
     - prefab: {fileID: 2083870381738153140, guid: d04850c4271b7654abb44813eee8a58a, type: 3}
       localPosition: {x: 1.3, y: 0, z: 0}
       localEulerAngles: {x: 0, y: -60, z: 0}
-      previewSprite: {fileID: 21300000, guid: 97fbf8f588fe98e4ebde6902ac49725e, type: 3}
+      previewSprite: {fileID: 21300000, guid: 86a42366d3385d5459e302cb01f3ba90, type: 3}
     - prefab: {fileID: 919132149155446097, guid: b60206b7245c00c4b978c07aaad9110c, type: 3}
       localPosition: {x: -1.2, y: 0, z: 0}
       localEulerAngles: {x: 0, y: 60, z: 0}
-      previewSprite: {fileID: 21300000, guid: d9da4e90d1664b24e982fa0b3c0dde93, type: 3}
+      previewSprite: {fileID: 21300000, guid: ec611a2201d8a1140a0065dc99d370c7, type: 3}
     objectsMaterial: {fileID: 2100000, guid: 4fb28da5f668f8c42af28fb87e646d8b, type: 2}
     logoSprite: {fileID: 21300000, guid: f2ff987be4bd8ee4e9a65c058430a83d, type: 3}
     precio: 200
@@ -89,11 +89,11 @@ MonoBehaviour:
     - prefab: {fileID: 919132149155446097, guid: 6ed5960c492fd554eb706b13af97566b, type: 3}
       localPosition: {x: 1.4, y: 0, z: 0}
       localEulerAngles: {x: 0, y: -60, z: 0}
-      previewSprite: {fileID: 21300000, guid: 078f913ce4ecce749b15501ee6d5807a, type: 3}
+      previewSprite: {fileID: 21300000, guid: 8ee8b0684ef711c4993231efd2105a30, type: 3}
     - prefab: {fileID: 919132149155446097, guid: b60206b7245c00c4b978c07aaad9110c, type: 3}
       localPosition: {x: -1.36, y: 0, z: 0}
       localEulerAngles: {x: 0, y: 60, z: 0}
-      previewSprite: {fileID: 21300000, guid: d9da4e90d1664b24e982fa0b3c0dde93, type: 3}
+      previewSprite: {fileID: 21300000, guid: 813030f87239410439732434d4b840d1, type: 3}
     objectsMaterial: {fileID: 2100000, guid: 192dce785a4a4fd43a278d470bab67f1, type: 2}
     logoSprite: {fileID: 21300000, guid: e408603ca21360f42bda1351e38e43d6, type: 3}
     precio: 200
@@ -106,11 +106,11 @@ MonoBehaviour:
     - prefab: {fileID: 919132149155446097, guid: c6aee0a6158891c489cda20ebb1c5e44, type: 3}
       localPosition: {x: 1, y: 0, z: 0}
       localEulerAngles: {x: 0, y: -60, z: 0}
-      previewSprite: {fileID: 21300000, guid: 83708a1618c68fe45bb1ca4f2f0f1f85, type: 3}
+      previewSprite: {fileID: 21300000, guid: d837eb5ae3cfdd24290410bb4c748e8e, type: 3}
     - prefab: {fileID: 919132149155446097, guid: 6f61e92a586820f49bc51e88cf42813b, type: 3}
       localPosition: {x: -1, y: 0, z: 0}
       localEulerAngles: {x: 0, y: 60, z: 0}
-      previewSprite: {fileID: 21300000, guid: 3f5c234ec6371214481a608705b415b4, type: 3}
+      previewSprite: {fileID: 21300000, guid: 8bb4313161b1b314784c5db4bf12ea79, type: 3}
     objectsMaterial: {fileID: 2100000, guid: c8e765ecfea9e1c438b907babf5310bc, type: 2}
     logoSprite: {fileID: 21300000, guid: cb0ebb76277380446ba32652ff01e69b, type: 3}
     precio: 200
@@ -123,11 +123,11 @@ MonoBehaviour:
     - prefab: {fileID: 919132149155446097, guid: 6f61e92a586820f49bc51e88cf42813b, type: 3}
       localPosition: {x: 1, y: 0, z: 0}
       localEulerAngles: {x: 0, y: -60, z: 0}
-      previewSprite: {fileID: 21300000, guid: 3f5c234ec6371214481a608705b415b4, type: 3}
+      previewSprite: {fileID: 21300000, guid: 3181f3a0218251848938ff23456798d2, type: 3}
     - prefab: {fileID: 919132149155446097, guid: fb98bc8455e142144968dbba4e20f40e, type: 3}
       localPosition: {x: -1, y: 0.1, z: 0}
       localEulerAngles: {x: 0, y: 0, z: 0}
-      previewSprite: {fileID: 21300000, guid: 1405de9bb09a2904fa9cf30271f6f66a, type: 3}
+      previewSprite: {fileID: 21300000, guid: 908abb20be37bfe40bb6714431f21f7b, type: 3}
     objectsMaterial: {fileID: 2100000, guid: 63d4f835901c1f64c84f34d37084cd86, type: 2}
     logoSprite: {fileID: 21300000, guid: 05fa20f232228544884d8b96cf9b6b5f, type: 3}
     precio: 200
@@ -137,14 +137,14 @@ MonoBehaviour:
     selectorSprite: {fileID: 21300000, guid: e991ab06a5cfb334db829d3808a2138e, type: 3}
     backgroundSprite: {fileID: 21300000, guid: 09e49b2ac9df68d4c8f8e18939c9d5f8, type: 3}
     objects:
-    - prefab: {fileID: 919132149155446097, guid: b60206b7245c00c4b978c07aaad9110c, type: 3}
+    - prefab: {fileID: 919132149155446097, guid: 28f7d8ecc31c69e4caa920b9987dfa23, type: 3}
       localPosition: {x: 1.7, y: 0, z: 0}
       localEulerAngles: {x: 0, y: -60, z: 0}
-      previewSprite: {fileID: 21300000, guid: d9da4e90d1664b24e982fa0b3c0dde93, type: 3}
+      previewSprite: {fileID: 21300000, guid: 840c2e0cf956e0b4ca47f12d225aa613, type: 3}
     - prefab: {fileID: 919132149155446097, guid: fb98bc8455e142144968dbba4e20f40e, type: 3}
       localPosition: {x: -1, y: 0.1, z: 0}
       localEulerAngles: {x: 0, y: 0, z: 0}
-      previewSprite: {fileID: 21300000, guid: 1405de9bb09a2904fa9cf30271f6f66a, type: 3}
+      previewSprite: {fileID: 21300000, guid: 6dbe24a80c6b11e4f9f79d89a633b38b, type: 3}
     objectsMaterial: {fileID: 2100000, guid: 0eb72e075388af340a1e323958b4b6b9, type: 2}
     logoSprite: {fileID: 21300000, guid: a1766e4f44c3d4249a08b5626fcbe796, type: 3}
     precio: 200
@@ -157,11 +157,11 @@ MonoBehaviour:
     - prefab: {fileID: 2083870381738153140, guid: d04850c4271b7654abb44813eee8a58a, type: 3}
       localPosition: {x: 1.5, y: 0, z: 0}
       localEulerAngles: {x: 0, y: -60, z: 0}
-      previewSprite: {fileID: 21300000, guid: 97fbf8f588fe98e4ebde6902ac49725e, type: 3}
+      previewSprite: {fileID: 21300000, guid: 1f617ecc8cc62644fa5380ee7f5de669, type: 3}
     - prefab: {fileID: 919132149155446097, guid: b60206b7245c00c4b978c07aaad9110c, type: 3}
       localPosition: {x: -2, y: 0, z: 0}
       localEulerAngles: {x: 0, y: 60, z: 0}
-      previewSprite: {fileID: 21300000, guid: d9da4e90d1664b24e982fa0b3c0dde93, type: 3}
+      previewSprite: {fileID: 21300000, guid: 1e167bb8f0a05424cb9e497bc00d5e83, type: 3}
     objectsMaterial: {fileID: 2100000, guid: b63d8744ae1398c42bcac8af935efc44, type: 2}
     logoSprite: {fileID: 21300000, guid: 624b0db7c2dc7284fb52e7d48614e021, type: 3}
     precio: 200
@@ -174,11 +174,11 @@ MonoBehaviour:
     - prefab: {fileID: 919132149155446097, guid: 6f61e92a586820f49bc51e88cf42813b, type: 3}
       localPosition: {x: 1, y: 0, z: 0}
       localEulerAngles: {x: 0, y: -60, z: 0}
-      previewSprite: {fileID: 21300000, guid: 3f5c234ec6371214481a608705b415b4, type: 3}
+      previewSprite: {fileID: 21300000, guid: 38f3da1bbdcd29b47a4641bddc665062, type: 3}
     - prefab: {fileID: 919132149155446097, guid: c6aee0a6158891c489cda20ebb1c5e44, type: 3}
       localPosition: {x: -1, y: 0, z: 0}
       localEulerAngles: {x: 0, y: 60, z: 0}
-      previewSprite: {fileID: 21300000, guid: 83708a1618c68fe45bb1ca4f2f0f1f85, type: 3}
+      previewSprite: {fileID: 21300000, guid: 408c4621b045d3f45b1a41a095d89825, type: 3}
     objectsMaterial: {fileID: 2100000, guid: 710bc4183a2049a43b0fd97c6f856d9a, type: 2}
     logoSprite: {fileID: 21300000, guid: d9b79b2471750df439fec2881814cd58, type: 3}
     precio: 200
