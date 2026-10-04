@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using System.Collections.Generic;
 
 public class ChangeAvatarTrigger : MonoBehaviour
@@ -10,12 +11,33 @@ public class ChangeAvatarTrigger : MonoBehaviour
     [Header("UI")]
     [SerializeField] private GameObject promptPresionarE;
 
+    [Tooltip("Botón del mismo prompt. En móvil se toca para cambiar de avatar.")]
+    [SerializeField] private Button botonPrompt;
+
     [Header("Configuración")]
     [SerializeField] private KeyCode interactionKey = KeyCode.E;
     [SerializeField] private string playerTag = "Player";
 
     private readonly HashSet<Collider> collidersJugador = new HashSet<Collider>();
     private bool JugadorDentro => collidersJugador.Count > 0;
+
+    private void Awake()
+    {
+        // Si no se asignó manualmente, busca el Button en el propio prompt.
+        if (botonPrompt == null && promptPresionarE != null)
+        {
+            botonPrompt = promptPresionarE.GetComponent<Button>();
+
+            if (botonPrompt == null)
+                botonPrompt = promptPresionarE.GetComponentInChildren<Button>(true);
+        }
+
+        if (botonPrompt != null)
+        {
+            botonPrompt.onClick.RemoveListener(CambiarEscenaDesdePrompt);
+            botonPrompt.onClick.AddListener(CambiarEscenaDesdePrompt);
+        }
+    }
 
     private void Start()
     {
@@ -30,8 +52,18 @@ public class ChangeAvatarTrigger : MonoBehaviour
             CambiarEscena();
     }
 
-    // Público para que también lo pueda llamar el botón táctil (punto 2)
-    public void CambiarEscena()
+    /// <summary>
+    /// Se ejecuta al tocar/presionar el prompt en celular o tablet.
+    /// </summary>
+    public void CambiarEscenaDesdePrompt()
+    {
+        if (!JugadorDentro)
+            return;
+
+        CambiarEscena();
+    }
+
+    private void CambiarEscena()
     {
         SceneManager.LoadScene(avatarSceneName);
     }
@@ -41,6 +73,7 @@ public class ChangeAvatarTrigger : MonoBehaviour
         if (!EsJugador(other)) return;
         collidersJugador.Add(other);
         if (promptPresionarE != null) promptPresionarE.SetActive(true);
+        if (botonPrompt != null) botonPrompt.interactable = true;
     }
 
     private void OnTriggerExit(Collider other)
@@ -49,6 +82,9 @@ public class ChangeAvatarTrigger : MonoBehaviour
         collidersJugador.Remove(other);
         if (!JugadorDentro && promptPresionarE != null)
             promptPresionarE.SetActive(false);
+
+        if (!JugadorDentro && botonPrompt != null)
+            botonPrompt.interactable = false;
     }
 
     private bool EsJugador(Collider other)
@@ -56,5 +92,22 @@ public class ChangeAvatarTrigger : MonoBehaviour
         if (other.CompareTag(playerTag)) return true;
         Transform raiz = other.transform.root;
         return raiz != null && raiz.CompareTag(playerTag);
+    }
+
+    private void OnDisable()
+    {
+        collidersJugador.Clear();
+
+        if (promptPresionarE != null)
+            promptPresionarE.SetActive(false);
+
+        if (botonPrompt != null)
+            botonPrompt.interactable = false;
+    }
+
+    private void OnDestroy()
+    {
+        if (botonPrompt != null)
+            botonPrompt.onClick.RemoveListener(CambiarEscenaDesdePrompt);
     }
 }

@@ -62,13 +62,41 @@ private bool estadoControlesTactilesGuardado;
     public bool IsInSet => isInSet;
     public bool IsSelectorOpen => isSelectorOpen;
 
+    private void Awake()
+    {
+        // Permite agregar el botón a la interfaz sin tener que enlazarlo
+        // manualmente en el Inspector.
+        if (closeButton == null && selectorPanel != null)
+        {
+            Button[] buttons = selectorPanel.GetComponentsInChildren<Button>(true);
+
+            foreach (Button button in buttons)
+            {
+                if (button == null)
+                    continue;
+
+                string buttonName = button.gameObject.name;
+
+                if (buttonName == "CerrarButonSelectorDeKit" ||
+                    buttonName == "CerrarButtonSelectorDeKit")
+                {
+                    closeButton = button;
+                    break;
+                }
+            }
+        }
+    }
+
     private void Start()
     {
         if (useKitButton != null)
             useKitButton.onClick.AddListener(UseSelectedKit);
 
         if (closeButton != null)
-            closeButton.onClick.AddListener(CloseSelector);
+        {
+            closeButton.onClick.RemoveListener(ExitSet);
+            closeButton.onClick.AddListener(ExitSet);
+        }
 
         if (selectorPanel != null)
             selectorPanel.SetActive(false);
@@ -485,7 +513,7 @@ OcultarControlesTactiles();
             useKitButton.onClick.RemoveListener(UseSelectedKit);
 
         if (closeButton != null)
-            closeButton.onClick.RemoveListener(CloseSelector);
+            closeButton.onClick.RemoveListener(ExitSet);
     }
 
     private void OcultarControlesTactiles()

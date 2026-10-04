@@ -1087,7 +1087,7 @@ public class PhotoCaptureController : MonoBehaviour
 
             kitSelectorController
 
-                .ClosePhotoPanel();
+                .ExitSet();
 
 
 
