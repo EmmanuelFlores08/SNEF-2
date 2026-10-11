@@ -19,6 +19,10 @@ public class MovieSelectorController : MonoBehaviour
     [Header("Pantalla de cine")]
     [SerializeField] private MovieScreenPlayer movieScreenPlayer;
 
+    [Header("Imagen estática (pantalla en reposo)")]
+    [Tooltip("Se muestra siempre que NO haya video reproduciéndose ni trivia en pantalla.")]
+    [SerializeField] private GameObject imagenEstatica;
+
     [Header("Trivia")]
     [SerializeField] private MovieTriviaController movieTriviaController;
 
@@ -112,6 +116,20 @@ public class MovieSelectorController : MonoBehaviour
         {
             StopWatching();
         }
+
+        ActualizarImagenEstatica();
+    }
+
+    // Muestra la imagen estática siempre que NO haya video reproduciéndose ni trivia.
+    private void ActualizarImagenEstatica()
+    {
+        if (imagenEstatica == null)
+            return;
+
+        bool mostrar = !isWatching && !isTriviaOpen;
+
+        if (imagenEstatica.activeSelf != mostrar)
+            imagenEstatica.SetActive(mostrar);
     }
 
 
