@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PhotoKitCatalog
   m_EditorClassIdentifier: 
   kits:
-  - kitId: kit_13
+  - kitId: kit_12
     previewSprite: {fileID: 21300000, guid: b0e92d767de47ea42be4442c380fb052, type: 3}
     selectorSprite: {fileID: 21300000, guid: 98de95765c16df348924ff2675e53843, type: 3}
     backgroundSprite: {fileID: 21300000, guid: f99ed66b1a388bb4ea8b5f9216421e4f, type: 3}
@@ -198,5 +198,56 @@ MonoBehaviour:
       previewSprite: {fileID: 21300000, guid: b1a3e0d20173afb48b452c4a7aeb3b2a, type: 3}
     objectsMaterial: {fileID: 2100000, guid: ef8c23ae17bb91240946d79716db5c50, type: 2}
     logoSprite: {fileID: 21300000, guid: 86a1545bfc860924fba0b4329a4b9af4, type: 3}
+    precio: 200
+    gratuito: 0
+  - kitId: kit_14
+    previewSprite: {fileID: 21300000, guid: 681367f903dffaf4396a7d6eb8e593d4, type: 3}
+    selectorSprite: {fileID: 21300000, guid: 2ba6a694bdc91b44b898250f33121324, type: 3}
+    backgroundSprite: {fileID: 21300000, guid: 0770b1a731195ef4bb781359930d3db4, type: 3}
+    objects:
+    - prefab: {fileID: 919132149155446097, guid: 6f61e92a586820f49bc51e88cf42813b, type: 3}
+      localPosition: {x: 1, y: 0, z: 0}
+      localEulerAngles: {x: 0, y: -40, z: 0}
+      previewSprite: {fileID: 21300000, guid: 8bb4313161b1b314784c5db4bf12ea79, type: 3}
+    - prefab: {fileID: 919132149155446097, guid: c6aee0a6158891c489cda20ebb1c5e44, type: 3}
+      localPosition: {x: -1, y: 0, z: 0}
+      localEulerAngles: {x: 0, y: 60, z: 0}
+      previewSprite: {fileID: 21300000, guid: d837eb5ae3cfdd24290410bb4c748e8e, type: 3}
+    objectsMaterial: {fileID: 2100000, guid: 6ac1da026a4edfd40be1de01bc827349, type: 2}
+    logoSprite: {fileID: 21300000, guid: d1810df5b4a43924fb66abad680f07d4, type: 3}
+    precio: 200
+    gratuito: 0
+  - kitId: kit_10
+    previewSprite: {fileID: 21300000, guid: ea8c3578bc7380a4bbfb36762a2a604c, type: 3}
+    selectorSprite: {fileID: 21300000, guid: 447ec4a0694b93f40b0b9906274d3cba, type: 3}
+    backgroundSprite: {fileID: 21300000, guid: 6b12cacb1fa750d4e9a3274a0de84154, type: 3}
+    objects:
+    - prefab: {fileID: 2083870381738153140, guid: d04850c4271b7654abb44813eee8a58a, type: 3}
+      localPosition: {x: 1.5, y: 0, z: 0}
+      localEulerAngles: {x: 0, y: -60, z: 0}
+      previewSprite: {fileID: 21300000, guid: d9d43b9e449d85949b9460d7c6bfb2ce, type: 3}
+    - prefab: {fileID: 919132149155446097, guid: 02b504fc19ff80844b155ffd0e712a50, type: 3}
+      localPosition: {x: -1, y: 0.2, z: 0}
+      localEulerAngles: {x: 0, y: 60, z: 0}
+      previewSprite: {fileID: 21300000, guid: c7124fd1c78af444d9ecf11cc75dc2ea, type: 3}
+    objectsMaterial: {fileID: 2100000, guid: a12319e233a9203488fb5b4414832d87, type: 2}
+    logoSprite: {fileID: 21300000, guid: 9fde7a33cc055094eb2fa7bc7c3f4265, type: 3}
+    precio: 200
+    gratuito: 0
+  - kitId: kit_11
+    previewSprite: {fileID: 21300000, guid: 72995d6397175ab4a911d7c2b16f2d8d, type: 3}
+    selectorSprite: {fileID: 21300000, guid: 15963be539407b3439eb85b9dd254f61, type: 3}
+    backgroundSprite: {fileID: 21300000, guid: 6b452dc1eec50b144aa6a7f32459ab6e, type: 3}
+    objects:
+    - prefab: {fileID: 919132149155446097, guid: 6f61e92a586820f49bc51e88cf42813b, type: 3}
+      localPosition: {x: 1, y: 0, z: 0}
+      localEulerAngles: {x: 0, y: -40, z: 0}
+      previewSprite: {fileID: 21300000, guid: d6d93947171635844bddbaec2398485c, type: 3}
+    - prefab: {fileID: 919132149155446097, guid: c6aee0a6158891c489cda20ebb1c5e44, type: 3}
+      localPosition: {x: -1, y: 0, z: 0}
+      localEulerAngles: {x: 0, y: 60, z: 0}
+      previewSprite: {fileID: 21300000, guid: 7783b9c7612caf849a6d516df648f7f1, type: 3}
+    objectsMaterial: {fileID: 2100000, guid: 6e741de6c7befe147916273fa549f268, type: 2}
+    logoSprite: {fileID: 21300000, guid: 46eed45aa9cd8484b9ccc393102381a6, type: 3}
     precio: 200
     gratuito: 0
