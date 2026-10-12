@@ -8,6 +8,9 @@ public class PhotoKitSelectorController : MonoBehaviour
     [Header("Panel principal")]
     [SerializeField] private GameObject selectorPanel;
 
+    [Header("Instrucciones")]
+    [SerializeField] private InstructionsTutorialController instructionsTutorial;
+
     [Header("Catálogo y set")]
     [SerializeField] private PhotoKitCatalog catalog;
     [SerializeField] private PhotoSetManager photoSetManager;
@@ -64,6 +67,9 @@ private bool estadoControlesTactilesGuardado;
 
     private void Awake()
     {
+        if (instructionsTutorial == null)
+            instructionsTutorial = FindFirstObjectByType<InstructionsTutorialController>();
+
         // Permite agregar el botón a la interfaz sin tener que enlazarlo
         // manualmente en el Inspector.
         if (closeButton == null && selectorPanel != null)
@@ -136,6 +142,9 @@ private bool estadoControlesTactilesGuardado;
 
 public void OpenSelector()
 {
+    if (isSelectorOpen || selectorPanel == null)
+        return;
+
     OcultarControlesTactiles();
 
     isSelectorOpen = true;
@@ -155,6 +164,10 @@ public void OpenSelector()
 
     if (UISoundManager.Instance != null)
         UISoundManager.Instance.PlayAbrirMenu();
+
+    if (instructionsTutorial != null)
+        instructionsTutorial.ShowContextTutorial(
+            InstructionsTutorialController.ContextTutorialType.SetGrabacion, selectorPanel);
 }
 
 public void CloseSelector()
@@ -374,6 +387,10 @@ OcultarControlesTactiles();
 
         if (UISoundManager.Instance != null)
             UISoundManager.Instance.PlayAbrirMenu();
+
+        if (instructionsTutorial != null)
+            instructionsTutorial.ShowContextTutorial(
+                InstructionsTutorialController.ContextTutorialType.SetGrabacion, selectorPanel);
     }
 
     public void ExitSet()

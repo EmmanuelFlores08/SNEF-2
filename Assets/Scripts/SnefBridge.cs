@@ -1,6 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Json;
+using System.Text;
 using UnityEngine;
+using UnityEngine.Scripting;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -20,6 +25,8 @@ public class SnefBridge : MonoBehaviour
     public bool IsGuest { get; private set; } = true;
     public int Ditas { get; private set; }
     public string AvatarId { get; private set; }
+    public int OutfitStateVersion { get; private set; }
+    public EquipadosPayload ConfirmedOutfit => confirmedOutfit?.Copy();
 
     public event Action OnStateChanged;
     public event Action<CompraResult> OnCompraResult;
@@ -32,6 +39,10 @@ public class SnefBridge : MonoBehaviour
         new Dictionary<string, string>();
     private readonly HashSet<string> pendingPurchaseItems = new HashSet<string>();
     private string pendingAvatarId;
+    private EquipadosPayload confirmedOutfit;
+#if UNITY_EDITOR
+    private EquipadosPayload lastEditorOutfitRequest;
+#endif
 
 #if UNITY_WEBGL && !UNITY_EDITOR
     [DllImport("__Internal")]
@@ -39,6 +50,9 @@ public class SnefBridge : MonoBehaviour
 
     [DllImport("__Internal")]
     private static extern void SnefAvatar(string avatarId);
+
+    [DllImport("__Internal")]
+    private static extern void SnefEquipar(string json);
 #endif
 
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
@@ -151,6 +165,86 @@ public class SnefBridge : MonoBehaviour
         }
     }
 
+    public bool RequestEquipar(string hat, string pants, string shoes, string acce)
+    {
+        if (!HasServerState || IsGuest)
+            return false;
+
+        EquipadosPayload outfit = new EquipadosPayload
+        {
+            hat = hat, pants = pants, shoes = shoes, acce = acce
+        };
+        if (outfit.SameAs(confirmedOutfit))
+            return false;
+
+        try
+        {
+            string json = SerializeOutfitJson(outfit);
+#if UNITY_EDITOR
+            lastEditorOutfitRequest = outfit.Copy();
+            Debug.Log($"[SNEF Bridge] Editor envio simulado de outfit: {json}");
+            return true;
+#elif UNITY_WEBGL
+            SnefEquipar(json);
+            return true;
+#else
+            return false;
+#endif
+        }
+        catch (Exception exception)
+        {
+            Debug.LogWarning($"[SNEF Bridge] No se pudo solicitar guardar outfit: {exception.Message}");
+            return false;
+        }
+    }
+
+    [Preserve]
+    public void ResultadoEquipar(string json)
+    {
+        try
+        {
+            EquiparPayload payload = ReadEquiparJson(json);
+            if (payload == null)
+            {
+                Debug.LogWarning("[SNEF Bridge] ResultadoEquipar vacio o invalido.");
+                return;
+            }
+            if (!payload.ok)
+            {
+                Debug.LogWarning($"[SNEF Bridge] Outfit rechazado: {payload.motivo ?? "sin motivo"}");
+                return;
+            }
+            if (payload.equipados == null)
+            {
+                Debug.LogWarning("[SNEF Bridge] ResultadoEquipar OK sin equipados; se conserva el outfit confirmado.");
+                return;
+            }
+
+            confirmedOutfit = payload.equipados.Copy();
+            Debug.Log("[SNEF Bridge] Outfit confirmado por backend.");
+        }
+        catch (Exception exception)
+        {
+            Debug.LogWarning($"[SNEF Bridge] Error procesando ResultadoEquipar: {exception.Message}");
+        }
+    }
+
+    // Este contrato necesita conservar null reales, tanto del objeto como de sus categorias.
+    private static EquiparPayload ReadEquiparJson(string json)
+    {
+        using (MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(json)))
+            return (EquiparPayload)new DataContractJsonSerializer(typeof(EquiparPayload)).ReadObject(stream);
+    }
+
+    private static string SerializeOutfitJson(object payload)
+    {
+        using (MemoryStream stream = new MemoryStream())
+        {
+            new DataContractJsonSerializer(payload.GetType()).WriteObject(stream, payload);
+            return Encoding.UTF8.GetString(stream.ToArray());
+        }
+    }
+
     public void SnefEstado(string json)
     {
         try
@@ -162,6 +256,8 @@ public class SnefBridge : MonoBehaviour
                 return;
             }
 
+            payload.equipados = ReadEquiparJson(json)?.equipados;
+
             if (!InitialServerStateReceived)
             {
                 InitialServerStateReceived = true;
@@ -171,6 +267,8 @@ public class SnefBridge : MonoBehaviour
 
             HasServerState = true;
             IsGuest = payload.invitado;
+            confirmedOutfit = IsGuest ? null : payload.equipados?.Copy();
+            OutfitStateVersion++;
             Ditas = Mathf.Max(0, payload.ditas);
 
             comprados.Clear();
@@ -206,6 +304,36 @@ public class SnefBridge : MonoBehaviour
     }
 
 #if UNITY_EDITOR
+    [ContextMenu("SNEF/Test SnefEstado con equipados")]
+    private void TestSnefEstadoConEquipados()
+    {
+        SnefEstado("{\"invitado\":false,\"ditas\":550,\"avatar\":\"avatar_03\"," +
+            "\"comprados\":[\"Hat_7\",\"Pants_3\",\"Shoes_8\"]," +
+            "\"equipados\":{\"hat\":\"Hat_7\",\"pants\":\"Pants_3\",\"shoes\":\"Shoes_8\",\"acce\":null}}");
+    }
+
+    [ContextMenu("SNEF/Test SnefEstado equipados null")]
+    private void TestSnefEstadoEquipadosNull()
+    {
+        SnefEstado("{\"invitado\":false,\"ditas\":550,\"avatar\":\"avatar_03\"," +
+            "\"comprados\":[\"Hat_7\",\"Pants_3\",\"Shoes_8\"],\"equipados\":null}");
+    }
+
+    [ContextMenu("SNEF/Test ResultadoEquipar OK")]
+    private void TestResultadoEquiparOk()
+    {
+        if (lastEditorOutfitRequest == null)
+        {
+            Debug.LogWarning("[SNEF Bridge] No hay solicitud de outfit de Editor para confirmar.");
+            return;
+        }
+        ResultadoEquipar(SerializeOutfitJson(new EquiparPayload
+        {
+            ok = true, equipados = lastEditorOutfitRequest.Copy()
+        }));
+        lastEditorOutfitRequest = null;
+    }
+
     [ContextMenu("SNEF/Test SnefEstado invitado")]
     private void TestSnefEstadoInvitado()
     {
@@ -520,6 +648,35 @@ public class SnefBridge : MonoBehaviour
         public int ditas;
         public string avatar;
         public string[] comprados;
+        public EquipadosPayload equipados;
+    }
+
+    [Serializable, DataContract, Preserve]
+    public class EquipadosPayload
+    {
+        [DataMember, Preserve] public string hat;
+        [DataMember, Preserve] public string pants;
+        [DataMember, Preserve] public string shoes;
+        [DataMember, Preserve] public string acce;
+
+        public EquipadosPayload Copy()
+        {
+            return new EquipadosPayload { hat = hat, pants = pants, shoes = shoes, acce = acce };
+        }
+
+        public bool SameAs(EquipadosPayload other)
+        {
+            return other != null && hat == other.hat && pants == other.pants &&
+                shoes == other.shoes && acce == other.acce;
+        }
+    }
+
+    [DataContract, Preserve]
+    private class EquiparPayload
+    {
+        [DataMember, Preserve] public bool ok;
+        [DataMember, Preserve] public EquipadosPayload equipados;
+        [DataMember, Preserve] public string motivo;
     }
 
     [Serializable]

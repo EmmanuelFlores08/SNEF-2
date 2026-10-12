@@ -50,6 +50,7 @@ public class CustomizationSceneSetup : MonoBehaviour
         }
 
         PlayerCharacterCustomized character = Instantiate(prefab, anchor);
+        character.EnableServerOutfitRestoration();
         character.transform.localPosition = Vector3.zero;
         character.transform.localRotation = Quaternion.identity;
 

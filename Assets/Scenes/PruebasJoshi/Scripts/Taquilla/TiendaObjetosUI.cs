@@ -10,6 +10,9 @@ public class TiendaObjetosUI : MonoBehaviour
     [Header("Interfaz completa")]
     [SerializeField] private GameObject uiTaquilla;
 
+    [Header("Instrucciones")]
+    [SerializeField] private InstructionsTutorialController instructionsTutorial;
+
     [Header("Texto del botón comprar/usar prenda")]
     [SerializeField] private TextMeshProUGUI textoBotonPrenda;
 
@@ -82,6 +85,7 @@ private bool controlesTactilesEstabanActivos;
 
     private PlayerCharacterCustomized character;
     private MovePlayerInput playerInput;
+    private SnefBridge.EquipadosPayload outfitAlAbrir;
 
     private Vector3 savedPosition;
     private Quaternion savedRotation;
@@ -101,6 +105,9 @@ private bool controlesTactilesEstabanActivos;
 
     private void Awake()
     {
+        if (instructionsTutorial == null)
+            instructionsTutorial = FindFirstObjectByType<InstructionsTutorialController>();
+
         ObtenerAnimacionesAutomaticamente();
 
         if (buttonPersonaje != null)
@@ -160,6 +167,7 @@ private bool controlesTactilesEstabanActivos;
     private void Update()
     {
         if (!EstaAbierta) return;
+        if (instructionsTutorial != null && instructionsTutorial.IsOpen) return;
 
         if (permitirCerrarConEscape && Input.GetKeyDown(KeyCode.Escape))
             CerrarTienda();
@@ -167,8 +175,21 @@ private bool controlesTactilesEstabanActivos;
 
     public void Bind(PlayerCharacterCustomized newCharacter, MovePlayerInput newInput)
     {
+        if (character != null)
+            character.OnServerOutfitApplied -= HandleServerOutfitApplied;
         character = newCharacter;
         playerInput = newInput;
+        if (character != null)
+            character.OnServerOutfitApplied += HandleServerOutfitApplied;
+    }
+
+    private void HandleServerOutfitApplied()
+    {
+        if (!EstaAbierta) return;
+        // Un estado tardio pasa a ser la base real, evitando restaurar un preview anterior.
+        GuardarOutfitActual();
+        outfitAlAbrir = character.GetCurrentOutfit();
+        prendaEnPreview = false;
     }
 
     private void OnItemSelected(ShopCategoryUI categoria, int index)
@@ -624,6 +645,7 @@ private bool controlesTactilesEstabanActivos;
         playerInput.enabled = false;
 
     GuardarOutfitActual();
+    outfitAlAbrir = character != null ? character.GetCurrentOutfit() : null;
 
     if (character != null && previewAnchor != null)
     {
@@ -663,6 +685,10 @@ private bool controlesTactilesEstabanActivos;
         MostrarPanelActual();
 
     MostrarCursorInterfaz(true);
+
+    if (instructionsTutorial != null)
+        instructionsTutorial.ShowContextTutorial(
+            InstructionsTutorialController.ContextTutorialType.Taquilla, uiTaquilla);
 }
    public void CerrarTienda()
 {
@@ -671,6 +697,7 @@ private bool controlesTactilesEstabanActivos;
     EstaAbierta = false;
 
     RestaurarOutfitOriginal();
+    GuardarOutfitFinalEnServidor();
 
     if (uiTaquilla != null)
         uiTaquilla.SetActive(false);
@@ -725,6 +752,18 @@ private bool controlesTactilesEstabanActivos;
     if (UISoundManager.Instance != null)
         UISoundManager.Instance.PlayCerrarMenu();
 }
+
+    private void GuardarOutfitFinalEnServidor()
+    {
+        if (character == null || SnefBridge.Instance == null)
+            return;
+
+        SnefBridge.EquipadosPayload outfit = character.GetCurrentOutfit();
+        if (outfit == null || outfitAlAbrir == null || outfit.SameAs(outfitAlAbrir))
+            return;
+
+        SnefBridge.Instance.RequestEquipar(outfit.hat, outfit.pants, outfit.shoes, outfit.acce);
+    }
 
     private void GuardarOutfitActual()
     {
@@ -875,6 +914,8 @@ private bool controlesTactilesEstabanActivos;
 
     private void OnDestroy()
     {
+        if (character != null)
+            character.OnServerOutfitApplied -= HandleServerOutfitApplied;
         if (buttonPersonaje != null) buttonPersonaje.onClick.RemoveListener(MostrarPanelPersonaje);
         if (buttonSetDeGrabacion != null) buttonSetDeGrabacion.onClick.RemoveListener(MostrarPanelSetDeGrabacion);
         if (buttonCerrar != null) buttonCerrar.onClick.RemoveListener(CerrarTienda);

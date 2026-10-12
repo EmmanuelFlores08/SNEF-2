@@ -20,5 +20,11 @@ mergeInto(LibraryManager.library, {
                 UTF8ToString(avatarId)
             );
         } catch (e) {}
+    },
+
+    SnefEquipar: function (json) {
+        try {
+            window.SNEF_EQUIPAR(UTF8ToString(json));
+        } catch (e) {}
     }
 });

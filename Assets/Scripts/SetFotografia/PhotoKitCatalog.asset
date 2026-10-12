@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PhotoKitCatalog
   m_EditorClassIdentifier: 
   kits:
-  - kitId: kit_00
+  - kitId: kit_13
     previewSprite: {fileID: 21300000, guid: b0e92d767de47ea42be4442c380fb052, type: 3}
     selectorSprite: {fileID: 21300000, guid: 98de95765c16df348924ff2675e53843, type: 3}
     backgroundSprite: {fileID: 21300000, guid: f99ed66b1a388bb4ea8b5f9216421e4f, type: 3}
@@ -183,7 +183,7 @@ MonoBehaviour:
     logoSprite: {fileID: 21300000, guid: d9b79b2471750df439fec2881814cd58, type: 3}
     precio: 200
     gratuito: 0
-  - kitId: kit_10
+  - kitId: kit_15
     previewSprite: {fileID: 21300000, guid: 9d06fd673192f424f9415066f444c1d4, type: 3}
     selectorSprite: {fileID: 21300000, guid: 4c39f5672d43b2142bed596cdfb52ba6, type: 3}
     backgroundSprite: {fileID: 21300000, guid: 56fcfc0b0b95a55438737d365a7d9eea, type: 3}

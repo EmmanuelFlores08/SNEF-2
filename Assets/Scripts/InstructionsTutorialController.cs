@@ -5,6 +5,10 @@ using UnityEngine.UI;
 
 public class InstructionsTutorialController : MonoBehaviour
 {
+    public enum ContextTutorialType { Taquilla, SetGrabacion }
+
+    private enum TutorialMode { General, Contextual }
+
     [Header("UI")]
     [SerializeField] private GameObject instructionsRoot;
     [SerializeField] private Image slideImage;
@@ -21,6 +25,10 @@ public class InstructionsTutorialController : MonoBehaviour
     [SerializeField] private Sprite cinemaRoomsSlide;
     [SerializeField] private Sprite shopSlide;
     [SerializeField] private Sprite photoSetSlide;
+
+    [Header("Contextual slides")]
+    [SerializeField] private Sprite taquillaInstructionsSlide;
+    [SerializeField] private Sprite recordingSetInstructionsSlide;
 
     [Header("Input")]
     [SerializeField] private KeyCode openKey = KeyCode.Q;
@@ -49,6 +57,21 @@ public class InstructionsTutorialController : MonoBehaviour
     private CursorLockMode previousCursorLockState;
     private bool previousCursorVisible;
     private int currentSlideIndex;
+    private TutorialMode tutorialMode;
+    private Sprite contextualSlide;
+    private GameObject contextualInterface;
+
+    private static bool tutorialTaquillaMostrado;
+    private static bool tutorialSetMostrado;
+
+    public bool IsOpen => isOpen;
+
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+    private static void ResetContextTutorialSession()
+    {
+        tutorialTaquillaMostrado = false;
+        tutorialSetMostrado = false;
+    }
 
     private const int WelcomeIndex = 0;
     private const int ControlsIndex = 1;
@@ -58,6 +81,7 @@ public class InstructionsTutorialController : MonoBehaviour
     {
         ResolveMissingReferences();
         ConfigureButtonListeners();
+        EnsureInputBlocker();
 
         if (instructionsRoot != null)
             instructionsRoot.SetActive(false);
@@ -87,6 +111,12 @@ public class InstructionsTutorialController : MonoBehaviour
 
     private void Update()
     {
+        if (isOpen && tutorialMode == TutorialMode.Contextual &&
+            (contextualInterface == null || !contextualInterface.activeInHierarchy))
+        {
+            CloseTutorial();
+        }
+
         if (Input.GetKeyDown(openKey) && !isOpen)
             OpenTutorial();
     }
@@ -99,6 +129,7 @@ public class InstructionsTutorialController : MonoBehaviour
         ResolveMissingReferences();
 
         isOpen = true;
+        tutorialMode = TutorialMode.General;
         currentSlideIndex = WelcomeIndex;
 
         if (instructionsRoot != null)
@@ -111,6 +142,56 @@ public class InstructionsTutorialController : MonoBehaviour
             UISoundManager.Instance.PlayAbrirMenu();
     }
 
+    public bool ShowContextTutorial(ContextTutorialType type, GameObject openedInterface)
+    {
+        if (isOpen || openedInterface == null || !openedInterface.activeInHierarchy)
+            return false;
+
+        Sprite slide;
+        switch (type)
+        {
+            case ContextTutorialType.Taquilla:
+                if (tutorialTaquillaMostrado)
+                    return false;
+                slide = taquillaInstructionsSlide;
+                break;
+            case ContextTutorialType.SetGrabacion:
+                if (tutorialSetMostrado)
+                    return false;
+                slide = recordingSetInstructionsSlide;
+                break;
+            default:
+                return false;
+        }
+
+        ResolveMissingReferences();
+        if (slide == null || instructionsRoot == null || slideImage == null ||
+            understoodButton == null)
+        {
+            Debug.LogWarning("[Instructions] Missing contextual tutorial UI or sprite.", this);
+            return false;
+        }
+
+        EnsureInputBlocker();
+        tutorialMode = TutorialMode.Contextual;
+        contextualSlide = slide;
+        contextualInterface = openedInterface;
+        isOpen = true;
+        instructionsRoot.SetActive(true);
+        ShowCurrentSlide();
+
+        // The underlying interface owns gameplay, cursor and touch-control locking.
+        if (type == ContextTutorialType.Taquilla)
+            tutorialTaquillaMostrado = true;
+        else
+            tutorialSetMostrado = true;
+
+        if (UISoundManager.Instance != null)
+            UISoundManager.Instance.PlayAbrirMenu();
+
+        return true;
+    }
+
     public void CloseTutorial()
     {
         if (!isOpen)
@@ -121,7 +202,12 @@ public class InstructionsTutorialController : MonoBehaviour
         if (instructionsRoot != null)
             instructionsRoot.SetActive(false);
 
-        RestoreGameplayLock();
+        if (tutorialMode == TutorialMode.General)
+            RestoreGameplayLock();
+
+        contextualSlide = null;
+        contextualInterface = null;
+        tutorialMode = TutorialMode.General;
 
         if (UISoundManager.Instance != null)
             UISoundManager.Instance.PlayCerrarMenu();
@@ -202,13 +288,17 @@ public class InstructionsTutorialController : MonoBehaviour
 
     private void GoToControlsSlide()
     {
+        if (!isOpen || tutorialMode != TutorialMode.General)
+            return;
+
         currentSlideIndex = ControlsIndex;
         ShowCurrentSlide();
     }
 
     private void GoToPreviousSlide()
     {
-        if (currentSlideIndex <= WelcomeIndex)
+        if (!isOpen || tutorialMode != TutorialMode.General ||
+            currentSlideIndex <= WelcomeIndex)
             return;
 
         currentSlideIndex--;
@@ -217,7 +307,8 @@ public class InstructionsTutorialController : MonoBehaviour
 
     private void GoToNextSlide()
     {
-        if (currentSlideIndex >= LastSlideIndex)
+        if (!isOpen || tutorialMode != TutorialMode.General ||
+            currentSlideIndex >= LastSlideIndex)
             return;
 
         currentSlideIndex++;
@@ -226,20 +317,46 @@ public class InstructionsTutorialController : MonoBehaviour
 
     private void ShowCurrentSlide()
     {
+        bool isContextual = tutorialMode == TutorialMode.Contextual;
         if (slideImage != null)
         {
-            slideImage.sprite = GetSpriteForSlide(currentSlideIndex);
+            slideImage.sprite = isContextual
+                ? contextualSlide : GetSpriteForSlide(currentSlideIndex);
             slideImage.preserveAspect = true;
         }
 
         bool isWelcome = currentSlideIndex == WelcomeIndex;
         bool isLast = currentSlideIndex == LastSlideIndex;
 
-        SetButtonVisible(skipButton, isWelcome);
-        SetButtonVisible(startTutorialButton, isWelcome);
-        SetButtonVisible(previousButton, !isWelcome);
-        SetButtonVisible(nextButton, !isWelcome && !isLast);
-        SetButtonVisible(understoodButton, isLast);
+        SetButtonVisible(skipButton, !isContextual && isWelcome);
+        SetButtonVisible(startTutorialButton, !isContextual && isWelcome);
+        SetButtonVisible(previousButton, !isContextual && !isWelcome);
+        SetButtonVisible(nextButton, !isContextual && !isWelcome && !isLast);
+        SetButtonVisible(understoodButton, isContextual || isLast);
+    }
+
+    private void EnsureInputBlocker()
+    {
+        if (instructionsRoot == null ||
+            instructionsRoot.transform.Find("InstructionsInputBlocker") != null)
+        {
+            return;
+        }
+
+        GameObject blocker = new GameObject("InstructionsInputBlocker",
+            typeof(RectTransform), typeof(CanvasRenderer), typeof(Image));
+        blocker.layer = instructionsRoot.layer;
+        RectTransform rect = blocker.GetComponent<RectTransform>();
+        rect.SetParent(instructionsRoot.transform, false);
+        rect.SetAsFirstSibling();
+        rect.anchorMin = Vector2.zero;
+        rect.anchorMax = Vector2.one;
+        rect.offsetMin = Vector2.zero;
+        rect.offsetMax = Vector2.zero;
+
+        Image image = blocker.GetComponent<Image>();
+        image.color = Color.clear;
+        image.raycastTarget = true;
     }
 
     private Sprite GetSpriteForSlide(int index)
